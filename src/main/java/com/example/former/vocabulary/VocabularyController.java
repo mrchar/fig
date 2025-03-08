@@ -1,15 +1,12 @@
 package com.example.former.vocabulary;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("vocabularies")
@@ -37,13 +34,13 @@ public class VocabularyController {
   }
 
   @PostMapping
-  public VocabularyEntity addVocabulary(@Valid @RequestBody AddOrUpdateVocabularyParams request) {
+  public VocabularyEntity addVocabulary(@RequestBody AddOrUpdateVocabularyParams request) {
     return this.vocabularyService.addVocabulary(request);
   }
 
   @PutMapping("{id}")
   public VocabularyEntity updateVocabulary(
-      @PathVariable Long id, @Valid @RequestBody AddOrUpdateVocabularyParams request) {
+      @PathVariable Long id, @RequestBody AddOrUpdateVocabularyParams request) {
     return this.vocabularyService.updateVocabulary(id, request);
   }
 
