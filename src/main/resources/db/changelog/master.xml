@@ -5,4 +5,5 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <include file="db/changelog/vocabulary.xml"/>
     <include file="db/changelog/schema.xml"/>
+    <include file="db/changelog/form.xml"/>
 </databaseChangeLog>
