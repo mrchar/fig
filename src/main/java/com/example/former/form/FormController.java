@@ -17,6 +17,11 @@ public class FormController {
     return this.formRepository.findAll(pageable);
   }
 
+  @GetMapping("{id}")
+  public FormEntity getForm(@PathVariable Long id) {
+    return this.formService.getForm(id);
+  }
+
   @PostMapping
   public FormEntity addForm(@RequestBody FormConcept params) {
     return this.formService.addForm(params);
