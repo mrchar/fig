@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Framework from "./layouts/Framework.vue"
+</script>
 
 <template>
-  <div class="text-3xl font-bold underline">Hello world!</div>
+  <Framework>
+    页面
+  </Framework>
 </template>
