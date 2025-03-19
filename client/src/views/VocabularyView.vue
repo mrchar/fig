@@ -55,12 +55,16 @@ function onClickEdit(id: number) {
 function onClickDelete(id: number) {
   console.log("Do delete record" + id)
 }
+
+function onClickAdd(){
+  console.log("navigate to editor")
+}
 </script>
 
 <template>
   <Table :columns="columns" :datasource="datasource">
     <template #operations>
-      <Button priority="primary">添加</Button>
+      <Button priority="primary" @click="onClickAdd">添加</Button>
     </template>
     <template #columns.operations="{row}">
       <Button type="ghost" priority="default"
