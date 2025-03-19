@@ -15,7 +15,7 @@ import routes from "../router/routes.ts"
           </RouterLink>
         </li>
       </ul>
-      <div class="w-full h-full">
+      <div class="w-full h-full p-4">
         <slot></slot>
       </div>
     </div>
