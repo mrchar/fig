@@ -1,5 +1,8 @@
+<script setup lang="ts">
+</script>
+
 <template>
-  <div class="w-screen h-screen flex flex-col h-full">
+  <div class="w-screen h-screen flex flex-col">
     <div class="navbar bg-base-100 shadow-sm">
       <a class="btn btn-ghost text-xl">Fig</a>
     </div>
@@ -15,8 +18,6 @@
         <slot></slot>
       </div>
     </div>
-
   </div>
 </template>
-<script setup lang="ts">
-</script>
+
