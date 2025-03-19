@@ -11,7 +11,7 @@ import routes from "../router/routes.ts"
       <ul class="menu bg-base-200 rounded-box w-56 h-full">
         <li v-for="route in routes">
           <RouterLink :to="route.path">
-            {{ route?.meta.title || route?.name || route.path }}
+            {{ route?.meta?.title || route?.name || route.path }}
           </RouterLink>
         </li>
       </ul>
