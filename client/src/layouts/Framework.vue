@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import routes from "../router/routes.ts"
 </script>
 
 <template>
@@ -8,11 +9,11 @@
     </div>
     <div class="h-full flex">
       <ul class="menu bg-base-200 rounded-box w-56 h-full">
-        <li><a>词汇表</a></li>
-        <li><a>数据格式</a></li>
-        <li><a>表单设计</a></li>
-        <li><a>流程设计</a></li>
-        <li><a>数据分析</a></li>
+        <li v-for="route in routes">
+          <RouterLink :to="route.path">
+            {{ route?.meta.title || route?.name || route.path }}
+          </RouterLink>
+        </li>
       </ul>
       <div class="w-full h-full">
         <slot></slot>

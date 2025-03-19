@@ -6,5 +6,12 @@ import Components from "unplugin-vue-components/vite"
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(), tailwindcss(), AutoImport({}), Components({})],
+  plugins: [
+    vue(),
+    tailwindcss(),
+    AutoImport({
+      imports: ["vue", "vue-router"]
+    }),
+    Components({})
+  ]
 })

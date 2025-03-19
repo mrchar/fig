@@ -4,6 +4,6 @@ import Framework from "./layouts/Framework.vue"
 
 <template>
   <Framework>
-    页面
+    <RouterView />
   </Framework>
 </template>
