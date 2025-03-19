@@ -1,5 +1,5 @@
 spring:
   application:
-    name: former
+    name: fig
   profiles:
     active: dev
