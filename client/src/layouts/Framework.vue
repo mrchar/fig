@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import routes from "../router/routes.ts"
 
+const menus = computed(() => {
+  return routes.filter(item => item?.meta && item.meta?.isMenu)
+})
+
 const route = useRoute()
 </script>
 
@@ -11,9 +15,9 @@ const route = useRoute()
     </div>
     <div class="h-full flex">
       <ul class="menu bg-base-200 rounded-box w-56 h-full">
-        <li v-for="item in routes">
-          <RouterLink :to="item.path" :class="{'menu-active':item.path===route.path}">
-            {{ item?.meta?.title || item?.name || item.path }}
+        <li v-for="menu in menus">
+          <RouterLink :to="menu.path" :class="{'menu-active':menu.path===route.path}">
+            {{ menu?.meta?.title || menu?.name || menu.path }}
           </RouterLink>
         </li>
       </ul>

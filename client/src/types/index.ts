@@ -1,7 +1,14 @@
+export type PagedResponse<T = any> = {
+  content: T[],
+  size: number,
+  number: number,
+  totalElements: number,
+}
+
 export type Vocabulary = {
   id: number,
   name: string,
   definition: any,
-  createdAt:string,
+  createdAt: string,
   updatedAt: string,
 }

@@ -8,11 +8,15 @@ const props = defineProps<Props>()
 const dialogRef = useTemplateRef("dialog")
 
 function open() {
-  dialogRef.value.showModal()
+  if (dialogRef.value) {
+    dialogRef.value.showModal()
+  }
 }
 
 function close() {
-  dialogRef.value.close()
+  if (dialogRef.value) {
+    dialogRef.value.close()
+  }
 }
 
 defineExpose({
@@ -29,10 +33,8 @@ defineExpose({
       </h3>
       <slot></slot>
       <div class="modal-action">
-        <form method="dialog">
-          <!-- if there is a button in form, it will close the modal -->
-          <button class="btn">Close</button>
-        </form>
+        <slot v-if="$slots.footer" name="footer"></slot>
+        <button v-else class="btn">Close</button>
       </div>
     </div>
   </dialog>
