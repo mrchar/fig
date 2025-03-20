@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Vocabulary } from "@/types"
+import api from "@/api"
 import type { Column } from "@/components/Table.vue"
 
 const columns: Column[] = [
@@ -27,50 +27,83 @@ const columns: Column[] = [
   }
 ]
 
+const { isFetching, data, error, execute } = api.vocabulary.useListVocabularies()
+
 const datasource = () => {
-  return {
-    rows: [
-      {
-        id: 1,
-        name: "词汇1",
-        definition: {},
-        createdAt: "2024-03-19T22:38:23+08:00",
-        updatedAt: "2024-03-19T22:38:23+08:00"
-      },
-      {
-        id: 2,
-        name: "词汇2",
-        definition: {},
-        createdAt: "2024-03-19T22:38:23+08:00",
-        updatedAt: "2024-03-19T22:38:23+08:00"
-      }
-    ] as Vocabulary[]
+  return { isFetching, data, error, execute }
+}
+
+const router = useRouter()
+
+const dialogRef = useTemplateRef("dialog")
+
+function onClickAdd() {
+  if (dialogRef.value) {
+    dialogRef.value.open()
   }
 }
 
+const nameToAdd = ref("")
+
+function onClickCancel() {
+  if (dialogRef.value) {
+    dialogRef.value.close()
+  }
+  nameToAdd.value = ""
+}
+
+function onClickCreate() {
+  api.vocabulary.useAddVocabulary({ name: nameToAdd.value, definition: {} })
+    .then(({ data }) => {
+      nameToAdd.value = ""
+      dialogRef.value!.close()
+      router.push(`/vocabulary/detail/${data!.value!.id}`)
+    })
+}
+
 function onClickEdit(id: number) {
-  console.log("Do edit record" + id)
+  router.push(`/vocabulary/detail/${id}`)
 }
 
 function onClickDelete(id: number) {
-  console.log("Do delete record" + id)
+  api.vocabulary.useDeleteVocabulary(id)
+    .then(() => {
+      execute()
+    })
 }
 
-function onClickAdd(){
-  console.log("navigate to editor")
-}
+
 </script>
 
 <template>
   <Table :columns="columns" :datasource="datasource">
     <template #operations>
-      <Button priority="primary" @click="onClickAdd">添加</Button>
+      <Button priority="primary" @click="onClickAdd">新增</Button>
     </template>
     <template #columns.operations="{row}">
-      <Button type="ghost" priority="default"
-              class="mr-1" @click="onClickEdit(row.id)">编辑
+      <Button class="mr-1"
+              type="ghost"
+              priority="default"
+              @click="onClickEdit(row.id)"
+      >
+        编辑
       </Button>
-      <Button type="ghost" priority="danger" @click="onClickDelete(row.id)">删除</Button>
+      <ConfirmButton type="ghost" priority="danger" @confirm="onClickDelete(row.id)">
+        删除
+      </ConfirmButton>
     </template>
   </Table>
+  <Dialog ref="dialog" title="新增词汇">
+    <Form>
+      <Input v-model="nameToAdd" label="名称" class="w-full" />
+    </Form>
+    <template #footer>
+      <div class="w-full flex justify-end gap-2">
+        <Button @click="onClickCancel">取消</Button>
+        <Button priority="primary" @click="onClickCreate">
+          创建
+        </Button>
+      </div>
+    </template>
+  </Dialog>
 </template>

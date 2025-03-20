@@ -9,9 +9,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('./src/components/Button.vue')['default']
+    ConfirmButton: typeof import('./src/components/ConfirmButton.vue')['default']
     Dialog: typeof import('./src/components/Dialog.vue')['default']
+    Form: typeof import('./src/components/Form.vue')['default']
+    Input: typeof import('./src/components/Input.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Table: typeof import('./src/components/Table.vue')['default']
+    Textarea: typeof import('./src/components/Textarea.vue')['default']
   }
 }
