@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ShallowRef } from "vue"
 import type { PagedResponse } from "@/types"
+import Pagination from "@/components/Pagination.vue"
 
 export type Column = {
   title: string,
@@ -83,10 +84,5 @@ const { data } = props.datasource()
       </tbody>
     </table>
   </div>
-  <div class="join flex justify-end px-8 py-1">
-    <button class="join-item btn">1</button>
-    <button class="join-item btn btn-active">2</button>
-    <button class="join-item btn">3</button>
-    <button class="join-item btn">4</button>
-  </div>
+  <Pagination/>
 </template>

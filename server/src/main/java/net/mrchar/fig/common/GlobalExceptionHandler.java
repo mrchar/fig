@@ -15,4 +15,12 @@ public class GlobalExceptionHandler {
     problemDetail.setDetail(e.getMessage());
     return problemDetail;
   }
+
+  @ExceptionHandler(ResourceNotExistsException.class)
+  public ProblemDetail handleResourceNotExistsException(ResourceNotExistsException e) {
+    ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+    problemDetail.setTitle("Resource Not Exists Error");
+    problemDetail.setDetail(e.getMessage());
+    return problemDetail;
+  }
 }

@@ -3,6 +3,7 @@ package net.mrchar.fig.vocabulary;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import net.mrchar.fig.common.ResourceNotExistsException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -19,28 +20,21 @@ public class VocabularyController {
     return this.vocabularyRepository.findAll(pageable);
   }
 
-  public static class AddOrUpdateVocabularyParams extends VocabularyConcept {
-    @Override
-    @NotBlank
-    public String getName() {
-      return super.getName();
-    }
-
-    @Override
-    @NotNull
-    public Object getDefinition() {
-      return super.getDefinition();
-    }
+  @GetMapping("{id}")
+  public VocabularyEntity getVocabulary(@PathVariable Long id) {
+    return this.vocabularyRepository
+        .findById(id)
+        .orElseThrow(() -> new ResourceNotExistsException("Vocabulary not found"));
   }
 
   @PostMapping
-  public VocabularyEntity addVocabulary(@RequestBody AddOrUpdateVocabularyParams request) {
+  public VocabularyEntity addVocabulary(@RequestBody VocabularyConcept request) {
     return this.vocabularyService.addVocabulary(request);
   }
 
   @PutMapping("{id}")
   public VocabularyEntity updateVocabulary(
-      @PathVariable Long id, @RequestBody AddOrUpdateVocabularyParams request) {
+      @PathVariable Long id, @RequestBody VocabularyConcept request) {
     return this.vocabularyService.updateVocabulary(id, request);
   }
 

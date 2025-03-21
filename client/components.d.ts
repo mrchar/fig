@@ -13,6 +13,7 @@ declare module 'vue' {
     Dialog: typeof import('./src/components/Dialog.vue')['default']
     Form: typeof import('./src/components/Form.vue')['default']
     Input: typeof import('./src/components/Input.vue')['default']
+    Pagination: typeof import('./src/components/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Table: typeof import('./src/components/Table.vue')['default']
