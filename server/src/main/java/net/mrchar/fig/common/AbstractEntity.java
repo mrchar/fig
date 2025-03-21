@@ -1,5 +1,6 @@
 package net.mrchar.fig.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.Instant;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @MappedSuperclass
+@JsonIgnoreProperties("new")
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity implements Persistable<Long> {
   @Id
