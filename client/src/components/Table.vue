@@ -36,6 +36,16 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const { data } = props.datasource()
+
+const pagination = ref({
+  size: 10,
+  number:1,
+  totalElements: 100,
+})
+
+function onPaginationChange(value: number) {
+  pagination.value.number = value
+}
 </script>
 
 <template>
@@ -84,5 +94,8 @@ const { data } = props.datasource()
       </tbody>
     </table>
   </div>
-  <Pagination/>
+  <Pagination :size="pagination.size"
+              :number="pagination.number"
+              :total-elements="pagination.totalElements"
+              @change="onPaginationChange" />
 </template>
