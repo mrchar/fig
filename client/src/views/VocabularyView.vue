@@ -89,7 +89,12 @@ function onClickDelete(id: number) {
       >
         编辑
       </Button>
-      <ConfirmButton type="ghost" priority="danger" @confirm="onClickDelete(row.id)">
+      <ConfirmButton type="ghost"
+                     priority="danger"
+                     title="删除确认"
+                     content="您确定要删除这条数据吗？"
+                     @confirm="onClickDelete(row.id)"
+      >
         删除
       </ConfirmButton>
     </template>
