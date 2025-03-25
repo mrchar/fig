@@ -28,6 +28,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@eslint/js", "npm:9.22.0"],\
+          ["@floating-ui/vue", "npm:1.1.6"],\
           ["@tailwindcss/vite", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:4.0.14"],\
           ["@types/node", "npm:22.13.10"],\
           ["@types/qs", "npm:6.9.18"],\
@@ -895,6 +896,48 @@ const RAW_RUNTIME_STATE =
           ["@eslint/plugin-kit", "npm:0.2.7"],\
           ["@eslint/core", "npm:0.12.0"],\
           ["levn", "npm:0.4.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@floating-ui/core", [\
+      ["npm:1.6.9", {\
+        "packageLocation": "../../../.yarn/berry/cache/@floating-ui-core-npm-1.6.9-6b15c93868-10c0.zip/node_modules/@floating-ui/core/",\
+        "packageDependencies": [\
+          ["@floating-ui/core", "npm:1.6.9"],\
+          ["@floating-ui/utils", "npm:0.2.9"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@floating-ui/dom", [\
+      ["npm:1.6.13", {\
+        "packageLocation": "../../../.yarn/berry/cache/@floating-ui-dom-npm-1.6.13-faaec36e87-10c0.zip/node_modules/@floating-ui/dom/",\
+        "packageDependencies": [\
+          ["@floating-ui/dom", "npm:1.6.13"],\
+          ["@floating-ui/core", "npm:1.6.9"],\
+          ["@floating-ui/utils", "npm:0.2.9"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@floating-ui/utils", [\
+      ["npm:0.2.9", {\
+        "packageLocation": "../../../.yarn/berry/cache/@floating-ui-utils-npm-0.2.9-f2d9dffc79-10c0.zip/node_modules/@floating-ui/utils/",\
+        "packageDependencies": [\
+          ["@floating-ui/utils", "npm:0.2.9"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@floating-ui/vue", [\
+      ["npm:1.1.6", {\
+        "packageLocation": "../../../.yarn/berry/cache/@floating-ui-vue-npm-1.1.6-742043458c-10c0.zip/node_modules/@floating-ui/vue/",\
+        "packageDependencies": [\
+          ["@floating-ui/vue", "npm:1.1.6"],\
+          ["@floating-ui/dom", "npm:1.6.13"],\
+          ["@floating-ui/utils", "npm:0.2.9"],\
+          ["vue-demi", "virtual:742043458c795138c1527862f67c108c898bf31bd285cf4b64bc1870f7c85d0c12ebd9fdf18168ff73aaca34c55bd91141f886022ea574c48dd7405eae5c48d1#npm:0.14.10"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2521,6 +2564,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["client", "workspace:."],\
           ["@eslint/js", "npm:9.22.0"],\
+          ["@floating-ui/vue", "npm:1.1.6"],\
           ["@tailwindcss/vite", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:4.0.14"],\
           ["@types/node", "npm:22.13.10"],\
           ["@types/qs", "npm:6.9.18"],\
@@ -6002,6 +6046,32 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/typescript",\
           "typescript"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["vue-demi", [\
+      ["npm:0.14.10", {\
+        "packageLocation": "./.yarn/unplugged/vue-demi-virtual-fc254c3e21/node_modules/vue-demi/",\
+        "packageDependencies": [\
+          ["vue-demi", "npm:0.14.10"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:742043458c795138c1527862f67c108c898bf31bd285cf4b64bc1870f7c85d0c12ebd9fdf18168ff73aaca34c55bd91141f886022ea574c48dd7405eae5c48d1#npm:0.14.10", {\
+        "packageLocation": "./.yarn/unplugged/vue-demi-virtual-fc254c3e21/node_modules/vue-demi/",\
+        "packageDependencies": [\
+          ["vue-demi", "virtual:742043458c795138c1527862f67c108c898bf31bd285cf4b64bc1870f7c85d0c12ebd9fdf18168ff73aaca34c55bd91141f886022ea574c48dd7405eae5c48d1#npm:0.14.10"],\
+          ["@types/vue", null],\
+          ["@types/vue__composition-api", null],\
+          ["@vue/composition-api", null],\
+          ["vue", null]\
+        ],\
+        "packagePeers": [\
+          "@types/vue",\
+          "@types/vue__composition-api",\
+          "@vue/composition-api",\
+          "vue"\
         ],\
         "linkType": "HARD"\
       }]\

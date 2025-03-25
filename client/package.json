@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.1.6",
     "@tailwindcss/vite": "^4.0.14",
     "@vueuse/core": "^13.0.0",
     "@vueuse/router": "^13.0.0",

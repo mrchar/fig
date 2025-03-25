@@ -1,6 +1,6 @@
 <script setup lang="ts">
 export type Props = {
-  size?: "sm" | "md" | "lg" | "xl",
+  size?: "xs" | "sm" | "md" | "lg" | "xl",
   type?: "normal" | "outline" | "dash" | "ghost" | "link"
   priority?: "default" | "primary" | "secondary" | "warning" | "danger"
 }
