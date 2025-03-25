@@ -9,7 +9,11 @@ const props = withDefaults(defineProps<Props>(),
   { number: 0, size: 10, totalElements: 100 }
 )
 
-const totalPages = computed(() => Math.ceil(props.totalElements / props.size))
+const pagination = computed(() => {
+  return { ...props, number: props.number + 1 }
+})
+
+const totalPages = computed(() => Math.ceil(pagination.value.totalElements / pagination.value.size))
 
 const pageNumbers = computed(() => {
   const result = []
@@ -22,7 +26,7 @@ const pageNumbers = computed(() => {
   }
 
   // 左侧直接罗列，右侧省略
-  if (props.number <= 5) {
+  if (pagination.value.number <= 5) {
     for (let i = 1; i <= 8; i++) {
       result.push(i)
     }
@@ -31,7 +35,7 @@ const pageNumbers = computed(() => {
   }
 
   // 右侧直接罗列，中间省略
-  if (totalPages.value - props.number <= 4) {
+  if (totalPages.value - pagination.value.number <= 4) {
     result.push(1, "...")
     for (let i = totalPages.value - 7; i <= totalPages.value; i++) {
       result.push(i)
@@ -41,7 +45,7 @@ const pageNumbers = computed(() => {
 
   // 否则罗列左侧2个，右侧3个，两边省略
   result.push(1, "...")
-  for (let i = props.number - 2; i <= props.number + 3; i++) {
+  for (let i = pagination.value.number - 2; i <= pagination.value.number + 3; i++) {
     result.push(i)
   }
 
@@ -51,22 +55,22 @@ const pageNumbers = computed(() => {
 
 const emit = defineEmits(["change"])
 
-function onClickButton(value:number){
-  if(value===props.number){
+function onClickButton(value: number) {
+  if (value === pagination.value.number) {
     return
   }
 
-  emit("change", value)
+  emit("change", value - 1)
 }
 
 </script>
 <template>
   <div class="join flex justify-end px-8 py-1">
     <button class="join-item btn"
-            :class="{'btn-active':item===props.number, 'btn-disabled':item==='...'}"
+            :class="{'btn-active':item===pagination.number, 'btn-disabled':item==='...'}"
             v-for="item in pageNumbers"
             :key="item"
-            @click="()=>onClickButton(item)"
+            @click="()=>onClickButton(item as number)"
     >
       {{ item }}
     </button>

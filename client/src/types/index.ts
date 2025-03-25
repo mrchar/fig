@@ -1,3 +1,9 @@
+export type PaginationParams = {
+  size?: number,
+  page?: number,
+  sort?: any[]
+}
+
 export type PagedResponse<T = any> = {
   content: T[],
   size: number,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ShallowRef } from "vue"
-import type { PagedResponse } from "@/types"
+import type { PagedResponse, PaginationParams } from "@/types"
 import Pagination from "@/components/Pagination.vue"
 
 export type Column = {
@@ -9,7 +9,7 @@ export type Column = {
   formatter?: (params: { index: number, row: any, column: Column, value: any }) => any
 }
 
-export type Datasource<T = any> = () => {
+export type PageableDatasource<T = any> = (pagination: MaybeRef<PaginationParams>) => {
   isFetching: Readonly<ShallowRef<boolean>>,
   error: ShallowRef<any>,
   data: ShallowRef<PagedResponse<T> | null>,
@@ -19,33 +19,46 @@ export type Datasource<T = any> = () => {
 export type Props = {
   uniqueKey?: string
   columns?: Column[],
-  datasource?: Datasource
+  datasource?: PageableDatasource
 }
 
 const props = withDefaults(defineProps<Props>(), {
   uniqueKey: "id",
   columns: () => ([]),
-  datasource: () => {
+  datasource: (_: MaybeRef<PaginationParams>) => {
     return {
       isFetching: readonly(shallowRef(false)),
       error: shallowRef(null),
       data: shallowRef({ content: [], size: 10, number: 1, totalElements: 0 }),
       execute: () => Promise.resolve()
-    } as ReturnType<Datasource>
+    } as ReturnType<PageableDatasource>
   }
 })
 
-const { data } = props.datasource()
-
-const pagination = ref({
+const paginationParams = ref<PaginationParams>({
   size: 10,
-  number:1,
-  totalElements: 100,
+  page: 0
 })
 
+const { data, execute } = props.datasource(paginationParams)
+
+const pagination = computed(() => ({
+  size: data.value?.size || 10,
+  number: data.value?.number || 0,
+  totalElements: data.value?.totalElements || 0
+}))
+
 function onPaginationChange(value: number) {
-  pagination.value.number = value
+  paginationParams.value.page = value
+  execute()
 }
+
+function refresh() {
+  paginationParams.value.page = 0
+  execute()
+}
+
+defineExpose({ refresh })
 </script>
 
 <template>
