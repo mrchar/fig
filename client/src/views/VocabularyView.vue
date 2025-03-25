@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import api from "@/api"
 import type { Column } from "@/components/Table.vue"
+import type { PaginationParams } from "@/types"
 
 const columns: Column[] = [
   {
@@ -27,10 +28,8 @@ const columns: Column[] = [
   }
 ]
 
-const { isFetching, data, error, execute } = api.vocabulary.useListVocabularies()
-
-const datasource = () => {
-  return { isFetching, data, error, execute }
+const datasource = (pagination: MaybeRef<PaginationParams>) => {
+  return api.vocabulary.useListVocabularies(pagination)
 }
 
 const router = useRouter()
@@ -65,10 +64,12 @@ function onClickEdit(id: number) {
   router.push(`/vocabulary/detail/${id}`)
 }
 
+const tableRef = useTemplateRef("table")
+
 function onClickDelete(id: number) {
   api.vocabulary.useDeleteVocabulary(id)
     .then(() => {
-      execute()
+      tableRef.value!.refresh()
     })
 }
 
@@ -76,7 +77,7 @@ function onClickDelete(id: number) {
 </script>
 
 <template>
-  <Table :columns="columns" :datasource="datasource">
+  <Table ref="table" :columns="columns" :datasource="datasource">
     <template #operations>
       <Button priority="primary" @click="onClickAdd">新增</Button>
     </template>
