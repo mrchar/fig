@@ -6,9 +6,13 @@ export type PaginationParams = {
 
 export type PagedResponse<T = any> = {
   content: T[],
-  size: number,
-  number: number,
-  totalElements: number,
+  page: {
+    size: number,
+    number: number,
+    totalElements: number,
+    totalPages: number
+  }
+
 }
 
 export type Vocabulary = {

@@ -42,11 +42,14 @@ const paginationParams = ref<PaginationParams>({
 
 const { data, execute } = props.datasource(paginationParams)
 
-const pagination = computed(() => ({
-  size: data.value?.size || 10,
-  number: data.value?.number || 0,
-  totalElements: data.value?.totalElements || 0
-}))
+const pagination = computed(() => {
+  const page = data.value?.page
+  return {
+    size: page?.size || 10,
+    number: page?.number || 0,
+    totalElements: page?.totalElements || 0
+  }
+})
 
 function onPaginationChange(value: number) {
   paginationParams.value.page = value
