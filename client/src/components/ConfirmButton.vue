@@ -33,9 +33,9 @@ function onClickConfirm() {
   emit("confirm")
 }
 
-const reference = useTemplateRef("reference")
-const floating = useTemplateRef("floating")
-const floatingArrow = useTemplateRef("floatingArrow")
+const reference = useTemplateRef<HTMLElement>("reference")
+const floating = useTemplateRef<HTMLElement>("floating")
+const floatingArrow = useTemplateRef<HTMLElement>("floatingArrow")
 const { floatingStyles, middlewareData } = useFloating(reference, floating, {
   placement: "bottom",
   middleware: [offset(10), arrow({ element: floatingArrow })]

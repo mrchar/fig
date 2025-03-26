@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
     return {
       isFetching: readonly(shallowRef(false)),
       error: shallowRef(null),
-      data: shallowRef({ content: [], size: 10, number: 1, totalElements: 0 }),
+      data: shallowRef({ content: [], page: { size: 10, number: 1, totalElements: 0, totalPages: 0 } }),
       execute: () => Promise.resolve()
     } as ReturnType<PageableDatasource>
   }
