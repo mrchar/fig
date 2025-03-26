@@ -72,8 +72,6 @@ function onClickDelete(id: number) {
       tableRef.value!.refresh()
     })
 }
-
-
 </script>
 
 <template>
