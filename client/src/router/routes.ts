@@ -20,6 +20,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/SchemaView.vue")
   },
   {
+    name: "SchemaEditor",
+    path: "/schema/detail/:id",
+    meta: { title: "数据格式", isMenu: false },
+    component: () => import("@/views/SchemaEditor.vue")
+  },
+  {
     name: "Form",
     path: "/form/list",
     meta: { title: "表单设计", isMenu: true },

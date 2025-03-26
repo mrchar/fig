@@ -1,6 +1,7 @@
 package net.mrchar.fig.schema;
 
 import lombok.RequiredArgsConstructor;
+import net.mrchar.fig.common.ResourceNotExistsException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,13 @@ public class SchemaController {
   @GetMapping
   public Page<SchemaEntity> listSchemas(Pageable pageable) {
     return this.schemaRepository.findAll(pageable);
+  }
+
+  @GetMapping("{id}")
+  public SchemaEntity getSchema(@PathVariable Long id) {
+    return this.schemaRepository
+        .findById(id)
+        .orElseThrow(() -> new ResourceNotExistsException("Schema not found"));
   }
 
   @PostMapping

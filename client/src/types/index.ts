@@ -22,3 +22,11 @@ export type Vocabulary = {
   createdAt: string,
   updatedAt: string,
 }
+
+export type Schema = {
+  id: number,
+  name: string,
+  definition: any,
+  createdAt: string,
+  updatedAt: string,
+}
