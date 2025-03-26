@@ -43,6 +43,7 @@ const RAW_RUNTIME_STATE =
           ["globals", "npm:16.0.0"],\
           ["husky", "npm:9.1.7"],\
           ["lint-staged", "npm:15.5.0"],\
+          ["monaco-editor", "npm:0.52.2"],\
           ["prettier", "npm:3.5.3"],\
           ["prettier-plugin-tailwindcss", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:0.6.11"],\
           ["qs", "npm:6.14.0"],\
@@ -2579,6 +2580,7 @@ const RAW_RUNTIME_STATE =
           ["globals", "npm:16.0.0"],\
           ["husky", "npm:9.1.7"],\
           ["lint-staged", "npm:15.5.0"],\
+          ["monaco-editor", "npm:0.52.2"],\
           ["prettier", "npm:3.5.3"],\
           ["prettier-plugin-tailwindcss", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:0.6.11"],\
           ["qs", "npm:6.14.0"],\
@@ -4475,6 +4477,15 @@ const RAW_RUNTIME_STATE =
           ["pathe", "npm:2.0.3"],\
           ["pkg-types", "npm:1.3.1"],\
           ["ufo", "npm:1.5.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["monaco-editor", [\
+      ["npm:0.52.2", {\
+        "packageLocation": "../../../.yarn/berry/cache/monaco-editor-npm-0.52.2-584d16bfa6-10c0.zip/node_modules/monaco-editor/",\
+        "packageDependencies": [\
+          ["monaco-editor", "npm:0.52.2"]\
         ],\
         "linkType": "HARD"\
       }]\

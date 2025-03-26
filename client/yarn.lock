@@ -1926,6 +1926,7 @@ __metadata:
     globals: "npm:^16.0.0"
     husky: "npm:^9.1.7"
     lint-staged: "npm:^15.5.0"
+    monaco-editor: "npm:^0.52.2"
     prettier: "npm:^3.5.3"
     prettier-plugin-tailwindcss: "npm:^0.6.11"
     qs: "npm:^6.14.0"
@@ -3646,6 +3647,13 @@ __metadata:
     pkg-types: "npm:^1.3.0"
     ufo: "npm:^1.5.4"
   checksum: 10c0/69e738218a13d6365caf930e0ab4e2b848b84eec261597df9788cefb9930f3e40667be9cb58a4718834ba5f97a6efeef31d3b5a95f4388143fd4e0d0deff72ff
+  languageName: node
+  linkType: hard
+
+"monaco-editor@npm:^0.52.2":
+  version: 0.52.2
+  resolution: "monaco-editor@npm:0.52.2"
+  checksum: 10c0/5a92da64f1e2ab375c0ce99364137f794d057c97bed10ecc65a08d6e6846804b8ecbd377eacf01e498f7dfbe1b21e8be64f728256681448f0484df90e767b435
   languageName: node
   linkType: hard
 

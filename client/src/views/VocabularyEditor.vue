@@ -5,7 +5,27 @@ const id = useRouteParams<string, number>("id", "", { transform: Number })
 
 const name = ref("")
 
-const definition = ref()
+const definition = ref({})
+
+const definitionString = computed({
+  get() {
+    try {
+      return JSON.stringify(definition.value)
+    } catch (e) {
+      console.debug("序列化失败", e)
+    }
+
+    return ""
+  },
+  set(value) {
+    try {
+      definition.value = JSON.parse(value)
+    } catch (e) {
+      console.debug("解析失败", e)
+    }
+
+  }
+})
 
 api.vocabulary
   .useGetVocabulary(id)
@@ -36,6 +56,7 @@ function onClickSave() {
               :formatter="(value)=>(JSON.stringify(value))"
               :parser="(value)=>(JSON.parse(value))"
               placeholder="请输入词汇的定义" />
+    <MonacoEditor v-model="definitionString" />
     <div class="flex justify-end gap-2">
       <Button @click="onClickCancel">取消</Button>
       <Button priority="primary" @click="onClickSave">保存</Button>
