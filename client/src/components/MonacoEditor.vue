@@ -1,29 +1,61 @@
 <script setup lang="ts">
 import * as monaco from "monaco-editor"
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
-const model = defineModel()
+self.MonacoEnvironment = {
+  getWorker(_, label) {
+    if (label === 'json') {
+      return new jsonWorker()
+    }
+    if (label === 'css' || label === 'scss' || label === 'less') {
+      return new cssWorker()
+    }
+    if (label === 'html' || label === 'handlebars' || label === 'razor') {
+      return new htmlWorker()
+    }
+    if (label === 'typescript' || label === 'javascript') {
+      return new tsWorker()
+    }
+    return new editorWorker()
+  }
+}
+
+
+const content = defineModel({ default: "" })
 
 const containerRef = useTemplateRef("container")
-
-onMounted(() => {
+function initMonacoEditor() {
   if (!containerRef.value) {
+    console.error("找不到容器，MonacoEditor初始化失败")
     return
   }
 
+  const uri = monaco.Uri.parse("a://b/foo.json")
+  const model = monaco.editor.createModel(content.value, "json", uri)
   const editor = monaco.editor.create(containerRef.value, {
-    value: "",
-    language: "javascript",
+    model,
     automaticLayout: true,
     theme: "vs-dark"
   })
 
-  editor.onDidChangeModelContent(() => {
-    model.value = editor.getValue()
+  model.onDidChangeContent(() => {
+    content.value = model.getValue()
   })
 
-  watch(model, () => {
-    editor.setValue(model.value)
-  }, { immediate: true })
+  watch(content, () => {
+    if (!editor.hasTextFocus()) {
+      // 避免编辑代码时变更引起重绘
+      model.setValue(content.value)
+    }
+  })
+}
+
+onMounted(() => {
+  initMonacoEditor()
 })
 
 </script>

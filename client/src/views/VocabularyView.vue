@@ -51,8 +51,14 @@ function onClickCancel() {
   nameToAdd.value = ""
 }
 
+const defaultDefinition = {
+  "$schema": "http://json-schema.org/draft-07/schema"
+}
+
 function onClickCreate() {
-  api.vocabulary.useAddVocabulary({ name: nameToAdd.value, definition: {} })
+  api.vocabulary.useAddVocabulary({
+    name: nameToAdd.value, definition: defaultDefinition
+  })
     .then(({ data }) => {
       nameToAdd.value = ""
       dialogRef.value!.close()
