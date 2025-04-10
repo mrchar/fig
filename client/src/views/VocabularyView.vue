@@ -9,8 +9,12 @@ const columns: Column[] = [
       return index + 1
     }
   },
-  { title: "名称", prop: "name" },
-  { title: "定义", prop: "definition" },
+  { title: "名称", prop: "name" ,ellipsis:true},
+  {
+    title: "定义", prop: "definition", width: "10px", ellipsis: true, formatter({ value }) {
+      return JSON.stringify(value)
+    }
+  },
   {
     title: "创建时间", prop: "createdAt",
     formatter({ value }) {

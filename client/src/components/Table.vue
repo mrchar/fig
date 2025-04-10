@@ -6,6 +6,7 @@ import Pagination from "@/components/Pagination.vue"
 export type Column = {
   title: string,
   prop: string,
+  ellipsis?: boolean,
   formatter?: (params: { index: number, row: any, column: Column, value: any }) => any
 }
 
@@ -18,6 +19,7 @@ export type PageableDatasource<T = any> = (pagination: MaybeRef<PaginationParams
 
 export type Props = {
   uniqueKey?: string
+  caption?: string,
   columns?: Column[],
   datasource?: PageableDatasource
 }
@@ -61,6 +63,12 @@ function refresh() {
   execute()
 }
 
+function renderCell(index: number, row: any, column: Column) {
+  return column.formatter
+    ? column.formatter({ index, row, column, value: row?.[column.prop] })
+    : row?.[column.prop]
+}
+
 defineExpose({ refresh })
 </script>
 
@@ -75,6 +83,9 @@ defineExpose({ refresh })
   </div>
   <div class="overflow-x-auto">
     <table class="table">
+      <caption v-if="props.caption">
+        {{ props.caption }}
+      </caption>
       <!-- head -->
       <thead>
       <tr>
@@ -90,15 +101,16 @@ defineExpose({ refresh })
           v-for="(row, index) in data?.content"
           :key="row[props.uniqueKey]"
       >
-        <td v-for="column in props.columns" :key="column.prop" class="text-nowrap">
+        <td v-for="column in props.columns"
+            :key="column.prop"
+            class="text-nowrap max-w-3xs"
+            :class="[column.ellipsis && 'overflow-hidden text-ellipsis']"
+        >
           <template v-if="$slots['columns.'+column.prop]">
             <slot :name="'columns.'+column.prop" v-bind="{index,row, column,value:row?.[column.prop]}" />
           </template>
-          <template v-else-if="column.formatter">
-            {{ column.formatter({ index, row, column, value: row?.[column.prop] }) }}
-          </template>
           <template v-else>
-            {{ row?.[column.prop] }}
+            {{ renderCell(index, row, column) }}
           </template>
         </td>
       </tr>
