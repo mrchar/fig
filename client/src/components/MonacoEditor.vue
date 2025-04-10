@@ -5,6 +5,7 @@ import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker"
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker"
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
+import api from "@/api"
 
 self.MonacoEnvironment = {
   getWorker(_, label) {
@@ -23,6 +24,25 @@ self.MonacoEnvironment = {
     return new editorWorker()
   }
 }
+
+// 注册自定义完成项提供者
+monaco.languages.registerCompletionItemProvider("json", {
+  async provideCompletionItems(model, position) {
+    // 获取用户当前输入的文本
+    const currentLine = model.getLineContent(position.lineNumber)
+    const currentInput = currentLine.slice(0, position.column - 1)
+
+    if(!currentInput || currentInput.length==0){
+      return
+    }
+
+    const { data } = await api.completion.getSuggestions(encodeURIComponent(currentInput.trim()))
+
+    return {
+      suggestions: data.value.content
+    }
+  }
+})
 
 export type Props = {
   uri: string
