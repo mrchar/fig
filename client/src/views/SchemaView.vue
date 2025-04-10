@@ -10,7 +10,11 @@ const columns: Column[] = [
     }
   },
   { title: "名称", prop: "name" },
-  { title: "定义", prop: "definition" },
+  {
+    title: "类型", prop: "definition", width: "10px", ellipsis: true, formatter({ value }) {
+      return value?.type || "未知"
+    }
+  },
   {
     title: "创建时间", prop: "createdAt",
     formatter({ value }) {
@@ -51,8 +55,11 @@ function onClickCancel() {
   nameToAdd.value = ""
 }
 
+const defaultDefinition = {
+  "$schema": "http://json-schema.org/draft-07/schema"
+}
 function onClickCreate() {
-  api.schema.useAddSchema({ name: nameToAdd.value, definition: {} })
+  api.schema.useAddSchema({ name: nameToAdd.value, definition: defaultDefinition })
     .then(({ data }) => {
       nameToAdd.value = ""
       dialogRef.value!.close()
@@ -65,8 +72,6 @@ function onClickEdit(id: number) {
 }
 
 const tableRef = useTemplateRef("table")
-
-
 function onClickDelete(id: number) {
   api.schema.useDeleteSchema(id)
     .then(() => {
