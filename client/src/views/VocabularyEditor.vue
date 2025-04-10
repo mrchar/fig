@@ -17,8 +17,8 @@ watch(definition, (value: string) => {
   definitionString.value = JSON.stringify(value, null, 2)
 }, { immediate: true })
 
+const route = useRoute()
 const router = useRouter()
-
 function onClickCancel() {
   router.go(-1)
 }
@@ -37,7 +37,7 @@ function onClickSave() {
 <template>
   <div class="w-fit h-full p-4 flex flex-col gap-2">
     <Input v-model="name" label="名称" placeholder="请输入词汇名称" />
-    <MonacoEditor v-model="definitionString" />
+    <MonacoEditor v-model="definitionString" :uri="route.path"/>
     <div class="flex justify-end gap-2">
       <Button @click="onClickCancel">取消</Button>
       <Button priority="primary" @click="onClickSave">保存</Button>

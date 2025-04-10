@@ -1,41 +1,46 @@
 <script setup lang="ts">
 import * as monaco from "monaco-editor"
-import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
-import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
-import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
-import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
-import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker"
+import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker"
+import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker"
+import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
+import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 
 self.MonacoEnvironment = {
   getWorker(_, label) {
-    if (label === 'json') {
+    if (label === "json") {
       return new jsonWorker()
     }
-    if (label === 'css' || label === 'scss' || label === 'less') {
+    if (label === "css" || label === "scss" || label === "less") {
       return new cssWorker()
     }
-    if (label === 'html' || label === 'handlebars' || label === 'razor') {
+    if (label === "html" || label === "handlebars" || label === "razor") {
       return new htmlWorker()
     }
-    if (label === 'typescript' || label === 'javascript') {
+    if (label === "typescript" || label === "javascript") {
       return new tsWorker()
     }
     return new editorWorker()
   }
 }
 
+export type Props = {
+  uri: string
+}
 
 const content = defineModel({ default: "" })
+const props = defineProps<Props>()
+const uri = monaco.Uri.parse(props.uri)
+const model = monaco.editor.createModel(content.value, "json", uri)
 
 const containerRef = useTemplateRef("container")
+
 function initMonacoEditor() {
   if (!containerRef.value) {
     console.error("找不到容器，MonacoEditor初始化失败")
     return
   }
 
-  const uri = monaco.Uri.parse("a://b/foo.json")
-  const model = monaco.editor.createModel(content.value, "json", uri)
   const editor = monaco.editor.create(containerRef.value, {
     model,
     automaticLayout: true,
@@ -56,6 +61,10 @@ function initMonacoEditor() {
 
 onMounted(() => {
   initMonacoEditor()
+})
+
+onUnmounted(() => {
+  model && model.dispose()
 })
 
 </script>
