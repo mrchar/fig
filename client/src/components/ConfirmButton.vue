@@ -46,11 +46,12 @@ const { floatingStyles, middlewareData } = useFloating(reference, floating, {
   <Button ref="reference" v-bind="$attrs" @click="onClickButton">
     <slot></slot>
   </Button>
-  <div ref="floating" v-if="confirming" :style="floatingStyles">
-    <div
-      ref="floatingArrow"
-      class="card w-8 h-8 bg-base-100 rotate-45"
-      :style="{
+  <Teleport to="body">
+    <div ref="floating" v-if="confirming" :style="floatingStyles">
+      <div
+        ref="floatingArrow"
+        class="card w-8 h-8 bg-base-100 rotate-45"
+        :style="{
         position: 'absolute',
         left:
           middlewareData.arrow?.x != null
@@ -61,21 +62,21 @@ const { floatingStyles, middlewareData } = useFloating(reference, floating, {
             ? `${middlewareData.arrow.y}px`
             : '',
       }"
-    ></div>
-    <div class="card w-64 bg-base-100 card-xs shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title">{{ props.title }}</h2>
-        <p>{{ props.content }}</p>
-        <div class="justify-end card-actions">
-          <Button size="xs" @click="onClickCancel">
-            {{ props.cancel }}
-          </Button>
-          <Button size="xs" priority="primary" @click="onClickConfirm">
-            {{ props.confirm }}
-          </Button>
+      ></div>
+      <div class="card w-64 bg-base-100 card-xs shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title">{{ props.title }}</h2>
+          <p>{{ props.content }}</p>
+          <div class="justify-end card-actions">
+            <Button size="xs" @click="onClickCancel">
+              {{ props.cancel }}
+            </Button>
+            <Button size="xs" priority="primary" @click="onClickConfirm">
+              {{ props.confirm }}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
+  </Teleport>
 </template>
