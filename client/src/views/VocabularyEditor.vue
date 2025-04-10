@@ -35,9 +35,9 @@ function onClickSave() {
 </script>
 
 <template>
-  <div class="w-fit h-full p-4 flex flex-col gap-2">
-    <Input v-model="name" label="名称" placeholder="请输入词汇名称" />
-    <MonacoEditor v-model="definitionString" :uri="route.path"/>
+  <div class="max-w-xl w-full h-full p-4 flex flex-col gap-2">
+    <Input class="w-full" v-model="name" label="名称" placeholder="请输入词汇名称" />
+    <MonacoEditor class="w-full" v-model="definitionString" :uri="route.path"/>
     <div class="flex justify-end gap-2">
       <Button @click="onClickCancel">取消</Button>
       <Button priority="primary" @click="onClickSave">保存</Button>

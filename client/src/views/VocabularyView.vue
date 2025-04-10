@@ -58,7 +58,6 @@ function onClickCancel() {
 const defaultDefinition = {
   "$schema": "http://json-schema.org/draft-07/schema"
 }
-
 function onClickCreate() {
   api.vocabulary.useAddVocabulary({
     name: nameToAdd.value, definition: defaultDefinition
@@ -75,7 +74,6 @@ function onClickEdit(id: number) {
 }
 
 const tableRef = useTemplateRef("table")
-
 function onClickDelete(id: number) {
   api.vocabulary.useDeleteVocabulary(id)
     .then(() => {
