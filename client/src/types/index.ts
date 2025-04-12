@@ -23,7 +23,7 @@ export type Vocabulary = {
   updatedAt: string,
 }
 
-export type Schema = {
+export type Struct = {
   id: number,
   name: string,
   definition: any,

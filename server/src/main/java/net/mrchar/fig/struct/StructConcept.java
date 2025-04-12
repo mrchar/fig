@@ -1,4 +1,4 @@
-package net.mrchar.fig.schema;
+package net.mrchar.fig.struct;
 
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
@@ -13,7 +13,7 @@ import org.hibernate.annotations.Type;
 @Getter
 @Embeddable
 @NoArgsConstructor
-public class SchemaConcept {
+public class StructConcept {
   @Setter
   @NotBlank
   @Column(name = "name")
@@ -25,7 +25,7 @@ public class SchemaConcept {
   @Column(name = "definition", columnDefinition = "json")
   private Object definition;
 
-  public SchemaConcept(String name, Object definition) {
+  public StructConcept(String name, Object definition) {
     this.name = name;
     this.definition = definition;
   }

@@ -3,7 +3,7 @@ package net.mrchar.fig.completion;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import net.mrchar.fig.schema.SchemaRepository;
+import net.mrchar.fig.struct.StructRepository;
 import net.mrchar.fig.vocabulary.VocabularyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CompletionService {
   private final VocabularyRepository vocabularyRepository;
-  private final SchemaRepository schemaRepository;
+  private final StructRepository structRepository;
 
   private final ObjectMapper mapper = new ObjectMapper();
 
@@ -38,19 +38,19 @@ public class CompletionService {
               });
     }
 
-    if ("schemas".contains(keyword)) {
-      return this.schemaRepository
+    if ("structs".contains(keyword)) {
+      return this.structRepository
           .findAll(pageable)
           .map(
               (entity) -> {
                 try {
                   return SuggestionConcept.builder()
-                      .label("schemas/" + entity.getSchema().getName())
+                      .label("structs/" + entity.getStruct().getName())
                       .insertText(
                               "\""
-                              + entity.getSchema().getName()
+                              + entity.getStruct().getName()
                               + "\": "
-                              + mapper.writeValueAsString(entity.getSchema().getDefinition()))
+                              + mapper.writeValueAsString(entity.getStruct().getDefinition()))
                       .build();
                 } catch (JsonProcessingException e) {
                   throw new RuntimeException(e);

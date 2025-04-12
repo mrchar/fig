@@ -1,7 +1,5 @@
 package net.mrchar.fig.vocabulary;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import net.mrchar.fig.common.ResourceNotExistsException;
 import org.springframework.data.domain.Page;

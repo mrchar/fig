@@ -5,7 +5,7 @@ const routes: RouteRecordRaw[] = [
     name: "VocabularyList",
     path: "/vocabulary/list",
     meta: { title: "词汇表", isMenu: true },
-    component: () => import("@/views/VocabularyView.vue")
+    component: () => import("@/views/VocabularyList.vue")
   },
   {
     name: "VocabularyEditor",
@@ -14,34 +14,34 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/VocabularyEditor.vue")
   },
   {
-    name: "Schema",
-    path: "/schema/list",
+    name: "Struct",
+    path: "/struct/list",
     meta: { title: "数据格式", isMenu: true },
-    component: () => import("@/views/SchemaView.vue")
+    component: () => import("@/views/StructList.vue")
   },
   {
-    name: "SchemaEditor",
-    path: "/schema/detail/:id",
+    name: "StructEditor",
+    path: "/struct/detail/:id",
     meta: { title: "数据格式", isMenu: false },
-    component: () => import("@/views/SchemaEditor.vue")
+    component: () => import("@/views/StructEditor.vue")
   },
   {
     name: "Form",
     path: "/form/list",
     meta: { title: "表单设计", isMenu: true },
-    component: () => import("@/views/FormView.vue")
+    component: () => import("@/views/FormList.vue")
   },
   {
     name: "Flow",
     path: "/flow/list",
     meta: { title: "流程设计", isMenu: true },
-    component: () => import("@/views/FlowView.vue")
+    component: () => import("@/views/FlowList.vue")
   },
   {
     name: "record",
     path: "/record/list",
     meta: { title: "数据分析", isMenu: true },
-    component: () => import("@/views/RecordView.vue")
+    component: () => import("@/views/RecordList.vue")
   }
 ]
 

@@ -63,12 +63,12 @@ function onClickCreate() {
     .then(({ data }) => {
       nameToAdd.value = ""
       dialogRef.value!.close()
-      router.push(`/schema/detail/${data!.value!.id}`)
+      router.push(`/struct/detail/${data!.value!.id}`)
     })
 }
 
 function onClickEdit(id: number) {
-  router.push(`/schema/detail/${id}`)
+  router.push(`/struct/detail/${id}`)
 }
 
 const tableRef = useTemplateRef("table")

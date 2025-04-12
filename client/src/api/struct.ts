@@ -1,15 +1,15 @@
 import qs from "qs"
 import { useApi } from "./api.ts"
-import type { PagedResponse, PaginationParams, Schema } from "@/types"
+import type { PagedResponse, PaginationParams, Struct } from "@/types"
 
 export function useListSchemas(pagination: MaybeRef<PaginationParams>) {
-  return useApi(computed(() => `/schemas?${qs.stringify(unref(pagination))}`))
+  return useApi(computed(() => `/structs?${qs.stringify(unref(pagination))}`))
     .get()
-    .json<PagedResponse<Schema>>()
+    .json<PagedResponse<Struct>>()
 }
 
 export function useGetSchema(id: MaybeRef<number>) {
-  return useApi(computed(() => `/schemas/${unref(id)}`)).get().json<Schema>()
+  return useApi(computed(() => `/structs/${unref(id)}`)).get().json<Struct>()
 }
 
 export type SchemaConcept = {
@@ -18,15 +18,15 @@ export type SchemaConcept = {
 }
 
 export function useAddSchema(params: MaybeRef<SchemaConcept>) {
-  return useApi("/schemas").post(unref(params)).json<Schema>()
+  return useApi("/structs").post(unref(params)).json<Struct>()
 }
 
 export function useUpdateSchema(id: MaybeRef<number>, params: MaybeRef<SchemaConcept>) {
-  return useApi(`/schemas/${unref(id)}`).put(unref(params)).json<Schema>()
+  return useApi(`/structs/${unref(id)}`).put(unref(params)).json<Struct>()
 }
 
 export function useDeleteSchema(id: MaybeRef<number>) {
-  return useApi(`/schemas/${unref(id)}`).delete().json<Schema>()
+  return useApi(`/structs/${unref(id)}`).delete().json<Struct>()
 }
 
 export default {

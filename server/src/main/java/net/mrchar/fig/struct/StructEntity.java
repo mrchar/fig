@@ -1,4 +1,4 @@
-package net.mrchar.fig.schema;
+package net.mrchar.fig.struct;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.persistence.Embedded;
@@ -12,11 +12,11 @@ import net.mrchar.fig.common.AbstractEntity;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "schema_definition")
-public class SchemaEntity extends AbstractEntity {
-  @JsonUnwrapped @Setter @Embedded private SchemaConcept schema;
+@Table(name = "struct")
+public class StructEntity extends AbstractEntity {
+  @JsonUnwrapped @Setter @Embedded private StructConcept struct;
 
-  public SchemaEntity(SchemaConcept schema) {
-    this.schema = schema;
+  public StructEntity(StructConcept struct) {
+    this.struct = struct;
   }
 }

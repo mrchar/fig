@@ -4,13 +4,13 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="create_schema_definition_table" author="admin">
+    <changeSet id="create_struct_table" author="admin">
         <preConditions>
             <not>
-                <tableExists tableName="schema_definition"/>
+                <tableExists tableName="struct"/>
             </not>
         </preConditions>
-        <createTable tableName="schema_definition">
+        <createTable tableName="struct">
             <column name="id" type="serial">
                 <constraints primaryKey="true"/>
             </column>

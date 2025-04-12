@@ -1,4 +1,4 @@
-package net.mrchar.fig.schema;
+package net.mrchar.fig.struct;
 
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -20,24 +20,25 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @TestInstance(PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-class SchemaApiTest {
-  @Autowired SchemaRepository schemaRepository;
+class StructApiTest {
+  @Autowired
+  StructRepository structRepository;
   @Autowired MockMvc mockMvc;
 
   @BeforeAll
   void setUp() {
-    List<SchemaEntity> entities = new ArrayList<>();
+    List<StructEntity> entities = new ArrayList<>();
     for (int i = 0; i < 10; i++) {
-      entities.add(SchemaEntityGenerator.generate());
+      entities.add(StructEntityGenerator.generate());
     }
-    this.schemaRepository.saveAll(entities);
+    this.structRepository.saveAll(entities);
   }
 
   @Test
   @Order(1)
-  void should_success_when_listing_schemas() throws Exception {
+  void should_success_when_listing_structs() throws Exception {
     mockMvc
-        .perform(get("/schemas"))
+        .perform(get("/structs"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isNotEmpty());
   }
@@ -47,7 +48,7 @@ class SchemaApiTest {
   void should_success_when_adding_schema() throws Exception {
     mockMvc
         .perform(
-            post("/schemas")
+            post("/structs")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\": \"测试\", \"definition\": {}}"))
         .andExpect(status().isOk());
@@ -58,7 +59,7 @@ class SchemaApiTest {
   void should_fail_when_adding_schema_with_invalid_params() throws Exception {
     mockMvc
         .perform(
-            post("/schemas")
+            post("/structs")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\": \"\", \"definition\": {}}"))
         .andDo(print())
@@ -66,7 +67,7 @@ class SchemaApiTest {
 
     mockMvc
         .perform(
-            post("/schemas")
+            post("/structs")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\": \"测试\", \"definition\": null}"))
         .andDo(print())
@@ -78,7 +79,7 @@ class SchemaApiTest {
   void should_success_when_updating_schema() throws Exception {
     mockMvc
         .perform(
-            put("/schemas/1")
+            put("/structs/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\": \"修改\", \"definition\": {}}"))
         .andExpect(status().isOk());
@@ -87,6 +88,6 @@ class SchemaApiTest {
   @Test
   @Order(5)
   void should_success_when_deleting_schema() throws Exception {
-    mockMvc.perform(delete("/schemas/1")).andExpect(status().isOk());
+    mockMvc.perform(delete("/structs/1")).andExpect(status().isOk());
   }
 }
