@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Breadcrumbs: typeof import('./src/components/Breadcrumbs.vue')['default']
     Button: typeof import('./src/components/Button.vue')['default']
     ConfirmButton: typeof import('./src/components/ConfirmButton.vue')['default']
     Dialog: typeof import('./src/components/Dialog.vue')['default']

@@ -10,11 +10,11 @@ const routes: RouteRecordRaw[] = [
   {
     name: "VocabularyEditor",
     path: "/vocabulary/detail/:id",
-    meta: { title: "编辑词汇", isMenu: false },
+    meta: { title: "编辑词汇", isMenu: false, parent: "VocabularyList" },
     component: () => import("@/views/VocabularyEditor.vue")
   },
   {
-    name: "Struct",
+    name: "StructList",
     path: "/struct/list",
     meta: { title: "数据格式", isMenu: true },
     component: () => import("@/views/StructList.vue")
@@ -22,7 +22,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: "StructEditor",
     path: "/struct/detail/:id",
-    meta: { title: "数据格式", isMenu: false },
+    meta: { title: "数据格式", isMenu: false, parent: "StructList" },
     component: () => import("@/views/StructEditor.vue")
   },
   {

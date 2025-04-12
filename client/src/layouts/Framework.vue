@@ -22,6 +22,7 @@ const route = useRoute()
         </li>
       </ul>
       <div class="w-full h-full p-4">
+        <Breadcrumbs/>
         <slot></slot>
       </div>
     </div>
