@@ -8,10 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 import net.mrchar.fig.form.FormEntity;
-import net.mrchar.fig.form.FormEntityGenerator;
+import net.mrchar.fig.mock.FormEntityGenerator;
 import net.mrchar.fig.form.FormRepository;
+import net.mrchar.fig.mock.RecordEntityGenerator;
 import net.mrchar.fig.struct.StructEntity;
-import net.mrchar.fig.struct.StructEntityGenerator;
+import net.mrchar.fig.mock.StructEntityGenerator;
 import net.mrchar.fig.struct.StructRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
