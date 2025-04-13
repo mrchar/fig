@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { MaybeRef } from "vue"
+import type { MaybeRef, ShallowRef } from "vue"
 import type { PagedResponse, PaginationParams } from "@/types"
 
 export type Props = {
   placeholder?: string
   options?: any[]
   datasource?: SearchDatasource, // 获取选项的方法
-  formatter?: (any) => string // 将选项转换为字符串
+  formatter?: (item: any) => string // 将选项转换为字符串
 }
 
 export type SearchDatasource<T = any> = (
@@ -19,9 +19,9 @@ export type SearchDatasource<T = any> = (
   execute: (throwOnFailed?: boolean) => Promise<any>,
 }
 
-const model = defineModel()
+const model = defineModel<any>()
 const props = withDefaults(defineProps<Props>(),
-  { options: [], placeholder: "please select a option" }
+  { options: () => [], placeholder: "please select a option" }
 )
 
 const keyword = ref("")
@@ -30,10 +30,11 @@ const pagination: PaginationParams = {
   size: 10
 }
 const searchParams = computed(() => ({ keyword: keyword.value }))
-const { data, execute } = props?.datasource(searchParams, pagination)
-|| { data: ref([]) }
+const { data, execute } = props.datasource
+  ? props.datasource(searchParams, pagination)
+  : { data: ref([]) }
 
-let timeoutIndex = null
+let timeoutIndex: number | null = null
 if (!props.datasource) {
   watch(keyword, () => {
     if (timeoutIndex) {
@@ -41,7 +42,8 @@ if (!props.datasource) {
     }
 
     timeoutIndex = setTimeout(() => {
-      execute()
+      execute && execute()
+
       timeoutIndex = null
     }, 500)
   })
@@ -50,12 +52,17 @@ if (!props.datasource) {
 const _options = computed((): any[] => {
   if (!props.datasource) {
     return props.options
-  } else {
-    return data?.value?.content || []
   }
+
+  if (data.value) {
+    const response: PagedResponse = data.value as PagedResponse
+    return response.content
+  }
+
+  return []
 })
 
-const selectRef = useTemplateRef("select")
+const selectRef = useTemplateRef<HTMLSelectElement>("select")
 watch(model, () => {
   if (!selectRef.value) {
     return
@@ -69,16 +76,15 @@ watch(model, () => {
 const emit = defineEmits(["change"])
 
 function onSelectChange(e: Event) {
-  const value = e.target.value
-  if (!props.formatter) {
+  const value = (e.target as HTMLSelectElement).value
+  if (props.formatter) {
+    const selected = _options.value.find(item => (props.formatter!(item) === value))
+    emit("change", selected)
+    model.value = selected
+  } else {
     emit("change", value)
     model.value = value
-    return
   }
-
-  const selected = _options.value.find(item => props.formatter(item) === value)
-  emit("change", selected)
-  model.value = selected
 }
 </script>
 

@@ -11,7 +11,7 @@ const columns: Column[] = [
   },
   { title: "名称", prop: "name" },
   {
-    title: "类型", prop: "definition", width: "10px", ellipsis: true, formatter({ value }) {
+    title: "类型", prop: "definition", ellipsis: true, formatter({ value }) {
       return value?.type || "未知"
     }
   },
@@ -32,8 +32,10 @@ const columns: Column[] = [
   }
 ]
 
+const params = ref({ keyword: "" })
+
 const datasource = (pagination: MaybeRef<PaginationParams>) => {
-  return api.struct.useListStructs(pagination)
+  return api.struct.useListStructs(params, pagination)
 }
 
 const router = useRouter()

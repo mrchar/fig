@@ -13,7 +13,7 @@ api.vocabulary
   })
 
 const definitionString = ref("")
-watch(definition, (value: string) => {
+watch(definition, (value: any) => {
   definitionString.value = JSON.stringify(value, null, 2)
 }, { immediate: true })
 

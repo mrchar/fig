@@ -12,16 +12,18 @@ export function useGetForm(id: MaybeRef<number>) {
   return useApi(computed(() => `/forms/${unref(id)}`)).get().json<Form>()
 }
 
-export type SchemaConcept = {
+export type AddOrUpdateFormParams = {
   name: string,
-  definition: any
+  description: string,
+  structId: number,
+  uiSchema: any
 }
 
-export function useAddForm(params: MaybeRef<SchemaConcept>) {
+export function useAddForm(params: MaybeRef<AddOrUpdateFormParams>) {
   return useApi("/forms").post(unref(params)).json<Form>()
 }
 
-export function useUpdateForm(id: MaybeRef<number>, params: MaybeRef<SchemaConcept>) {
+export function useUpdateForm(id: MaybeRef<number>, params: MaybeRef<AddOrUpdateFormParams>) {
   return useApi(`/forms/${unref(id)}`).put(unref(params)).json<Form>()
 }
 

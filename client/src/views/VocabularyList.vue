@@ -11,7 +11,7 @@ const columns: Column[] = [
   },
   { title: "名称", prop: "name", ellipsis: true },
   {
-    title: "类型", prop: "definition", width: "10px", ellipsis: true, formatter({ value }) {
+    title: "类型", prop: "definition", ellipsis: true, formatter({ value }) {
       return value?.type || "未知"
     }
   },

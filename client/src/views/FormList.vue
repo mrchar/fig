@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import api from "@/api"
 import type { Column } from "@/components/Table.vue"
-import type { PaginationParams } from "@/types"
+import type { Form, PaginationParams } from "@/types"
 
 const columns: Column[] = [
   {
@@ -33,8 +33,10 @@ const columns: Column[] = [
   }
 ]
 
+const params = ref({ keyword: "" })
+
 const datasource = (pagination: MaybeRef<PaginationParams>) => {
-  return api.form.useListForms(null, pagination)
+  return api.form.useListForms(params, pagination)
 }
 
 const router = useRouter()
@@ -47,11 +49,11 @@ function onClickAdd() {
   }
 }
 
-function initFormToAdd() {
-  return { name: "", description: "", struct: {}, uiSchema: {} }
+function initFormToAdd(): Form {
+  return { name: "", description: "", struct: {}, uiSchema: {} } as Form
 }
 
-const formToAdd = ref(initFormToAdd())
+const formToAdd = ref<Form>(initFormToAdd())
 
 function onClickCancel() {
   if (dialogRef.value) {

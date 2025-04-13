@@ -11,17 +11,26 @@
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.6",
+    "@jsonforms/core": "^3.5.1",
+    "@jsonforms/vue": "^3.5.1",
+    "@jsonforms/vue-vuetify": "^3.5.1",
     "@tailwindcss/vite": "^4.0.14",
     "@vueuse/core": "^13.0.0",
     "@vueuse/router": "^13.0.0",
+    "ajv": "^8.6.1",
+    "dayjs": "^1.10.6",
+    "lodash": "^4.17.21",
+    "maska": "^2.1.11",
     "monaco-editor": "^0.52.2",
     "qs": "^6.14.0",
     "tailwindcss": "^4.0.14",
     "vue": "^3.5.13",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vuetify": "~3.6.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@types/lodash": "^4",
     "@types/node": "^22.13.10",
     "@types/qs": "^6.9.18",
     "@vitejs/plugin-vue": "^5.2.1",
@@ -35,12 +44,14 @@
     "lint-staged": "^15.5.0",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "sass": "^1.86.3",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "unplugin-auto-import": "^19.1.1",
     "unplugin-vue-components": "^28.4.1",
     "vite": "^6.2.0",
     "vite-plugin-vue-devtools": "^7.7.2",
+    "vite-plugin-vuetify": "^2.1.1",
     "vue-tsc": "^2.2.4"
   },
   "lint-staged": {

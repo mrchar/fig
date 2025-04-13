@@ -1,16 +1,33 @@
 <script setup lang="ts">
+import { markRaw } from "vue"
+import { JsonForms } from "@jsonforms/vue"
+import { extendedVuetifyRenderers } from "@jsonforms/vue-vuetify"
+
 import api from "@/api"
+import type { Form, Struct } from "@/types"
 
 const id = useRouteParams<string, number>("id", "", { transform: Number })
-const form = ref({ name: "", description: "", struct: {}, uiSchema: {} })
+const form = ref<Form>({
+  name: "",
+  description: "",
+  struct: { id: 0, name: "", definition: {} } as Struct,
+  jsonSchema: {
+    type: "object",
+    properties: { name: { type: "string", title: "name" } }
+  },
+  uiSchema: {
+    type: "VerticalLayout",
+    elements: [{
+      "type": "Control",
+      "scope": "#/properties/name"
+    }]
+  }
+} as Form)
 
 api.form
   .useGetForm(id)
   .then(({ data }) => {
-    form.value.name = data.value!.name
-    form.value.description = data.value!.description!
-    form.value.struct = data.value!.struct
-    form.value.uiSchema = data.value!.uiSchema
+    form.value = data.value as Form
   })
 
 const uiSchemaString = ref("")
@@ -38,28 +55,52 @@ function saveForm() {
     })
 }
 
+const renderers = markRaw([
+  ...extendedVuetifyRenderers
+  // here you can add custom renderers
+])
+
+const freezeRenderers = Object.freeze(renderers)
+
+const data = ref({
+  name: "John Doe"
+})
+
+function onJsonFormsChange(event: any) {
+  data.value = event.data
+}
 </script>
 
 <template>
-  <Form class="w-full h-full p-4 flex flex-col gap-2">
-    <FormItem label="名称">
-      <Input class="w-full" v-model="form.name" placeholder="请输入表单名称" />
-    </FormItem>
-    <FormItem label="描述">
-      <Input class="w-full" v-model="form.description" placeholder="请输入表单描述" />
-    </FormItem>
-    <FormItem label="数据定义">
-      <Select v-model="form.struct" class="w-full"
-              :datasource="api.struct.useListStructs"
-              :formatter="item=>item.name"
-      />
-    </FormItem>
-    <FormItem label="表单定义">
-      <MonacoEditor class="w-full" v-model="uiSchemaString" :uri="route.path" />
-    </FormItem>
-    <div class="flex justify-end gap-2">
-      <Button @click="onClickCancel">取消</Button>
-      <Button priority="primary" @click="saveForm">保存</Button>
-    </div>
-  </Form>
+  <div class="w-ful h-full flex gap-2">
+    <Form class="w-full h-full p-4 flex flex-col gap-2">
+      <FormItem label="名称">
+        <Input v-model="form.name" class="w-full" placeholder="请输入表单名称" />
+      </FormItem>
+      <FormItem label="描述">
+        <Input v-model="form.description" class="w-full" placeholder="请输入表单描述" />
+      </FormItem>
+      <FormItem label="数据定义">
+        <Select v-model="form.struct" class="w-full"
+                :datasource="api.struct.useListStructs"
+                :formatter="item=>item.name"
+        />
+      </FormItem>
+      <FormItem label="表单定义">
+        <MonacoEditor v-model="uiSchemaString" class="w-full" :uri="route.path" />
+      </FormItem>
+      <div class="flex justify-end gap-2">
+        <Button @click="onClickCancel">取消</Button>
+        <Button priority="primary" @click="saveForm">保存</Button>
+      </div>
+    </Form>
+    <JsonForms
+      :data="data"
+      :schema="form.jsonSchema"
+      :uischema="form.uiSchema"
+      :renderers="freezeRenderers"
+      @change="onJsonFormsChange"
+    />
+  </div>
 </template>
+

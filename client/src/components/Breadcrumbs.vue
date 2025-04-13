@@ -1,15 +1,24 @@
 <script setup lang="ts">
+import type { RouteMeta } from "vue-router"
+
+type Route = {
+  name: string
+  path: string
+  meta: RouteMeta,
+  children: Route[]
+}
+
 const route = useRoute()
-const pieces = computed(() => {
-  const ancestors = findAncestors(route)
+const pieces = computed((): Route[] => {
+  const ancestors = findAncestors(route as unknown as Route)
   if (ancestors) {
-    return [...ancestors, route]
+    return [...ancestors, route as unknown as Route]
   }
 
-  return [route]
+  return [route as unknown as Route]
 })
 
-function findAncestors(route: RouteLocationNormalizedLoadedGeneric) {
+function findAncestors(route: Route): Route[] | null {
   if (!route.meta?.parent) {
     return null
   }
@@ -29,12 +38,12 @@ function findAncestors(route: RouteLocationNormalizedLoadedGeneric) {
 
 const router = useRouter()
 
-function findRouteByName(name: string) {
+function findRouteByName(name: string): Route | null {
   const routes = router.getRoutes()
-  return walkThroughRoutes(routes, name)
+  return walkThroughRoutes(routes as Route[], name)
 }
 
-function walkThroughRoutes(routes: RouteRecordRaw[], name: string) {
+function walkThroughRoutes(routes: Route[], name: string): Route | null {
   for (let route of routes) {
     if (route.name === name) {
       return route

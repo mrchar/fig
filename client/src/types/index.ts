@@ -1,3 +1,5 @@
+import "./route-meta.ts"
+
 export type PaginationParams = {
   size?: number,
   page?: number,
@@ -12,7 +14,6 @@ export type PagedResponse<T = any> = {
     totalElements: number,
     totalPages: number
   }
-
 }
 
 export type Vocabulary = {
