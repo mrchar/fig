@@ -11,9 +11,6 @@ export default defineConfig({
   resolve: {
     alias: { "@": resolve(__dirname, "src") }
   },
-  optimizeDeps: {
-    exclude: ["vuetify"]
-  },
   plugins: [
     vue(),
     tailwindcss(),

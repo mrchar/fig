@@ -770,19 +770,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsonforms/vue-vuetify@npm:^3.5.1":
+"@jsonforms/vue-vanilla@npm:^3.5.1":
   version: 3.5.1
-  resolution: "@jsonforms/vue-vuetify@npm:3.5.1"
+  resolution: "@jsonforms/vue-vanilla@npm:3.5.1"
+  dependencies:
+    lodash: "npm:^4.17.21"
   peerDependencies:
     "@jsonforms/core": 3.5.1
     "@jsonforms/vue": 3.5.1
-    ajv: ^8.6.1
-    dayjs: ^1.10.6
-    lodash: ^4.17.21
-    maska: ^2.1.11
-    vue: ^3.4.21
-    vuetify: ^3.6.6
-  checksum: 10c0/08412ab6c3dc3f98b3dda4efb149f7fa0f48976591547da00090623c2df031b7d6c66325976778a3c970bc4155f7115de8a250eabf154ed33f53a517bede18ae
+    vue: ^3.2.26
+  checksum: 10c0/0086d7fcf7fe6fedf3060d807a60f6d623e2b4f460be7d9fb8d8a6f4fb01ce2d7c574172330f2f68ecf28808cc9d5c05b1c65c64e4be0003a7875bbc260775a0
   languageName: node
   linkType: hard
 
@@ -1749,18 +1746,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vuetify/loader-shared@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@vuetify/loader-shared@npm:2.1.0"
-  dependencies:
-    upath: "npm:^2.0.1"
-  peerDependencies:
-    vue: ^3.0.0
-    vuetify: ^3.0.0
-  checksum: 10c0/85c882ccbfd151cafd9fc0790c65c2e9924e2a4552e867ca4aa1deb47c501222fc1fb6e83df9c31080e7d1285d8f9a51a44a996901d104e2b49ad0dee301be76
-  languageName: node
-  linkType: hard
-
 "@vueuse/core@npm:^13.0.0":
   version: 13.1.0
   resolution: "@vueuse/core@npm:13.1.0"
@@ -2147,7 +2132,7 @@ __metadata:
     "@floating-ui/vue": "npm:^1.1.6"
     "@jsonforms/core": "npm:^3.5.1"
     "@jsonforms/vue": "npm:^3.5.1"
-    "@jsonforms/vue-vuetify": "npm:^3.5.1"
+    "@jsonforms/vue-vanilla": "npm:^3.5.1"
     "@tailwindcss/vite": "npm:^4.0.14"
     "@types/lodash": "npm:^4"
     "@types/node": "npm:^22.13.10"
@@ -2179,11 +2164,9 @@ __metadata:
     unplugin-vue-components: "npm:^28.4.1"
     vite: "npm:^6.2.0"
     vite-plugin-vue-devtools: "npm:^7.7.2"
-    vite-plugin-vuetify: "npm:^2.1.1"
     vue: "npm:^3.5.13"
     vue-router: "npm:4"
     vue-tsc: "npm:^2.2.4"
-    vuetify: "npm:~3.6.6"
   languageName: unknown
   linkType: soft
 
@@ -2302,7 +2285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.7, debug@npm:^4.4.0":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.3.7, debug@npm:^4.4.0":
   version: 4.4.0
   resolution: "debug@npm:4.4.0"
   dependencies:
@@ -5149,13 +5132,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"upath@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "upath@npm:2.0.1"
-  checksum: 10c0/79e8e1296b00e24a093b077cfd7a238712d09290c850ce59a7a01458ec78c8d26dcc2ab50b1b9d6a84dabf6511fb4969afeb8a5c9a001aa7272b9cc74c34670f
-  languageName: node
-  linkType: hard
-
 "update-browserslist-db@npm:^1.1.1":
   version: 1.1.3
   resolution: "update-browserslist-db@npm:1.1.3"
@@ -5250,21 +5226,6 @@ __metadata:
   peerDependencies:
     vite: ^3.0.0-0 || ^4.0.0-0 || ^5.0.0-0 || ^6.0.0-0
   checksum: 10c0/bdf94da1af1ad8634280a3ecc040ff5a216beabb00566a5c105bd6abbb414847f7ca6e35aa30e8cc74443be0e7ca8ea1a58592f20b497db22f4b74e1cb863b02
-  languageName: node
-  linkType: hard
-
-"vite-plugin-vuetify@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "vite-plugin-vuetify@npm:2.1.1"
-  dependencies:
-    "@vuetify/loader-shared": "npm:^2.1.0"
-    debug: "npm:^4.3.3"
-    upath: "npm:^2.0.1"
-  peerDependencies:
-    vite: ">=5"
-    vue: ^3.0.0
-    vuetify: ^3.0.0
-  checksum: 10c0/629893488ae23ffd9e9a32fccf2d6ff4d5a00826329ec90e9765a17d182a9200ffe11430bd418227119e8ef3ed21eaec1bab0635a77fdcb4b64aac10f38adcb0
   languageName: node
   linkType: hard
 
@@ -5383,28 +5344,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/4bbb5caf3f04fed933b01c100804f3693ff902984a3152ea1359a972264fa3240f6551d32f0163a79c64df3715b4d6691818c9f652cdd41b2473c69e2b0a373d
-  languageName: node
-  linkType: hard
-
-"vuetify@npm:~3.6.6":
-  version: 3.6.15
-  resolution: "vuetify@npm:3.6.15"
-  peerDependencies:
-    typescript: ">=4.7"
-    vite-plugin-vuetify: ">=1.0.0"
-    vue: ^3.3.0
-    vue-i18n: ^9.0.0
-    webpack-plugin-vuetify: ">=2.0.0"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-    vite-plugin-vuetify:
-      optional: true
-    vue-i18n:
-      optional: true
-    webpack-plugin-vuetify:
-      optional: true
-  checksum: 10c0/6334026ec4b37f5a9f8fadf9a6b069d1eea428da03d2e696314ef37511356a8ee2a110fe0699cf595e0368510214513da283e6b63ca15aa394c22bd27b611adb
   languageName: node
   linkType: hard
 

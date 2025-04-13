@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { markRaw } from "vue"
 import { JsonForms } from "@jsonforms/vue"
-import { extendedVuetifyRenderers } from "@jsonforms/vue-vuetify"
+import { vanillaRenderers } from "@jsonforms/vue-vanilla"
 
 import api from "@/api"
 import type { Form, Struct } from "@/types"
@@ -56,7 +56,7 @@ function saveForm() {
 }
 
 const renderers = markRaw([
-  ...extendedVuetifyRenderers
+  ...vanillaRenderers
   // here you can add custom renderers
 ])
 
@@ -77,7 +77,7 @@ onClickOutside(monacoEditorRef, () => {
 </script>
 
 <template>
-  <div class="w-ful h-full flex gap-2">
+  <div class="w-ful h-full flex gap-2 divide-x divide-gray-500">
     <Form class="w-full h-full p-4 flex flex-col gap-2">
       <FormItem label="名称">
         <Input v-model="form.name" class="w-full" placeholder="请输入表单名称" />
@@ -105,6 +105,7 @@ onClickOutside(monacoEditorRef, () => {
     </Form>
     <JsonForms
       :data="data"
+      class=" max-h-120 w-full max-w-lg  p-2 "
       :schema="form.jsonSchema"
       :uischema="form.uiSchema"
       :renderers="freezeRenderers"

@@ -13,7 +13,7 @@
     "@floating-ui/vue": "^1.1.6",
     "@jsonforms/core": "^3.5.1",
     "@jsonforms/vue": "^3.5.1",
-    "@jsonforms/vue-vuetify": "^3.5.1",
+    "@jsonforms/vue-vanilla": "^3.5.1",
     "@tailwindcss/vite": "^4.0.14",
     "@vueuse/core": "^13.0.0",
     "@vueuse/router": "^13.0.0",
@@ -25,8 +25,7 @@
     "qs": "^6.14.0",
     "tailwindcss": "^4.0.14",
     "vue": "^3.5.13",
-    "vue-router": "4",
-    "vuetify": "~3.6.6"
+    "vue-router": "4"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
@@ -51,7 +50,6 @@
     "unplugin-vue-components": "^28.4.1",
     "vite": "^6.2.0",
     "vite-plugin-vue-devtools": "^7.7.2",
-    "vite-plugin-vuetify": "^2.1.1",
     "vue-tsc": "^2.2.4"
   },
   "lint-staged": {
