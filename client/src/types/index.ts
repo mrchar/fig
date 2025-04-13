@@ -30,3 +30,14 @@ export type Struct = {
   createdAt: string,
   updatedAt: string,
 }
+
+export type Form = {
+  id: number,
+  name: string,
+  description: string,
+  struct: Struct,
+  jsonSchema: any,
+  uiSchema: any,
+  createdAt: string,
+  updatedAt: string,
+}

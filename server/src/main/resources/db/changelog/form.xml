@@ -18,7 +18,7 @@
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="description" type="varchar(200)"/>
-            <column name="json_schema" type="json">
+            <column name="struct_id" type="int">
                 <constraints nullable="false"/>
             </column>
             <column name="ui_schema" type="json">

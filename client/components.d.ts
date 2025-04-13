@@ -18,6 +18,7 @@ declare module 'vue' {
     Pagination: typeof import('./src/components/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Select: typeof import('./src/components/Select.vue')['default']
     Table: typeof import('./src/components/Table.vue')['default']
     Textarea: typeof import('./src/components/Textarea.vue')['default']
   }

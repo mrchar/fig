@@ -19,11 +19,12 @@ watch(definition, (value: string) => {
 
 const route = useRoute()
 const router = useRouter()
+
 function onClickCancel() {
   router.go(-1)
 }
 
-function onClickSave() {
+function saveVocabulary() {
   definition.value = JSON.parse(definitionString.value)
   api.vocabulary.useUpdateVocabulary(id,
     { name: name.value, definition: definition.value })
@@ -35,12 +36,12 @@ function onClickSave() {
 </script>
 
 <template>
-  <div class="max-w-xl w-full h-full p-4 flex flex-col gap-2">
+  <Form class="max-w-xl w-full h-full p-4 flex flex-col gap-2">
     <Input class="w-full" v-model="name" label="名称" placeholder="请输入词汇名称" />
-    <MonacoEditor class="w-full" v-model="definitionString" :uri="route.path"/>
+    <MonacoEditor class="w-full" v-model="definitionString" :uri="route.path" />
     <div class="flex justify-end gap-2">
       <Button @click="onClickCancel">取消</Button>
-      <Button priority="primary" @click="onClickSave">保存</Button>
+      <Button priority="primary" @click="saveVocabulary">保存</Button>
     </div>
-  </div>
+  </Form>
 </template>

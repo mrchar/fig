@@ -1,9 +1,12 @@
 package net.mrchar.fig.vocabulary;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.mrchar.fig.common.ResourceNotExistsException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,8 +16,18 @@ public class VocabularyController {
   private final VocabularyRepository vocabularyRepository;
   private final VocabularyService vocabularyService;
 
+  @Getter
+  @AllArgsConstructor
+  public static class ListVocabulariesParams {
+    private String keyword;
+  }
+
   @GetMapping
-  public Page<VocabularyEntity> listVocabularies(Pageable pageable) {
+  public Page<VocabularyEntity> listVocabularies(ListVocabulariesParams params, Pageable pageable) {
+    if (StringUtils.hasText(params.keyword)) {
+      return this.vocabularyRepository.searchByNameContainsKeyword(params.getKeyword(), pageable);
+    }
+
     return this.vocabularyRepository.findAll(pageable);
   }
 

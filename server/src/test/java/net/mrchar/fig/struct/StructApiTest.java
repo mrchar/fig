@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -21,8 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @TestInstance(PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 class StructApiTest {
-  @Autowired
-  StructRepository structRepository;
+  @Autowired StructRepository structRepository;
   @Autowired MockMvc mockMvc;
 
   @BeforeAll
@@ -41,6 +41,19 @@ class StructApiTest {
         .perform(get("/structs"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isNotEmpty());
+  }
+
+  @Test
+  @Order(1)
+  void should_success_when_search_structs() throws Exception {
+    StructEntity entity = new StructEntity();
+    entity.setStruct(new StructConcept("name", new HashMap<>()));
+    this.structRepository.save(entity);
+    mockMvc
+        .perform(get("/structs?keyword=am"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content").isNotEmpty())
+        .andExpect(jsonPath("$.content[0].name").value("name"));
   }
 
   @Test

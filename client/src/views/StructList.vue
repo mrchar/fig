@@ -33,7 +33,7 @@ const columns: Column[] = [
 ]
 
 const datasource = (pagination: MaybeRef<PaginationParams>) => {
-  return api.schema.useListSchemas(pagination)
+  return api.struct.useListStructs(pagination)
 }
 
 const router = useRouter()
@@ -58,8 +58,9 @@ function onClickCancel() {
 const defaultDefinition = {
   "$schema": "http://json-schema.org/draft-07/schema"
 }
-function onClickCreate() {
-  api.schema.useAddSchema({ name: nameToAdd.value, definition: defaultDefinition })
+
+function createStruct() {
+  api.struct.useAddStruct({ name: nameToAdd.value, definition: defaultDefinition })
     .then(({ data }) => {
       nameToAdd.value = ""
       dialogRef.value!.close()
@@ -72,8 +73,9 @@ function onClickEdit(id: number) {
 }
 
 const tableRef = useTemplateRef("table")
+
 function onClickDelete(id: number) {
-  api.schema.useDeleteSchema(id)
+  api.struct.useDeleteStruct(id)
     .then(() => {
       tableRef.value!.refresh()
     })
@@ -103,13 +105,13 @@ function onClickDelete(id: number) {
     </template>
   </Table>
   <Dialog ref="dialog" title="新增格式">
-    <Form>
+    <Form @submit="createStruct">
       <Input v-model="nameToAdd" label="名称" class="w-full" />
     </Form>
     <template #footer>
       <div class="w-full flex justify-end gap-2">
         <Button @click="onClickCancel">取消</Button>
-        <Button priority="primary" @click="onClickCreate">
+        <Button priority="primary" @click="createStruct">
           创建
         </Button>
       </div>

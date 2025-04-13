@@ -58,7 +58,8 @@ function onClickCancel() {
 const defaultDefinition = {
   "$schema": "http://json-schema.org/draft-07/schema"
 }
-function onClickCreate() {
+
+function createVocabulary() {
   api.vocabulary.useAddVocabulary({
     name: nameToAdd.value, definition: defaultDefinition
   })
@@ -74,6 +75,7 @@ function onClickEdit(id: number) {
 }
 
 const tableRef = useTemplateRef("table")
+
 function onClickDelete(id: number) {
   api.vocabulary.useDeleteVocabulary(id)
     .then(() => {
@@ -106,13 +108,13 @@ function onClickDelete(id: number) {
     </template>
   </Table>
   <Dialog ref="dialog" title="新增词汇">
-    <Form>
+    <Form @submit="createVocabulary">
       <Input v-model="nameToAdd" label="名称" class="w-full" />
     </Form>
     <template #footer>
       <div class="w-full flex justify-end gap-2">
         <Button @click="onClickCancel">取消</Button>
-        <Button priority="primary" @click="onClickCreate">
+        <Button priority="primary" @click="createVocabulary">
           创建
         </Button>
       </div>

@@ -22,14 +22,20 @@ const routes: RouteRecordRaw[] = [
   {
     name: "StructEditor",
     path: "/struct/detail/:id",
-    meta: { title: "数据格式", isMenu: false, parent: "StructList" },
+    meta: { title: "编辑数据格式", isMenu: false, parent: "StructList" },
     component: () => import("@/views/StructEditor.vue")
   },
   {
-    name: "Form",
+    name: "FormList",
     path: "/form/list",
     meta: { title: "表单设计", isMenu: true },
     component: () => import("@/views/FormList.vue")
+  },
+  {
+    name: "FormEditor",
+    path: "/form/detail/:id",
+    meta: { title: "编辑表单", isMenu: false, parent: "FormList" },
+    component: () => import("@/views/FormEditor.vue")
   },
   {
     name: "Flow",

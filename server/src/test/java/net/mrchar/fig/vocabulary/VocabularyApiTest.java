@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -39,6 +40,19 @@ class VocabularyApiTest {
         .perform(get("/vocabularies"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isNotEmpty());
+  }
+
+  @Test
+  @Order(1)
+  void should_success_when_search_vocabularies() throws Exception {
+    VocabularyEntity entity = new VocabularyEntity();
+    entity.setVocabulary(new VocabularyConcept("name", new HashMap<>()));
+    this.vocabularyRepository.save(entity);
+    mockMvc
+        .perform(get("/vocabularies?keyword=am"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content").isNotEmpty())
+        .andExpect(jsonPath("$.content[0].name").value("name"));
   }
 
   @Test
