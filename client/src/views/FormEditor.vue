@@ -69,6 +69,11 @@ const data = ref({
 function onJsonFormsChange(event: any) {
   data.value = event.data
 }
+
+const monacoEditorRef = useTemplateRef("monaco-editor")
+onClickOutside(monacoEditorRef, () => {
+  form.value.uiSchema = JSON.parse(uiSchemaString.value)
+})
 </script>
 
 <template>
@@ -87,7 +92,11 @@ function onJsonFormsChange(event: any) {
         />
       </FormItem>
       <FormItem label="表单定义">
-        <MonacoEditor v-model="uiSchemaString" class="w-full" :uri="route.path" />
+        <MonacoEditor ref="monaco-editor"
+                      v-model="uiSchemaString"
+                      class="w-full"
+                      :uri="route.path"
+        />
       </FormItem>
       <div class="flex justify-end gap-2">
         <Button @click="onClickCancel">取消</Button>
