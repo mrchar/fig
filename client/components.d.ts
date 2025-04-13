@@ -13,6 +13,7 @@ declare module 'vue' {
     ConfirmButton: typeof import('./src/components/ConfirmButton.vue')['default']
     Dialog: typeof import('./src/components/Dialog.vue')['default']
     Form: typeof import('./src/components/Form.vue')['default']
+    FormItem: typeof import('./src/components/FormItem.vue')['default']
     Input: typeof import('./src/components/Input.vue')['default']
     MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
     Pagination: typeof import('./src/components/Pagination.vue')['default']

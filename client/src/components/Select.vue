@@ -3,7 +3,6 @@ import type { MaybeRef } from "vue"
 import type { PagedResponse, PaginationParams } from "@/types"
 
 export type Props = {
-  label?: string
   placeholder?: string
   options?: any[]
   datasource?: SearchDatasource, // 获取选项的方法
@@ -84,18 +83,12 @@ function onSelectChange(e: Event) {
 </script>
 
 <template>
-  <fieldset class="fieldset">
-    <legend v-if="props.label" class="fieldset-legend">
-      {{ props.label }}
-    </legend>
-    <!--<input v-model="keyword" type="text" class="input w-full" />-->
-    <select ref="select" class="select w-full" @change="onSelectChange">
-      <option v-if="props.placeholder" disabled selected>
-        {{ props.placeholder }}
-      </option>
-      <option v-for="option in _options">
-        {{ props.formatter ? props.formatter(option) : option }}
-      </option>
-    </select>
-  </fieldset>
+  <select ref="select" class="select w-full" @change="onSelectChange">
+    <option v-if="props.placeholder" disabled selected>
+      {{ props.placeholder }}
+    </option>
+    <option v-for="option in _options">
+      {{ props.formatter ? props.formatter(option) : option }}
+    </option>
+  </select>
 </template>
