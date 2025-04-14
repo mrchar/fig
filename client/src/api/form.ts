@@ -2,8 +2,12 @@ import qs from "qs"
 import { useApi } from "./api.ts"
 import type { FormType, PagedResponse, PaginationParams } from "@/types"
 
-export function useListForms(params: MaybeRef<{ keyword: string }>, pagination: MaybeRef<PaginationParams>) {
-  return useApi(computed(() => `/forms?${qs.stringify({ ...unref(params), ...unref(pagination) })}`))
+export function useListForms(params: MaybeRef<{ keyword: string }>,
+                             pagination: MaybeRef<PaginationParams>) {
+  const url = computed(() =>
+    `/forms?${qs.stringify({ ...unref(params), ...unref(pagination) })}`
+  )
+  return useApi(url)
     .get()
     .json<PagedResponse<FormType>>()
 }

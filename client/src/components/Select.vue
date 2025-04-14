@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<Props>(),
 
 const keyword = ref("")
 const pagination: PaginationParams = {
-  page: 0, // TODO: 使用useFetch的拦截器处理
+  page: 1,
   size: 10
 }
 const searchParams = computed(() => ({ keyword: keyword.value }))

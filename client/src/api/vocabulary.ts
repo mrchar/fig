@@ -3,13 +3,15 @@ import { useApi } from "./api.ts"
 import type { PagedResponse, PaginationParams, VocabularyType } from "@/types"
 
 export function useListVocabularies(pagination: MaybeRef<PaginationParams>) {
-  return useApi(computed(() => `/vocabularies?${qs.stringify(unref(pagination))}`))
+  const url = computed(() => `/vocabularies?${qs.stringify(unref(pagination))}`)
+  return useApi(url)
     .get()
     .json<PagedResponse<VocabularyType>>()
 }
 
 export function useGetVocabulary(id: MaybeRef<number>) {
-  return useApi(computed(() => `/vocabularies/${unref(id)}`)).get().json<VocabularyType>()
+  const url = computed(() => `/vocabularies/${unref(id)}`)
+  return useApi(url).get().json<VocabularyType>()
 }
 
 export type VocabularyConcept = {
@@ -22,11 +24,13 @@ export function useAddVocabulary(params: MaybeRef<VocabularyConcept>) {
 }
 
 export function useUpdateVocabulary(id: MaybeRef<number>, params: MaybeRef<VocabularyConcept>) {
-  return useApi(`/vocabularies/${unref(id)}`).put(unref(params)).json<VocabularyType>()
+  const url = computed(() => `/vocabularies/${unref(id)}`)
+  return useApi(url).put(unref(params)).json<VocabularyType>()
 }
 
 export function useDeleteVocabulary(id: MaybeRef<number>) {
-  return useApi(`/vocabularies/${unref(id)}`).delete().json<VocabularyType>()
+  const url = computed(()=>`/vocabularies/${unref(id)}`)
+  return useApi(url).delete().json<VocabularyType>()
 }
 
 export default {

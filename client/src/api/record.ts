@@ -3,11 +3,13 @@ import { useApi } from "./api.ts"
 import type { PagedResponse, PaginationParams, RecordType } from "@/types"
 
 function useListRecords(pagination: MaybeRef<PaginationParams>) {
-  return useApi("/records?" + qs.stringify({ ...unref(pagination) })).get().json<PagedResponse<RecordType>>()
+  const url = computed(() => `/records?${qs.stringify({ ...unref(pagination) })}`)
+  return useApi(url).get().json<PagedResponse<RecordType>>()
 }
 
 function useGetRecord(id: MaybeRef<Number>) {
-  return useApi(`/records/${unref(id)}`).get().json<RecordType>()
+  const url = computed(() => `/records/${unref(id)}`)
+  return useApi(url).get().json<RecordType>()
 }
 
 export type AddRecordParams = {
@@ -24,11 +26,13 @@ export type UpdateRecordParams = {
 }
 
 function useUpdateRecord(id: MaybeRef<number>, params: MaybeRef<UpdateRecordParams>) {
-  return useApi(computed(() => `/records/${unref(id)}`)).put(unref(params).content).json<RecordType>()
+  const url = computed(() => `/records/${unref(id)}`)
+  return useApi(url).put(unref(params).content).json<RecordType>()
 }
 
 function useDeleteRecord(id: MaybeRef<number>) {
-  return useApi(computed(() => `/records/${unref(id)}`)).delete()
+  const url = computed(() => `/records/${unref(id)}`)
+  return useApi(url).delete().json<RecordType>()
 }
 
 export default {

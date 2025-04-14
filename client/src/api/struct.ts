@@ -3,13 +3,15 @@ import { useApi } from "./api.ts"
 import type { PagedResponse, PaginationParams, StructType } from "@/types"
 
 export function useListStructs(params: MaybeRef<{ keyword: string }>, pagination: MaybeRef<PaginationParams>) {
-  return useApi(computed(() => `/structs?${qs.stringify({ ...unref(params), ...unref(pagination) })}`))
+  const url = computed(() => `/structs?${qs.stringify({ ...unref(params), ...unref(pagination) })}`)
+  return useApi(url)
     .get()
     .json<PagedResponse<StructType>>()
 }
 
 export function useGetStruct(id: MaybeRef<number>) {
-  return useApi(computed(() => `/structs/${unref(id)}`)).get().json<StructType>()
+  const url = computed(() => `/structs/${unref(id)}`)
+  return useApi(url).get().json<StructType>()
 }
 
 export type SchemaConcept = {
@@ -22,11 +24,13 @@ export function useAddStruct(params: MaybeRef<SchemaConcept>) {
 }
 
 export function useUpdateStruct(id: MaybeRef<number>, params: MaybeRef<SchemaConcept>) {
-  return useApi(`/structs/${unref(id)}`).put(unref(params)).json<StructType>()
+  const url = computed(() => `/structs/${unref(id)}`)
+  return useApi(url).put(unref(params)).json<StructType>()
 }
 
 export function useDeleteStruct(id: MaybeRef<number>) {
-  return useApi(`/structs/${unref(id)}`).delete().json<StructType>()
+  const url = computed(() => `/structs/${unref(id)}`)
+  return useApi(url).delete().json<StructType>()
 }
 
 export default {

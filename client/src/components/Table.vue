@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const paginationParams = ref<PaginationParams>({
   size: 10,
-  page: 0
+  page: 1
 })
 
 const { data, execute } = props.datasource(paginationParams)
@@ -48,7 +48,7 @@ const pagination = computed(() => {
   const page = data.value?.page
   return {
     size: page?.size || 10,
-    number: page?.number || 0,
+    number: page?.number || 1,
     totalElements: page?.totalElements || 0
   }
 })
