@@ -3,8 +3,9 @@ import type { MaybeRef, ShallowRef } from "vue"
 import type { PagedResponse, PaginationParams } from "@/types"
 
 export type Props = {
-  placeholder?: string
-  options?: any[]
+  prefix?: string,
+  placeholder?: string,
+  options?: any[],
   datasource?: SearchDatasource, // 获取选项的方法
   formatter?: (item: any) => string // 将选项转换为字符串
 }
@@ -89,12 +90,17 @@ function onSelectChange(e: Event) {
 </script>
 
 <template>
-  <select ref="select" class="select w-full" @change="onSelectChange">
-    <option v-if="props.placeholder" disabled selected>
-      {{ props.placeholder }}
-    </option>
-    <option v-for="option in _options">
-      {{ props.formatter ? props.formatter(option) : option }}
-    </option>
-  </select>
+  <label class="select">
+    <span v-if="props.prefix" class="label">
+      {{ props.prefix }}
+    </span>
+    <select ref="select" @change="onSelectChange">
+      <option v-if="props.placeholder" disabled selected>
+        {{ props.placeholder }}
+      </option>
+      <option v-for="option in _options">
+        {{ props.formatter ? props.formatter(option) : option }}
+      </option>
+    </select>
+  </label>
 </template>

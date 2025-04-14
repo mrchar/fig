@@ -59,7 +59,7 @@ function onPaginationChange(value: number) {
 }
 
 function refresh() {
-  paginationParams.value.page = 0
+  paginationParams.value.page = 1
   execute()
 }
 

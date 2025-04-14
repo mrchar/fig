@@ -10,7 +10,7 @@ const model = defineModel()
 const props = defineProps<Props>()
 </script>
 <template>
-  <label class="input w-full">
+  <label class="input">
     <span v-if="props.prefix" class="label">
       {{ props.prefix }}
     </span>

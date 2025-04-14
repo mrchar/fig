@@ -2,8 +2,9 @@ import qs from "qs"
 import { useApi } from "./api.ts"
 import type { PagedResponse, PaginationParams, VocabularyType } from "@/types"
 
-export function useListVocabularies(pagination: MaybeRef<PaginationParams>) {
-  const url = computed(() => `/vocabularies?${qs.stringify(unref(pagination))}`)
+export function useListVocabularies(params: MaybeRef<{ keyword: string }>, pagination: MaybeRef<PaginationParams>) {
+  const url = computed(() =>
+    `/vocabularies?${qs.stringify({ ...unref(params), ...unref(pagination) })}`)
   return useApi(url)
     .get()
     .json<PagedResponse<VocabularyType>>()
@@ -29,7 +30,7 @@ export function useUpdateVocabulary(id: MaybeRef<number>, params: MaybeRef<Vocab
 }
 
 export function useDeleteVocabulary(id: MaybeRef<number>) {
-  const url = computed(()=>`/vocabularies/${unref(id)}`)
+  const url = computed(() => `/vocabularies/${unref(id)}`)
   return useApi(url).delete().json<VocabularyType>()
 }
 

@@ -33,13 +33,17 @@ const columns: Column[] = [
   }
 ]
 
-const params = ref({ keyword: "" })
+const searchParams = ref({ keyword: "" })
 
 const datasource = (pagination: MaybeRef<PaginationParams>) => {
-  return api.form.useListForms(params, pagination)
+  return api.form.useListForms(searchParams, pagination)
 }
 
-const router = useRouter()
+const tableRef = useTemplateRef("table")
+
+function onClickSearch() {
+  tableRef.value!.refresh()
+}
 
 const dialogRef = useTemplateRef("dialog")
 
@@ -49,29 +53,31 @@ function onClickAdd() {
   }
 }
 
-function initFormToAdd(): FormType {
+function initAddParams(): FormType {
   return { name: "", description: "", struct: {}, uiSchema: {} } as FormType
 }
 
-const formToAdd = ref<FormType>(initFormToAdd())
+const addParams = ref<FormType>(initAddParams())
 
 function onClickCancel() {
   if (dialogRef.value) {
     dialogRef.value.close()
   }
 
-  formToAdd.value = initFormToAdd()
+  addParams.value = initAddParams()
 }
+
+const router = useRouter()
 
 function createForm() {
   api.form.useAddForm({
-    name: formToAdd.value.name,
-    description: formToAdd.value.description,
-    structId: formToAdd.value.struct.id,
-    uiSchema: formToAdd.value.uiSchema
+    name: addParams.value.name,
+    description: addParams.value.description,
+    structId: addParams.value.struct.id,
+    uiSchema: addParams.value.uiSchema
   })
     .then(({ data }) => {
-      formToAdd.value = initFormToAdd()
+      addParams.value = initAddParams()
       dialogRef.value!.close()
       router.push(`/form/detail/${data!.value!.id}`)
     })
@@ -81,8 +87,6 @@ function onClickEdit(id: number) {
   router.push(`/form/detail/${id}`)
 }
 
-const tableRef = useTemplateRef("table")
-
 function onClickDelete(id: number) {
   api.form.useDeleteForm(id)
     .then(() => {
@@ -91,6 +95,10 @@ function onClickDelete(id: number) {
 }
 </script>
 <template>
+  <Form class="flex gap-2" @submit="onClickSearch">
+    <Input prefix="名称" v-model="searchParams.keyword" />
+    <Button @click="onClickSearch">查询</Button>
+  </Form>
   <Table ref="table" :columns="columns" :datasource="datasource">
     <template #operations>
       <Button priority="primary" @click="onClickAdd">新增</Button>
@@ -116,13 +124,13 @@ function onClickDelete(id: number) {
   <Dialog ref="dialog" title="新增表单">
     <Form @submit="createForm">
       <FormItem label="名称">
-        <Input v-model="formToAdd.name" class="w-full" />
+        <Input v-model="addParams.name" class="w-full" />
       </FormItem>
       <FormItem label="描述">
-        <Input v-model="formToAdd.description" class="w-full" />
+        <Input v-model="addParams.description" class="w-full" />
       </FormItem>
       <FormItem label="数据定义">
-        <Select v-model="formToAdd.struct" class="w-full"
+        <Select v-model="addParams.struct" class="w-full"
                 :datasource="api.struct.useListStructs"
                 :formatter="item=>item.name"
         />

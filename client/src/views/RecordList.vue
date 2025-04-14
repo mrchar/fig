@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Column } from "@/components/Table.vue"
 import api from "@/api"
+import type { PaginationParams } from "@/types"
 
 const columns: Column[] = [
   {
@@ -30,9 +31,17 @@ const columns: Column[] = [
   }
 ]
 
-const datasource = api.record.useListRecords
+const searchParams = ref({ form: {} })
 
-const router = useRouter()
+const datasource = (pagination: MaybeRef<PaginationParams>) => {
+  return api.record.useListRecords(computed(() => ({ formId: searchParams.value.form.id! })), pagination)
+}
+
+const tableRef = useTemplateRef("table")
+
+function onClickSearch() {
+  tableRef.value!.refresh()
+}
 
 const dialogRef = useTemplateRef("dialog")
 
@@ -56,6 +65,8 @@ function onClickCancel() {
   dialogFormData.value = initDialogFormData()
 }
 
+const router = useRouter()
+
 function createRecord() {
   api.record.useAddRecord({
     formId: dialogFormData.value.form.id,
@@ -72,8 +83,6 @@ function onClickEdit(id: number) {
   router.push(`/record/detail/${id}`)
 }
 
-const tableRef = useTemplateRef("table")
-
 function onClickDelete(id: number) {
   api.record.useDeleteRecord(id)
     .then(() => {
@@ -83,6 +92,12 @@ function onClickDelete(id: number) {
 </script>
 
 <template>
+  <Form class="flex gap-2" @submit="onClickSearch">
+    <Select prefix="表单" v-model="searchParams.form"
+            :datasource="api.form.useListForms"
+            :formatter="item => item.name" />
+    <Button @click="onClickSearch">搜索</Button>
+  </Form>
   <Table ref="table" :columns="columns" :datasource="datasource">
     <template #operations>
       <Button priority="primary" @click="onClickAdd">新增</Button>

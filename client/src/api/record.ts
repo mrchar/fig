@@ -2,8 +2,9 @@ import qs from "qs"
 import { useApi } from "./api.ts"
 import type { PagedResponse, PaginationParams, RecordType } from "@/types"
 
-function useListRecords(pagination: MaybeRef<PaginationParams>) {
-  const url = computed(() => `/records?${qs.stringify({ ...unref(pagination) })}`)
+function useListRecords(params: MaybeRef<{ formId: number }>, pagination: MaybeRef<PaginationParams>) {
+  const url = computed(() =>
+    `/records?${qs.stringify({ ...unref(params), ...unref(pagination) })}`)
   return useApi(url).get().json<PagedResponse<RecordType>>()
 }
 

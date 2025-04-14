@@ -32,11 +32,16 @@ const columns: Column[] = [
   }
 ]
 
+const searchParams = ref({ keyword: "" })
 const datasource = (pagination: MaybeRef<PaginationParams>) => {
-  return api.vocabulary.useListVocabularies(pagination)
+  return api.vocabulary.useListVocabularies(searchParams, pagination)
 }
 
-const router = useRouter()
+const tableRef = useTemplateRef("table")
+
+function onClickSearch() {
+  tableRef.value!.refresh()
+}
 
 const dialogRef = useTemplateRef("dialog")
 
@@ -46,25 +51,27 @@ function onClickAdd() {
   }
 }
 
-const nameToAdd = ref("")
+const addParams = ref({ name: "" })
 
 function onClickCancel() {
   if (dialogRef.value) {
     dialogRef.value.close()
   }
-  nameToAdd.value = ""
+  addParams.value = { name: "" }
 }
 
 const defaultDefinition = {
   "$schema": "http://json-schema.org/draft-07/schema"
 }
 
+const router = useRouter()
+
 function createVocabulary() {
   api.vocabulary.useAddVocabulary({
-    name: nameToAdd.value, definition: defaultDefinition
+    name: addParams.value.name, definition: defaultDefinition
   })
     .then(({ data }) => {
-      nameToAdd.value = ""
+      addParams.value = { name: "" }
       dialogRef.value!.close()
       router.push(`/vocabulary/detail/${data!.value!.id}`)
     })
@@ -74,17 +81,20 @@ function onClickEdit(id: number) {
   router.push(`/vocabulary/detail/${id}`)
 }
 
-const tableRef = useTemplateRef("table")
-
 function onClickDelete(id: number) {
   api.vocabulary.useDeleteVocabulary(id)
     .then(() => {
       tableRef.value!.refresh()
     })
 }
+
 </script>
 
 <template>
+  <Form class="flex gap-2" @submit="onClickSearch">
+    <Input v-model="searchParams.keyword" prefix="名称" />
+    <Button @click="onClickSearch">查询</Button>
+  </Form>
   <Table ref="table" :columns="columns" :datasource="datasource">
     <template #operations>
       <Button priority="primary" @click="onClickAdd">新增</Button>
@@ -110,7 +120,7 @@ function onClickDelete(id: number) {
   <Dialog ref="dialog" title="新增词汇">
     <Form @submit="createVocabulary">
       <FormItem label="名称">
-        <Input v-model="nameToAdd" class="w-full" />
+        <Input v-model="addParams.name" class="w-full" />
       </FormItem>
     </Form>
     <template #footer>

@@ -32,13 +32,17 @@ const columns: Column[] = [
   }
 ]
 
-const params = ref({ keyword: "" })
+const searchParams = ref({ keyword: "" })
 
 const datasource = (pagination: MaybeRef<PaginationParams>) => {
-  return api.struct.useListStructs(params, pagination)
+  return api.struct.useListStructs(searchParams, pagination)
 }
 
-const router = useRouter()
+const tableRef = useTemplateRef("table")
+
+function onClickSearch() {
+  tableRef.value!.refresh()
+}
 
 const dialogRef = useTemplateRef("dialog")
 
@@ -48,23 +52,25 @@ function onClickAdd() {
   }
 }
 
-const nameToAdd = ref("")
+const addParams = ref({ name: "" })
 
 function onClickCancel() {
   if (dialogRef.value) {
     dialogRef.value.close()
   }
-  nameToAdd.value = ""
+  addParams.value = { name: "" }
 }
 
 const defaultDefinition = {
   "$schema": "http://json-schema.org/draft-07/schema"
 }
 
+const router = useRouter()
+
 function createStruct() {
-  api.struct.useAddStruct({ name: nameToAdd.value, definition: defaultDefinition })
+  api.struct.useAddStruct({ name: addParams.value.name, definition: defaultDefinition })
     .then(({ data }) => {
-      nameToAdd.value = ""
+      addParams.value = { name: "" }
       dialogRef.value!.close()
       router.push(`/struct/detail/${data!.value!.id}`)
     })
@@ -74,8 +80,6 @@ function onClickEdit(id: number) {
   router.push(`/struct/detail/${id}`)
 }
 
-const tableRef = useTemplateRef("table")
-
 function onClickDelete(id: number) {
   api.struct.useDeleteStruct(id)
     .then(() => {
@@ -84,6 +88,10 @@ function onClickDelete(id: number) {
 }
 </script>
 <template>
+  <Form class="flex gap-2" @submit="onClickSearch">
+    <Input prefix="名称" v-model="searchParams.keyword" />
+    <Button @click="onClickSearch">查询</Button>
+  </Form>
   <Table ref="table" :columns="columns" :datasource="datasource">
     <template #operations>
       <Button priority="primary" @click="onClickAdd">新增</Button>
@@ -109,7 +117,7 @@ function onClickDelete(id: number) {
   <Dialog ref="dialog" title="新增格式">
     <Form @submit="createStruct">
       <FormItem label="名称">
-        <Input v-model="nameToAdd"  class="w-full" />
+        <Input v-model="addParams.name" class="w-full" />
       </FormItem>
     </Form>
     <template #footer>
