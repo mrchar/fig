@@ -4,13 +4,13 @@ import { JsonForms } from "@jsonforms/vue"
 import { vanillaRenderers } from "@jsonforms/vue-vanilla"
 
 import api from "@/api"
-import type { Form, Struct } from "@/types"
+import type { FormType, StructType } from "@/types"
 
 const id = useRouteParams<string, number>("id", "", { transform: Number })
-const form = ref<Form>({
+const form = ref<FormType>({
   name: "",
   description: "",
-  struct: { id: 0, name: "", definition: {} } as Struct,
+  struct: { id: 0, name: "", definition: {} } as StructType,
   jsonSchema: {
     type: "object",
     properties: { name: { type: "string", title: "name" } }
@@ -22,12 +22,12 @@ const form = ref<Form>({
       "scope": "#/properties/name"
     }]
   }
-} as Form)
+} as FormType)
 
 api.form
   .useGetForm(id)
   .then(({ data }) => {
-    form.value = data.value as Form
+    form.value = data.value as FormType
   })
 
 const uiSchemaString = ref("")
@@ -70,7 +70,7 @@ function onJsonFormsChange(event: any) {
   data.value = event.data
 }
 
-const monacoEditorRef = useTemplateRef("monaco-editor")
+const monacoEditorRef = useTemplateRef<HTMLElement>("monaco-editor")
 onClickOutside(monacoEditorRef, () => {
   form.value.uiSchema = JSON.parse(uiSchemaString.value)
 })

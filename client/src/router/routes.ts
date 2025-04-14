@@ -44,10 +44,16 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/FlowList.vue")
   },
   {
-    name: "record",
+    name: "RecordList",
     path: "/record/list",
     meta: { title: "数据分析", isMenu: true },
     component: () => import("@/views/RecordList.vue")
+  },
+  {
+    name: "RecordEditor",
+    path: "/record/detail/:id",
+    meta: { title: "编辑数据", isMenu: false, parent: "RecordList" },
+    component: () => import("@/views/RecordEditor.vue")
   }
 ]
 

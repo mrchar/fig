@@ -9,7 +9,7 @@ public class StructEntityGenerator {
   private static final Faker faker = new Faker(Locale.CHINA);
 
   public static StructEntity generate() {
-    String name = faker.text().text(10);
+    String name = faker.letterify("struct??????????");
     Map<String, Object> jsonSchema =
         Map.of(
             "$schema", "http://json-schema.org/draft-07/schema#",

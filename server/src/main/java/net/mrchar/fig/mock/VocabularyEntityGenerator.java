@@ -9,7 +9,7 @@ public class VocabularyEntityGenerator {
   private static final Faker faker = new Faker(Locale.CHINA);
 
   public static VocabularyEntity generate() {
-    String name = faker.text().text(10);
+    String name = faker.letterify("vocabulary??????????");
     Map<String, Object> jsonSchema =
         Map.of(
             "$schema",

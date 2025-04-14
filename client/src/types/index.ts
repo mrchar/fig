@@ -16,7 +16,7 @@ export type PagedResponse<T = any> = {
   }
 }
 
-export type Vocabulary = {
+export type VocabularyType = {
   id: number,
   name: string,
   definition: any,
@@ -24,7 +24,7 @@ export type Vocabulary = {
   updatedAt: string,
 }
 
-export type Struct = {
+export type StructType = {
   id: number,
   name: string,
   definition: any,
@@ -32,13 +32,19 @@ export type Struct = {
   updatedAt: string,
 }
 
-export type Form = {
+export type FormType = {
   id: number,
   name: string,
   description: string,
-  struct: Struct,
+  struct: StructType,
   jsonSchema: any,
   uiSchema: any,
   createdAt: string,
   updatedAt: string,
+}
+
+export type RecordType = {
+  id: number,
+  form: FormType,
+  content: any
 }

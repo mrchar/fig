@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import api from "@/api"
 import type { Column } from "@/components/Table.vue"
-import type { Form, PaginationParams } from "@/types"
+import type { FormType, PaginationParams } from "@/types"
 
 const columns: Column[] = [
   {
@@ -49,11 +49,11 @@ function onClickAdd() {
   }
 }
 
-function initFormToAdd(): Form {
-  return { name: "", description: "", struct: {}, uiSchema: {} } as Form
+function initFormToAdd(): FormType {
+  return { name: "", description: "", struct: {}, uiSchema: {} } as FormType
 }
 
-const formToAdd = ref<Form>(initFormToAdd())
+const formToAdd = ref<FormType>(initFormToAdd())
 
 function onClickCancel() {
   if (dialogRef.value) {

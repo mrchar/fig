@@ -12,7 +12,7 @@ public class FormEntityGenerator {
   private static final Faker FAKER = new Faker();
 
   public static FormEntity generate(StructEntity struct) {
-    String name = FAKER.text().text(10);
+    String name = FAKER.letterify("form??????????");
     String description = FAKER.text().text(20);
     Map<String, Object> uiSchema =
         Map.of(
