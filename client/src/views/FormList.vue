@@ -115,12 +115,18 @@ function onClickDelete(id: number) {
   </Table>
   <Dialog ref="dialog" title="新增表单">
     <Form @submit="createForm">
-      <Input v-model="formToAdd.name" label="名称" class="w-full" />
-      <Input v-model="formToAdd.description" label="描述" class="w-full" />
-      <Select v-model="formToAdd.struct" label="数据定义" class="w-full"
-              :datasource="api.struct.useListStructs"
-              :formatter="item=>item.name"
-      />
+      <FormItem label="名称">
+        <Input v-model="formToAdd.name" class="w-full" />
+      </FormItem>
+      <FormItem label="描述">
+        <Input v-model="formToAdd.description" class="w-full" />
+      </FormItem>
+      <FormItem label="数据定义">
+        <Select v-model="formToAdd.struct" class="w-full"
+                :datasource="api.struct.useListStructs"
+                :formatter="item=>item.name"
+        />
+      </FormItem>
     </Form>
     <template #footer>
       <div class="w-full flex justify-end gap-2">

@@ -108,7 +108,9 @@ function onClickDelete(id: number) {
   </Table>
   <Dialog ref="dialog" title="新增格式">
     <Form @submit="createStruct">
-      <Input v-model="nameToAdd" label="名称" class="w-full" />
+      <FormItem label="名称">
+        <Input v-model="nameToAdd"  class="w-full" />
+      </FormItem>
     </Form>
     <template #footer>
       <div class="w-full flex justify-end gap-2">

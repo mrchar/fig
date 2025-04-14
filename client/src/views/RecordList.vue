@@ -107,10 +107,12 @@ function onClickDelete(id: number) {
   </Table>
   <Dialog ref="dialog" title="新增记录">
     <Form @submit="createRecord">
-      <Select v-model="dialogFormData.form" label="数据定义" class="w-full"
-              :datasource="api.form.useListForms"
-              :formatter="item=>item.name"
-      />
+      <FormItem label="表单">
+        <Select v-model="dialogFormData.form" class="w-full"
+                :datasource="api.form.useListForms"
+                :formatter="item=>item.name"
+        />
+      </FormItem>
     </Form>
     <template #footer>
       <div class="w-full flex justify-end gap-2">
