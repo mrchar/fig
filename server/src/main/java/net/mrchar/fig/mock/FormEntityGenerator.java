@@ -1,8 +1,8 @@
 package net.mrchar.fig.mock;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.datafaker.Faker;
 import net.mrchar.fig.form.FormConcept;
 import net.mrchar.fig.form.FormEntity;
@@ -12,8 +12,17 @@ public class FormEntityGenerator {
   private static final Faker FAKER = new Faker();
 
   public static FormEntity generate(StructEntity struct) {
-    FormConcept concept =
-        new FormConcept(FAKER.text().text(10), FAKER.text().text(20), struct, new HashMap<>());
+    String name = FAKER.text().text(10);
+    String description = FAKER.text().text(20);
+    Map<String, Object> uiSchema =
+        Map.of(
+            "type",
+            "HorizontalLayout",
+            "elements",
+            List.of(
+                Map.of("type", "Control", "scope", "#/properties/name"),
+                Map.of("type", "Control", "scope", "#/properties/age")));
+    FormConcept concept = new FormConcept(name, description, struct, uiSchema);
     return new FormEntity(concept);
   }
 

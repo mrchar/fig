@@ -1,9 +1,6 @@
 package net.mrchar.fig.mock;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import net.datafaker.Faker;
 import net.mrchar.fig.struct.StructConcept;
 import net.mrchar.fig.struct.StructEntity;
@@ -12,8 +9,19 @@ public class StructEntityGenerator {
   private static final Faker faker = new Faker(Locale.CHINA);
 
   public static StructEntity generate() {
-    StructConcept schema = new StructConcept(faker.text().text(10), new HashMap<>());
-    return new StructEntity(schema);
+    String name = faker.text().text(10);
+    Map<String, Object> jsonSchema =
+        Map.of(
+            "$schema", "http://json-schema.org/draft-07/schema#",
+            "type", "object",
+            "title", "student",
+            "description", "This schema describes a student.",
+            "properties",
+                Map.of(
+                    "name", Map.of("type", "string", "title", "name"),
+                    "age", Map.of("type", "integer", "title", "age")));
+    StructConcept concept = new StructConcept(name, jsonSchema);
+    return new StructEntity(concept);
   }
 
   public static List<StructEntity> generate(Integer count) {
