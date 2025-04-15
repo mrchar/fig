@@ -104,13 +104,13 @@ function onClickDelete(id: number) {
     </template>
     <template #columns.operations="{row}">
       <Button class="mr-1"
-              type="ghost"
+              mode="ghost"
               priority="default"
               @click="onClickEdit(row.id)"
       >
         编辑
       </Button>
-      <ConfirmButton type="ghost"
+      <ConfirmButton mode="ghost"
                      priority="danger"
                      title="删除确认"
                      content="您确定要删除这条数据吗？"

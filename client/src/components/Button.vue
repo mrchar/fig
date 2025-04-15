@@ -1,12 +1,13 @@
 <script setup lang="ts">
 export type Props = {
   size?: "xs" | "sm" | "md" | "lg" | "xl",
-  type?: "normal" | "outline" | "dash" | "ghost" | "link"
+  type?: "button" | "submit" | "reset",
+  mode?: "normal" | "outline" | "dash" | "ghost" | "link"
   priority?: "default" | "primary" | "secondary" | "warning" | "danger"
 }
 
 const props = withDefaults(defineProps<Props>(),
-  { size: "md", type: "normal", priority: "default" }
+  { size: "md", type: "button", mode: "normal", priority: "default" }
 )
 
 const computedClass = computed(() => {
@@ -15,11 +16,11 @@ const computedClass = computed(() => {
     result.push(`btn-${props.size}`)
   }
 
-  if (props.type !== "normal") {
-    result.push(`btn-${props.type}`)
+  if (props.mode !== "normal") {
+    result.push(`btn-${props.mode}`)
   }
 
-  if (props.type === "normal") {
+  if (props.mode === "normal") {
     if (props.priority === "primary") {
       result.push("btn-primary")
     }
@@ -34,7 +35,7 @@ const computedClass = computed(() => {
     }
   }
 
-  if (props.type === "outline" || props.type === "dash") {
+  if (props.mode === "outline" || props.mode === "dash") {
     if (props.priority === "primary") {
       result.push("btn-primary")
     }
@@ -49,7 +50,7 @@ const computedClass = computed(() => {
     }
   }
 
-  if (props.type === "ghost" || props.type === "link") {
+  if (props.mode === "ghost" || props.mode === "link") {
     if (props.priority === "primary") {
       result.push("text-primary")
     }
@@ -67,7 +68,7 @@ const computedClass = computed(() => {
 </script>
 
 <template>
-  <button type="button" class="btn" :class="computedClass">
+  <button :type="props.type" class="btn" :class="computedClass">
     <slot></slot>
   </button>
 </template>

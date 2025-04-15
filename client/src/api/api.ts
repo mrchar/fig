@@ -18,6 +18,11 @@ export const useApi = createFetch({
       }
 
       return { data }
+    },
+    onFetchError(ctx) {
+      if (ctx.response && ctx.response.status === 401) {
+        window.location.href = "/login"
+      }
     }
   }
 })

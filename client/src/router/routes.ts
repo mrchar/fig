@@ -1,5 +1,6 @@
 import type { RouteRecordRaw } from "vue-router"
 import LandingPage from "@/views/LandingPage.vue"
+import Login from "@/views/Login.vue"
 import Framework from "@/layouts/Framework.vue"
 
 const routes: RouteRecordRaw[] = [
@@ -8,6 +9,12 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     meta: { title: "首页" },
     component: LandingPage
+  },
+  {
+    name: "Login",
+    path: "/login",
+    meta: { title: "登陆" },
+    component: Login
   },
   {
     name: "Framework",
