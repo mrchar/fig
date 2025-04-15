@@ -31,7 +31,7 @@ const columns: Column[] = [
   }
 ]
 
-const searchParams = ref({ form: {} })
+const searchParams = ref({ form: { id: null } })
 
 const datasource = (pagination: MaybeRef<PaginationParams>) => {
   return api.record.useListRecords(computed(() => ({ formId: searchParams.value.form.id! })), pagination)

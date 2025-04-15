@@ -105,7 +105,7 @@ function onClickClose() {
 }
 
 function onClickApply() {
-  uiSchemaString.value = completionResult.value
+  uiSchemaString.value = completionResult.value as string
   onClickClose()
 }
 </script>

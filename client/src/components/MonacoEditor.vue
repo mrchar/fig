@@ -32,7 +32,7 @@ monaco.languages.registerCompletionItemProvider("json", {
     const currentLine = model.getLineContent(position.lineNumber)
     const currentInput = currentLine.slice(0, position.column - 1)
 
-    if(!currentInput || currentInput.length==0){
+    if (!currentInput || currentInput.length == 0) {
       return
     }
 
@@ -48,10 +48,10 @@ export type Props = {
   uri: string
 }
 
-const content = defineModel({ default: "" })
+const content = defineModel<string | null>({ default: "" })
 const props = defineProps<Props>()
 const uri = monaco.Uri.parse(props.uri)
-const model = monaco.editor.createModel(content.value, "json", uri)
+const model = monaco.editor.createModel(content.value as string, "json", uri)
 
 const containerRef = useTemplateRef("container")
 
@@ -74,7 +74,7 @@ function initMonacoEditor() {
   watch(content, () => {
     if (!editor.hasTextFocus()) {
       // 避免编辑代码时变更引起重绘
-      model.setValue(content.value)
+      model.setValue(content.value as string)
     }
   })
 }

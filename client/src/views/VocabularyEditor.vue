@@ -61,7 +61,7 @@ function onClickClose() {
 }
 
 function onClickApply(){
-  definitionString.value = completionResult.value
+  definitionString.value = completionResult.value as string
   onClickClose()
 }
 </script>

@@ -1,7 +1,12 @@
 import { createFetch } from "@vueuse/core"
 
+let apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+if (window.location.hostname === "localhost") {
+  apiBaseUrl = window.location.origin + "/api"
+}
+
 export const useApi = createFetch({
-  baseUrl: import.meta.env.VITE_API_BASE_URL,
+  baseUrl: apiBaseUrl,
   options: {
     beforeFetch(ctx) {
       const url = new URL(ctx.url)
@@ -23,6 +28,8 @@ export const useApi = createFetch({
       if (ctx.response && ctx.response.status === 401) {
         window.location.href = "/login"
       }
+
+      return ctx
     }
   }
 })
