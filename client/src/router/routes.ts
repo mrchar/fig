@@ -4,14 +4,14 @@ import Framework from "@/layouts/Framework.vue"
 
 const routes: RouteRecordRaw[] = [
   {
-    name:"LandingPage",
-    path:"/",
-    meta:{title:"首页"},
+    name: "LandingPage",
+    path: "/",
+    meta: { title: "首页" },
     component: LandingPage
   },
   {
-    name:"Framework",
-    path:"/",
+    name: "Framework",
+    path: "/",
     component: Framework,
     children: [
       {
@@ -51,10 +51,16 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/FormEditor.vue")
       },
       {
-        name: "Flow",
-        path: "/flow/list",
+        name: "FunctionList",
+        path: "/function/list",
+        meta: { title: "函数开发", isMenu: true },
+        component: () => import("@/views/FunctionList.vue")
+      },
+      {
+        name: "ProcessList",
+        path: "/process/list",
         meta: { title: "流程设计", isMenu: true },
-        component: () => import("@/views/FlowList.vue")
+        component: () => import("@/views/ProcessList.vue")
       },
       {
         name: "RecordList",
@@ -68,7 +74,7 @@ const routes: RouteRecordRaw[] = [
         meta: { title: "编辑数据", isMenu: false, parent: "RecordList" },
         component: () => import("@/views/RecordEditor.vue")
       }]
-  },
+  }
 ]
 
 export default routes
