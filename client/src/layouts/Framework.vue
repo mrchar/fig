@@ -25,7 +25,10 @@ const route = useRoute()
         </li>
       </ul>
       <div class="w-full h-full p-4">
-        <Breadcrumbs/>
+        <div class="flex justify-between">
+          <Breadcrumbs/>
+          <Help></Help>
+        </div>
         <RouterView/>
       </div>
     </div>

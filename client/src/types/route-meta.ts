@@ -10,6 +10,7 @@ declare module "vue-router" {
   interface RouteMeta {
     title?: string,
     isMenu?: boolean,
-    parent?: string
+    parent?: string,
+    help?: string,
   }
 }
