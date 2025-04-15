@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 ;
+  @apply text-white font-sans;
+}
