@@ -1,7 +1,6 @@
 package net.mrchar.fig.mock;
 
 import jakarta.annotation.PostConstruct;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.mrchar.fig.data.RecordEntity;
 import net.mrchar.fig.data.RecordRepository;
@@ -11,12 +10,16 @@ import net.mrchar.fig.struct.StructEntity;
 import net.mrchar.fig.struct.StructRepository;
 import net.mrchar.fig.vocabulary.VocabularyEntity;
 import net.mrchar.fig.vocabulary.VocabularyRepository;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Profile("dev")
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "mock.enabled", havingValue = "true")
 public class MockDateGenerator {
   private final VocabularyRepository vocabularyRepository;
   private final StructRepository structRepository;

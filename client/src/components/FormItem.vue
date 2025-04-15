@@ -9,8 +9,13 @@ const props = defineProps<Props>()
 
 <template>
   <fieldset class="fieldset">
-    <legend v-if="props.label" class="fieldset-legend">
-      {{ props.label }}
+    <legend v-if="props.label || $slots.label" class="fieldset-legend w-full">
+      <template v-if="$slots.label">
+        <slot name="label"></slot>
+      </template>
+      <template v-else>
+        {{ props.label }}
+      </template>
     </legend>
     <slot></slot>
     <p v-if="props.description" class="fieldset-label">

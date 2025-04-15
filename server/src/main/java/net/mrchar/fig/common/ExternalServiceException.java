@@ -4,19 +4,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 
-public class ResourceNotExistsException extends AbstractException {
-  public static final HttpStatusCode HTTP_STATUS = HttpStatus.NOT_FOUND;
+public class ExternalServiceException extends AbstractException {
+  public static final HttpStatusCode HTTP_STATUS = HttpStatus.INTERNAL_SERVER_ERROR;
 
-  public ResourceNotExistsException(String detail) {
+  public ExternalServiceException(String detail) {
     super(HTTP_STATUS, detail);
   }
 
-  public ResourceNotExistsException(HttpStatusCode status, ProblemDetail body, Throwable cause) {
+  public ExternalServiceException(ProblemDetail body, Throwable cause) {
     super(HTTP_STATUS, body, cause);
   }
 
-  public ResourceNotExistsException(
-      HttpStatusCode status,
+  public ExternalServiceException(
       ProblemDetail body,
       Throwable cause,
       String messageDetailCode,

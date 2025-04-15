@@ -36,7 +36,7 @@ monaco.languages.registerCompletionItemProvider("json", {
       return
     }
 
-    const { data } = await api.completion.getSuggestions(encodeURIComponent(currentInput.trim()))
+    const { data } = await api.completion.useGetSuggestions(encodeURIComponent(currentInput.trim()))
 
     return {
       suggestions: data.value.content

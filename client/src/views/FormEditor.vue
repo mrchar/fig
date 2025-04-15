@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { markRaw } from "vue"
+import { Icon } from "@iconify/vue"
 import { JsonForms } from "@jsonforms/vue"
 import { vanillaRenderers } from "@jsonforms/vue-vanilla"
 
@@ -15,13 +16,7 @@ const form = ref<FormType>({
     type: "object",
     properties: { name: { type: "string", title: "name" } }
   },
-  uiSchema: {
-    type: "VerticalLayout",
-    elements: [{
-      "type": "Control",
-      "scope": "#/properties/name"
-    }]
-  }
+  uiSchema: {}
 } as FormType)
 
 api.form
@@ -74,6 +69,45 @@ const monacoEditorRef = useTemplateRef<HTMLElement>("monaco-editor")
 onClickOutside(monacoEditorRef, () => {
   form.value.uiSchema = JSON.parse(uiSchemaString.value)
 })
+
+const dialogRef = useTemplateRef("dialog")
+
+function openDialog() {
+  if (dialogRef.value) {
+    dialogRef.value.open()
+  }
+}
+
+const query = ref("")
+
+const computedQuery = computed(() => {
+  return "这是我提供的数据定义" + JSON.stringify(form.value.jsonSchema) + "。" + query.value
+})
+
+const {
+  isFetching,
+  data: completionResult,
+  execute: executeCompletion
+} = api.completion.useCompleteForm(computedQuery)
+
+function onClickGenerate() {
+  executeCompletion()
+}
+
+function onClickClose() {
+  if (!dialogRef.value) {
+    return
+  }
+
+  dialogRef.value.close()
+  query.value = ""
+  completionResult.value = ""
+}
+
+function onClickApply() {
+  uiSchemaString.value = completionResult.value
+  onClickClose()
+}
 </script>
 
 <template>
@@ -91,7 +125,13 @@ onClickOutside(monacoEditorRef, () => {
                 :formatter="item=>item.name"
         />
       </FormItem>
-      <FormItem label="表单定义">
+      <FormItem>
+        <template #label>
+          <div class="flex w-full justify-between">
+            <div>表单定义</div>
+            <Icon icon="mingcute:ai-line" class="w-6 h-6 cursor-pointer" @click="openDialog" />
+          </div>
+        </template>
         <MonacoEditor ref="monaco-editor"
                       v-model="uiSchemaString"
                       class="w-full"
@@ -112,5 +152,27 @@ onClickOutside(monacoEditorRef, () => {
       @change="onJsonFormsChange"
     />
   </div>
+  <Dialog ref="dialog">
+    <Form class="flex flex-col gap-2">
+      <FormItem class="flex gap-2">
+        <Input v-model="query" class="w-full" />
+        <Button @click="onClickGenerate">
+          <template v-if="isFetching">
+            <span class="loading loading-spinner loading-xs"></span>
+          </template>
+          <template v-else>
+            生成
+          </template>
+        </Button>
+      </FormItem>
+      <MonacoEditor class="w-full" v-model="completionResult" :uri="`${route.path}/completion`" />
+    </Form>
+    <template #footer>
+      <div class="flex justify-end gap-2">
+        <Button @click="onClickClose">取消</Button>
+        <Button priority="primary" @click="onClickApply">应用</Button>
+      </div>
+    </template>
+  </Dialog>
 </template>
 

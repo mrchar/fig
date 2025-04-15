@@ -6,10 +6,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
-
 import net.mrchar.fig.mock.FormEntityGenerator;
-import net.mrchar.fig.struct.StructEntity;
 import net.mrchar.fig.mock.StructEntityGenerator;
+import net.mrchar.fig.struct.StructEntity;
 import net.mrchar.fig.struct.StructRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;

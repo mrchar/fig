@@ -1,9 +1,9 @@
 package net.mrchar.fig.struct;
 
-import net.mrchar.fig.common.ResourceNotExistsException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import net.mrchar.fig.common.ResourceNotExistsException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 

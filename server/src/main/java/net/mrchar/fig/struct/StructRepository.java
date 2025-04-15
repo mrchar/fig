@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StructRepository extends JpaRepository<StructEntity, Long> {
-    @Query("from StructEntity s where s.struct.name like :#{'%'+#keyword+'%'}")
-    Page<StructEntity> searchByNameContainsKeyword(String keyword, Pageable pageable);
+  @Query("from StructEntity s where s.struct.name like :#{'%'+#keyword+'%'}")
+  Page<StructEntity> searchByNameContainsKeyword(String keyword, Pageable pageable);
 }

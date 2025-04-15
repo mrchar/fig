@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VocabularyRepository extends JpaRepository<VocabularyEntity, Long> {
-    @Query("from VocabularyEntity v where v.vocabulary.name like :#{'%'+#keyword+'%'}")
-    Page<VocabularyEntity> searchByNameContainsKeyword(String keyword, Pageable pageable);
+  @Query("from VocabularyEntity v where v.vocabulary.name like :#{'%'+#keyword+'%'}")
+  Page<VocabularyEntity> searchByNameContainsKeyword(String keyword, Pageable pageable);
 }

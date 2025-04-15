@@ -1,12 +1,12 @@
 package net.mrchar.fig.data;
 
-import net.mrchar.fig.common.AbstractEntity;
-import net.mrchar.fig.form.FormEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.mrchar.fig.common.AbstractEntity;
+import net.mrchar.fig.form.FormEntity;
 import org.hibernate.annotations.Type;
 
 @Getter
