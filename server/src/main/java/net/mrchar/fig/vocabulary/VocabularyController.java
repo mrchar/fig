@@ -33,9 +33,7 @@ public class VocabularyController {
 
   @GetMapping("{id}")
   public VocabularyEntity getVocabulary(@PathVariable Long id) {
-    return this.vocabularyRepository
-        .findById(id)
-        .orElseThrow(() -> new ResourceNotExistsException("Vocabulary not found"));
+    return this.vocabularyService.getVocabulary(id);
   }
 
   @PostMapping

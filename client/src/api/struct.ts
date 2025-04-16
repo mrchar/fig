@@ -16,6 +16,7 @@ export function useGetStruct(id: MaybeRef<number>) {
 
 export type SchemaConcept = {
   name: string,
+  description: string,
   definition: any
 }
 

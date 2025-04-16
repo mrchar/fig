@@ -10,6 +10,7 @@ public class StructEntityGenerator {
 
   public static StructEntity generate() {
     String name = faker.letterify("struct??????????");
+    String description = faker.letterify("struct description ??????????");
     Map<String, Object> jsonSchema =
         Map.of(
             "$schema", "http://json-schema.org/draft-07/schema#",
@@ -20,7 +21,7 @@ public class StructEntityGenerator {
                 Map.of(
                     "name", Map.of("type", "string", "title", "name"),
                     "age", Map.of("type", "integer", "title", "age")));
-    StructConcept concept = new StructConcept(name, jsonSchema);
+    StructConcept concept = new StructConcept(name, description, jsonSchema);
     return new StructEntity(concept);
   }
 

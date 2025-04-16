@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+@WithMockUser
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(PER_CLASS)
@@ -48,7 +50,7 @@ class StructApiTest {
   @Order(1)
   void should_success_when_search_structs() throws Exception {
     StructEntity entity = new StructEntity();
-    entity.setStruct(new StructConcept("name", new HashMap<>()));
+    entity.setStruct(new StructConcept("name", "description", new HashMap<>()));
     this.structRepository.save(entity);
     mockMvc
         .perform(get("/structs?keyword=am"))
@@ -64,7 +66,13 @@ class StructApiTest {
         .perform(
             post("/structs")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\": \"测试\", \"definition\": {}}"))
+                .content("""
+                        {
+                          "name": "测试",
+                          "description": "描述",
+                          "definition": {}
+                        }
+                        """))
         .andExpect(status().isOk());
   }
 
@@ -95,7 +103,12 @@ class StructApiTest {
         .perform(
             put("/structs/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\": \"修改\", \"definition\": {}}"))
+                .content("""
+                        {
+                          "name": "修改",
+                          "description": "描述",
+                          "definition": {}
+                        }"""))
         .andExpect(status().isOk());
   }
 

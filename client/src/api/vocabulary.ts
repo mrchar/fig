@@ -17,6 +17,7 @@ export function useGetVocabulary(id: MaybeRef<number>) {
 
 export type VocabularyConcept = {
   name: string,
+  description: string,
   definition: any
 }
 

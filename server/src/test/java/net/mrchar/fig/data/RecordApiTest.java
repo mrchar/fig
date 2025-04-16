@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.List;
 import net.mrchar.fig.form.FormEntity;
 import net.mrchar.fig.form.FormRepository;
@@ -20,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+@WithMockUser
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(PER_CLASS)
@@ -41,11 +42,7 @@ class RecordApiTest {
     formEntity = FormEntityGenerator.generate(structEntity);
     formEntity = this.formRepository.saveAndFlush(formEntity);
 
-    List<RecordEntity> entities = new ArrayList<>();
-    for (int i = 0; i < 10; i++) {
-      entities.add(RecordEntityGenerator.generate(formEntity));
-    }
-
+    List<RecordEntity> entities = RecordEntityGenerator.generate(formEntity, 10);
     this.recordRepository.saveAll(entities);
   }
 
@@ -76,9 +73,10 @@ class RecordApiTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     """
-                            {"formId": 1,
+                            {"formId": %d,
                               "content": {}
-                            }"""))
+                            }"""
+                        .formatted(formEntity.getId())))
         .andExpect(status().isOk());
   }
 

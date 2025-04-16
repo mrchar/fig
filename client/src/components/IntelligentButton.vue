@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
-import type {ShallowRef} from "vue"
+import type { ShallowRef } from "vue"
 
 export type CompletionDatasource = (query: MaybeRef<string>) => {
   isFetching: Readonly<ShallowRef<boolean>>,
@@ -15,24 +15,23 @@ export type Props = {
 
 const props = defineProps<Props>()
 
+// 用户输入的提示词内容
+const query = ref("")
+
+const { isFetching, data: completionResult, execute: executeGeneration } = props.datasource(query)
+
 const dialogRef = useTemplateRef("dialog")
 
 function openDialog() {
-  if (dialogRef.value) {
-    dialogRef.value.open()
+  if (!dialogRef.value) {
+    return
   }
+
+  dialogRef.value.open()
 }
 
 
-const query = ref("")
-
-const { isFetching, data: completionResult, execute: executeCompletion } = props.datasource(query)
-
-function onClickGenerate() {
-  executeCompletion()
-}
-
-function onClickClose() {
+function closeDialog() {
   if (!dialogRef.value) {
     return
   }
@@ -44,9 +43,9 @@ function onClickClose() {
 
 const emit = defineEmits(["apply"])
 
-function onClickApply() {
+function applyChange() {
   emit("apply", completionResult.value)
-  onClickClose()
+  closeDialog()
 }
 </script>
 
@@ -58,21 +57,18 @@ function onClickApply() {
     <Form class="flex flex-col gap-2">
       <FormItem class="flex gap-2">
         <Input v-model="query" class="w-full" />
-        <Button @click="onClickGenerate">
-          <template v-if="isFetching">
-            <span class="loading loading-spinner loading-xs"></span>
-          </template>
-          <template v-else>
-            生成
-          </template>
+        <Button @click="executeGeneration" :loading="isFetching">
+          生成
         </Button>
       </FormItem>
       <slot name="editor" v-bind="{completionResult}"></slot>
     </Form>
     <template #footer>
       <div class="flex justify-end gap-2">
-        <Button @click="onClickClose">取消</Button>
-        <Button priority="primary" @click="onClickApply">应用</Button>
+        <Button @click="closeDialog">取消</Button>
+        <Button priority="primary" @click="applyChange" :disabled="!completionResult">
+          应用
+        </Button>
       </div>
     </template>
   </Dialog>

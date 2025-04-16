@@ -19,6 +19,7 @@ export type PagedResponse<T = any> = {
 export type VocabularyType = {
   id: number,
   name: string,
+  description: string,
   definition: any,
   createdAt: string,
   updatedAt: string,
@@ -27,6 +28,7 @@ export type VocabularyType = {
 export type StructType = {
   id: number,
   name: string,
+  description: string,
   definition: any,
   createdAt: string,
   updatedAt: string,

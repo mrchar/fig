@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import api from "@/api"
 import type { Column } from "@/components/Table.vue"
-import type { FormType, PaginationParams } from "@/types"
+import type { PaginationParams } from "@/types"
 
 const columns: Column[] = [
   {
@@ -41,25 +41,27 @@ const datasource = (pagination: MaybeRef<PaginationParams>) => {
 
 const tableRef = useTemplateRef("table")
 
-function onClickSearch() {
+function refreshResult() {
   tableRef.value!.refresh()
 }
 
 const dialogRef = useTemplateRef("dialog")
 
-function onClickAdd() {
-  if (dialogRef.value) {
-    dialogRef.value.open()
+function openDialog() {
+  if (!dialogRef.value) {
+    return
   }
+
+  dialogRef.value.open()
 }
 
-function initAddParams(): FormType {
-  return { name: "", description: "", struct: {}, uiSchema: {} } as FormType
+function initAddParams() {
+  return { id: 0, name: "", description: "", struct: { id: 0, definition: {} }, uiSchema: {} }
 }
 
-const addParams = ref<FormType>(initAddParams())
+const addParams = ref(initAddParams())
 
-function onClickCancel() {
+function closeDialog() {
   if (dialogRef.value) {
     dialogRef.value.close()
   }
@@ -69,45 +71,67 @@ function onClickCancel() {
 
 const router = useRouter()
 
+const query = computed(() => {
+  return `我要创建一个表单${addParams.value.name}，
+  表单的内容数据类型为：${JSON.stringify(addParams.value.struct.definition)} ，
+  这是对这个表单的描述${addParams.value.description}。
+  请帮我创建表单定义。`
+})
+
+const {
+  isFetching: isGenerating,
+  data: completionResult,
+  execute: executeGeneration
+} = api.completion.useCompleteForm(query)
+
 function createForm() {
-  api.form.useAddForm({
-    name: addParams.value.name,
-    description: addParams.value.description,
-    structId: addParams.value.struct.id,
-    uiSchema: addParams.value.uiSchema
-  })
-    .then(({ data }) => {
-      addParams.value = initAddParams()
-      dialogRef.value!.close()
-      router.push(`/form/detail/${data!.value!.id}`)
+  executeGeneration()
+    .then(() => {
+      if (completionResult.value) {
+        addParams.value.uiSchema = JSON.parse(completionResult.value)
+      }
+
+      api.form.useAddForm({
+        name: addParams.value.name,
+        description: addParams.value.description,
+        structId: addParams.value.struct.id,
+        uiSchema: addParams.value.uiSchema
+      })
+        .then(({ data }) => {
+          addParams.value = initAddParams()
+          dialogRef.value!.close()
+          router.push(`/form/detail/${data!.value!.id}`)
+        })
     })
+
 }
 
-function onClickEdit(id: number) {
+function gotoEditor(id: number) {
   router.push(`/form/detail/${id}`)
 }
 
-function onClickDelete(id: number) {
+function deleteForm(id: number) {
   api.form.useDeleteForm(id)
     .then(() => {
-      tableRef.value!.refresh()
+      refreshResult()
     })
 }
 </script>
+
 <template>
-  <Form class="flex gap-2" @submit="onClickSearch">
+  <Form class="flex gap-2" @submit="refreshResult">
     <Input prefix="名称" v-model="searchParams.keyword" />
-    <Button @click="onClickSearch">查询</Button>
+    <Button @click="refreshResult">查询</Button>
   </Form>
   <Table ref="table" :columns="columns" :datasource="datasource">
     <template #operations>
-      <Button priority="primary" @click="onClickAdd">新增</Button>
+      <Button priority="primary" @click="openDialog">新增</Button>
     </template>
     <template #columns.operations="{row}">
       <Button class="mr-1"
               mode="ghost"
               priority="default"
-              @click="onClickEdit(row.id)"
+              @click="gotoEditor(row.id)"
       >
         编辑
       </Button>
@@ -115,7 +139,7 @@ function onClickDelete(id: number) {
                      priority="danger"
                      title="删除确认"
                      content="您确定要删除这条数据吗？"
-                     @confirm="onClickDelete(row.id)"
+                     @confirm="deleteForm(row.id)"
       >
         删除
       </ConfirmButton>
@@ -138,8 +162,8 @@ function onClickDelete(id: number) {
     </Form>
     <template #footer>
       <div class="w-full flex justify-end gap-2">
-        <Button @click="onClickCancel">取消</Button>
-        <Button priority="primary" @click="createForm">
+        <Button @click="closeDialog">取消</Button>
+        <Button priority="primary" :loading="isGenerating" @click="createForm">
           创建
         </Button>
       </div>

@@ -3,30 +3,29 @@ package net.mrchar.fig.form;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.mrchar.fig.struct.StructEntity;
 import org.hibernate.annotations.Type;
-import org.springframework.lang.NonNull;
 
 @Getter
 @Embeddable
 @NoArgsConstructor
 public class FormConcept {
-  @NotBlank
+
   @Setter
   @Column(name = "name")
+  @NotBlank(message = "必须为表单创建一个名称")
   private String name;
 
   @Setter
   @Column(name = "description")
+  @NotBlank(message = "必须对表单进行描述")
   private String description;
 
-  @Setter @NonNull @ManyToOne private StructEntity struct;
+  @Setter @ManyToOne private StructEntity struct;
 
-  @NotNull
   @Setter
   @Type(JsonType.class)
   @Column(name = "ui_schema", columnDefinition = "json")

@@ -15,18 +15,23 @@ import org.hibernate.annotations.Type;
 @NoArgsConstructor
 public class StructConcept {
   @Setter
-  @NotBlank
+  @NotBlank(message = "必须为数据模型创建一个名称")
   @Column(name = "name")
   private String name;
 
+  @NotBlank(message = "必须对数据模型进行描述")
+  @Column(name = "description")
+  private String description;
+
   @Setter
-  @NotNull
+  @NotNull(message = "必须对数据模型进行定义")
   @Type(JsonType.class)
   @Column(name = "definition", columnDefinition = "json")
   private Object definition;
 
-  public StructConcept(String name, Object definition) {
+  public StructConcept(String name, String description, Object definition) {
     this.name = name;
+    this.description = description;
     this.definition = definition;
   }
 }

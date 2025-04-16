@@ -33,57 +33,60 @@ const columns: Column[] = [
 
 const searchParams = ref({ form: { id: null } })
 
-const datasource = (pagination: MaybeRef<PaginationParams>) => {
+const searchDatasource = (pagination: MaybeRef<PaginationParams>) => {
   return api.record.useListRecords(computed(() => ({ formId: searchParams.value.form.id! })), pagination)
 }
 
 const tableRef = useTemplateRef("table")
 
-function onClickSearch() {
+function refreshResult() {
   tableRef.value!.refresh()
 }
 
 const dialogRef = useTemplateRef("dialog")
 
-function onClickAdd() {
-  if (dialogRef.value) {
-    dialogRef.value.open()
+function openDialog() {
+  if (!dialogRef.value) {
+    return
   }
+
+  dialogRef.value.open()
 }
 
-function initDialogFormData() {
+function initAddParams() {
   return { form: { id: 0 }, content: {} }
 }
 
-const dialogFormData = ref(initDialogFormData())
+const addParams = ref(initAddParams())
 
-function onClickCancel() {
-  if (dialogRef.value) {
-    dialogRef.value.close()
+function closeDialog() {
+  if (!dialogRef.value) {
+    return
   }
 
-  dialogFormData.value = initDialogFormData()
+  dialogRef.value.close()
+  addParams.value = initAddParams()
 }
 
 const router = useRouter()
 
 function createRecord() {
   api.record.useAddRecord({
-    formId: dialogFormData.value.form.id,
-    content: dialogFormData.value.content
+    formId: addParams.value.form.id,
+    content: addParams.value.content
   })
     .then(({ data }) => {
-      dialogFormData.value = initDialogFormData()
+      addParams.value = initAddParams()
       dialogRef.value!.close()
       router.push(`/record/detail/${data.value!.id}`)
     })
 }
 
-function onClickEdit(id: number) {
+function gotoEditor(id: number) {
   router.push(`/record/detail/${id}`)
 }
 
-function onClickDelete(id: number) {
+function deleteRecord(id: number) {
   api.record.useDeleteRecord(id)
     .then(() => {
       tableRef.value!.refresh()
@@ -92,21 +95,21 @@ function onClickDelete(id: number) {
 </script>
 
 <template>
-  <Form class="flex gap-2" @submit="onClickSearch">
+  <Form class="flex gap-2" @submit="refreshResult">
     <Select prefix="表单" v-model="searchParams.form"
             :datasource="api.form.useListForms"
             :formatter="item => item.name" />
-    <Button @click="onClickSearch">搜索</Button>
+    <Button @click="refreshResult">搜索</Button>
   </Form>
-  <Table ref="table" :columns="columns" :datasource="datasource">
+  <Table ref="table" :columns="columns" :datasource="searchDatasource">
     <template #operations>
-      <Button priority="primary" @click="onClickAdd">新增</Button>
+      <Button priority="primary" @click="openDialog">新增</Button>
     </template>
     <template #columns.operations="{row}">
       <Button class="mr-1"
               mode="ghost"
               priority="default"
-              @click="onClickEdit(row.id)"
+              @click="gotoEditor(row.id)"
       >
         编辑
       </Button>
@@ -114,7 +117,7 @@ function onClickDelete(id: number) {
                      priority="danger"
                      title="删除确认"
                      content="您确定要删除这条数据吗？"
-                     @confirm="onClickDelete(row.id)"
+                     @confirm="deleteRecord(row.id)"
       >
         删除
       </ConfirmButton>
@@ -123,7 +126,7 @@ function onClickDelete(id: number) {
   <Dialog ref="dialog" title="新增记录">
     <Form @submit="createRecord">
       <FormItem label="表单">
-        <Select v-model="dialogFormData.form" class="w-full"
+        <Select v-model="addParams.form" class="w-full"
                 :datasource="api.form.useListForms"
                 :formatter="item=>item.name"
         />
@@ -131,7 +134,7 @@ function onClickDelete(id: number) {
     </Form>
     <template #footer>
       <div class="w-full flex justify-end gap-2">
-        <Button @click="onClickCancel">取消</Button>
+        <Button @click="closeDialog">取消</Button>
         <Button priority="primary" @click="createRecord">
           创建
         </Button>

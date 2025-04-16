@@ -13,17 +13,22 @@ import org.hibernate.annotations.Type;
 @Embeddable
 @NoArgsConstructor
 public class VocabularyConcept {
-  @NotBlank
+  @NotBlank(message = "必须指明要定义的词汇！")
   @Column(name = "name")
   private String name;
 
-  @NotNull
+  @NotBlank(message = "必须对词汇的含义进行解释！")
+  @Column(name = "description")
+  private String description;
+
+  @NotNull(message = "必须使用建模语言对词汇进行定义")
   @Type(JsonType.class)
   @Column(name = "definition", columnDefinition = "json")
   private Object definition;
 
-  public VocabularyConcept(String name, Object definition) {
+  public VocabularyConcept(String name, String description, Object definition) {
     this.name = name;
+    this.description = description;
     this.definition = definition;
   }
 }

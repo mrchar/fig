@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+@WithMockUser
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(PER_CLASS)
@@ -47,7 +49,7 @@ class VocabularyApiTest {
   @Order(1)
   void should_success_when_search_vocabularies() throws Exception {
     VocabularyEntity entity = new VocabularyEntity();
-    entity.setVocabulary(new VocabularyConcept("name", new HashMap<>()));
+    entity.setVocabulary(new VocabularyConcept("name", "description", new HashMap<>()));
     this.vocabularyRepository.save(entity);
     mockMvc
         .perform(get("/vocabularies?keyword=am"))
@@ -63,7 +65,12 @@ class VocabularyApiTest {
         .perform(
             post("/vocabularies")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\": \"测试\", \"definition\": {}}"))
+                .content("""
+                        {
+                          "name": "测试",
+                          "description": "描述",
+                          "definition": {}
+                        }"""))
         .andExpect(status().isOk());
   }
 
@@ -92,7 +99,12 @@ class VocabularyApiTest {
         .perform(
             put("/vocabularies/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\": \"修改\", \"definition\": {}}"))
+                .content("""
+                        {
+                          "name": "修改",
+                          "description": "描述",
+                          "definition": {}
+                        }"""))
         .andExpect(status().isOk());
   }
 }

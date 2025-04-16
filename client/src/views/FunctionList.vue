@@ -3,7 +3,7 @@ import api from "@/api"
 import type { PaginationParams } from "@/types"
 import type { Column } from "@/components/Table.vue"
 
-const columns :Column[]= [
+const columns: Column[] = [
   {
     title: "序号", prop: "series", formatter({ index }) {
       return index + 1
@@ -31,11 +31,19 @@ const columns :Column[]= [
 
 const searchParams = ref({ keyword: "" })
 
-const datasource = (pagination: MaybeRef<PaginationParams>) => {
+const searchDatasource = (pagination: MaybeRef<PaginationParams>) => {
   return api.func.useListFunctions(searchParams, pagination)
 }
 
 const tableRef = useTemplateRef("table")
+
+function refreshResult() {
+  if (!tableRef.value) {
+    return
+  }
+
+  tableRef.value.refresh()
+}
 
 function initAddParams() {
   return { name: "", description: "", content: "function func(args){\n  return args;\n}" }
@@ -45,8 +53,17 @@ const addParams = ref(initAddParams())
 
 const dialogRef = useTemplateRef("dialog")
 
-function onClickCancel() {
+function openDialog() {
+  dialogRef.value?.open()
+}
+
+function closeDialog() {
+  if (!dialogRef.value) {
+    return
+  }
+
   dialogRef.value?.close()
+  addParams.value = initAddParams()
 }
 
 function createFunction() {
@@ -59,34 +76,32 @@ function createFunction() {
 
 const router = useRouter()
 
-function onClickAdd() {
-  dialogRef.value?.open()
-}
-
-function onClickEdit(id: number) {
+function gotoEditor(id: number) {
   router.push("/function/detail/" + id)
 }
 
-function onClickDelete(id: number) {
+function deleteFunction(id: number) {
   api.func.useDeleteFunctions(id)
     .then(() => {
-      if (tableRef.value) {
-        tableRef.value.refresh()
-      }
+      refreshResult()
     })
 }
 </script>
 
 <template>
-  <Table ref="table" :columns="columns" :datasource="datasource">
+  <Form class="flex gap-2" @submit="refreshResult">
+    <Input prefix="名称" v-model="searchParams.keyword" />
+    <Button @click="refreshResult">查询</Button>
+  </Form>
+  <Table ref="table" :columns="columns" :datasource="searchDatasource">
     <template #operations>
-      <Button priority="primary" @click="onClickAdd">新增</Button>
+      <Button priority="primary" @click="openDialog">新增</Button>
     </template>
     <template #columns.operations="{row}">
       <Button class="mr-1"
               mode="ghost"
               priority="default"
-              @click="onClickEdit(row.id)"
+              @click="gotoEditor(row.id)"
       >
         编辑
       </Button>
@@ -94,7 +109,7 @@ function onClickDelete(id: number) {
                      priority="danger"
                      title="删除确认"
                      content="您确定要删除这条数据吗？"
-                     @confirm="onClickDelete(row.id)"
+                     @confirm="deleteFunction(row.id)"
       >
         删除
       </ConfirmButton>
@@ -111,7 +126,9 @@ function onClickDelete(id: number) {
     </Form>
     <template #footer>
       <div class="w-full flex justify-end gap-2">
-        <Button @click="onClickCancel">取消</Button>
+        <Button @click="closeDialog">
+          取消
+        </Button>
         <Button priority="primary" @click="createFunction">
           创建
         </Button>

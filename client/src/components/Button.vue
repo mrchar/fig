@@ -1,5 +1,6 @@
 <script setup lang="ts">
 export type Props = {
+  loading?: boolean,
   size?: "xs" | "sm" | "md" | "lg" | "xl",
   type?: "button" | "submit" | "reset",
   mode?: "normal" | "outline" | "dash" | "ghost" | "link"
@@ -7,7 +8,7 @@ export type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(),
-  { size: "md", type: "button", mode: "normal", priority: "default" }
+  { loading: false, size: "md", type: "button", mode: "normal", priority: "default" }
 )
 
 const computedClass = computed(() => {
@@ -69,6 +70,11 @@ const computedClass = computed(() => {
 
 <template>
   <button :type="props.type" class="btn" :class="computedClass">
-    <slot></slot>
+    <template v-if="props.loading">
+      <span class="loading loading-spinner loading-xs"></span>
+    </template>
+    <template v-else>
+      <slot></slot>
+    </template>
   </button>
 </template>

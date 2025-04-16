@@ -23,9 +23,7 @@
             <column name="struct_id" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="ui_schema" type="json">
-                <constraints nullable="false"/>
-            </column>
+            <column name="ui_schema" type="json"/>
             <column name="created_at" type="datetime" defaultValueComputed="now()">
                 <constraints nullable="false"/>
             </column>
