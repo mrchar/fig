@@ -64,7 +64,7 @@ function onClickAdd() {
 }
 
 function onClickEdit(id: number) {
-  router.push("/function/detail" + id)
+  router.push("/function/detail/" + id)
 }
 
 function onClickDelete(id: number) {

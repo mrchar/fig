@@ -18,9 +18,14 @@ function useCompleteForm(query: MaybeRef<string>) {
   return useApi("/completions/form", { immediate: false }).post(query).text()
 }
 
+function useCompleteFunction(query: MaybeRef<string>) {
+  return useApi("/completions/function", { immediate: false }).post(query).text()
+}
+
 export default {
   useGetSuggestions,
   useCompleteVocabulary,
   useCompleteStruct,
-  useCompleteForm
+  useCompleteForm,
+  useCompleteFunction
 }

@@ -16,6 +16,7 @@ declare module 'vue' {
     FormItem: typeof import('./src/components/FormItem.vue')['default']
     Help: typeof import('./src/components/Help.vue')['default']
     Input: typeof import('./src/components/Input.vue')['default']
+    IntelligentButton: typeof import('./src/components/IntelligentButton.vue')['default']
     MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
     Pagination: typeof import('./src/components/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

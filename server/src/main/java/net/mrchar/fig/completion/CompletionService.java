@@ -150,4 +150,31 @@ public class CompletionService {
 
     return result.substring(7, result.length() - 3);
   }
+
+  public String completeFunction(String query) {
+    String result =
+            this.chatClient
+                    .prompt()
+                    .system(
+                            """
+                            你是一个Javascript专家，请根据用户的要求完成方法体，以帮助用户实现功能并返回结果。
+                            方法声明必须是
+                            ```javascript
+                            function func(args){
+                              // TODO: 填充代码实现用户的需求
+                            }
+                            ```
+                            用户在介绍需求前，会使用jsonSchema介绍args的结构。
+                            为了让用户满意，你不能对方法声明作任何修改， 只能将代码写入到代码块内部。
+                            只需要返回完整的代码就行了，不要返回任何其他内容打扰用户。
+                            """)
+                    .user(query)
+                    .call()
+                    .content();
+    if (result == null || !result.startsWith("```javascript")) {
+      throw new ExternalServiceException("大模型返回了错误的结果，请稍候重新尝试。");
+    }
+
+    return result.substring(13, result.length() - 3);
+  }
 }

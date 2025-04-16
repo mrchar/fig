@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-ignore
 import Interpreter from "js-interpreter"
 import api from "@/api"
 import { useJsonForms } from "@/composables/json-forms-renderers.ts"
@@ -34,7 +35,7 @@ function saveFunction() {
   })
 }
 
-const struct = ref({})
+const struct = ref({ definition: null })
 const args = ref({})
 const result = ref("")
 
@@ -50,6 +51,20 @@ function execute() {
   interpreter.appendCode("func(args)")
   interpreter.run()
   result.value = interpreter.value
+}
+
+function onClickApply(value: string) {
+  content.value = value
+}
+
+const completionDatasource = function(query: MaybeRef<string>) {
+  const computedQuery = computed(() => {
+    if (struct.value.definition) {
+      return "这是方法参数定义：" + JSON.stringify(struct.value.definition) + "。\n" + unref(query)
+    }
+    return unref(query)
+  })
+  return api.completion.useCompleteFunction(computedQuery)
 }
 </script>
 
@@ -70,6 +85,20 @@ function execute() {
         />
       </FormItem>
       <FormItem label="代码">
+        <template #label>
+          <div class="flex w-full justify-between">
+            <div>代码</div>
+            <IntelligentButton :datasource="completionDatasource" @apply="onClickApply">
+              <template #editor="{completionResult}">
+                <MonacoEditor class="w-full"
+                              :model-value="completionResult"
+                              language="javascript"
+                              :uri="`${route.path}/completion`"
+                />
+              </template>
+            </IntelligentButton>
+          </div>
+        </template>
         <MonacoEditor v-model="content" language="javascript" :uri="route.path" />
       </FormItem>
       <div class="flex justify-end gap-2">
@@ -80,11 +109,11 @@ function execute() {
     <div>
       <JsonForms
         class=" max-h-120 w-full max-w-lg  p-2 "
-        :schema="struct.definition"
+        :schema="struct.definition!"
         :renderers="renderers"
         @change="onJsonFormsChange"
       />
-      <Button v-if="struct.definition" @click="execute">执行</Button>
+      <Button v-if="struct.definition!" @click="execute">执行</Button>
       <div v-if="struct.definition">
         {{ JSON.stringify(result) }}
       </div>

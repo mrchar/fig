@@ -30,4 +30,9 @@ public class CompletionController {
   public String completeForm(@RequestBody String query) {
     return this.completionService.completeForm(query);
   }
+
+  @PostMapping("/function")
+  public String completeFunction(@RequestBody String query) {
+    return this.completionService.completeFunction(query);
+  }
 }

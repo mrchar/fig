@@ -87,14 +87,22 @@ const routes: RouteRecordRaw[] = [
       {
         name: "FunctionList",
         path: "/function/list",
-        meta: { title: "函数开发", isMenu: true },
+        meta: {
+          title: "函数开发",
+          isMenu: true,
+          help: "函数是用来对数据进行处理的过程，提前定义好的函数可以在表单或者工作流中用到。向函数传入一个输入值，函数执行完成后会返回一个输出值。"
+        },
         component: () => import("@/views/FunctionList.vue")
       },
       {
-        name:"FunctionEditor",
-        path:"/function/detail/:id",
-        meta:{title: "编辑函数", isMenu: false},
-        component:()=>import("@/views/FunctionEditor.vue")
+        name: "FunctionEditor",
+        path: "/function/detail/:id",
+        meta: {
+          title: "编辑函数",
+          isMenu: false,
+          help: "函数使用javascript开发，如果你不了解如何编写javascript，可以使用AI帮助实现功能，在寻求帮助之前，请先确定函数的参数类型。"
+        },
+        component: () => import("@/views/FunctionEditor.vue")
       },
       {
         name: "ProcessList",
