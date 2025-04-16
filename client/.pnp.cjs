@@ -49,6 +49,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-vue", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:10.0.0"],\
           ["globals", "npm:16.0.0"],\
           ["husky", "npm:9.1.7"],\
+          ["js-interpreter", "npm:6.0.1"],\
           ["lint-staged", "npm:15.5.1"],\
           ["lodash", "npm:4.17.21"],\
           ["maska", "npm:2.1.11"],\
@@ -2962,6 +2963,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-vue", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:10.0.0"],\
           ["globals", "npm:16.0.0"],\
           ["husky", "npm:9.1.7"],\
+          ["js-interpreter", "npm:6.0.1"],\
           ["lint-staged", "npm:15.5.1"],\
           ["lodash", "npm:4.17.21"],\
           ["maska", "npm:2.1.11"],\
@@ -4349,6 +4351,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["js-interpreter", [\
+      ["npm:6.0.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/js-interpreter-npm-6.0.1-c0a49d31c8-10c0.zip/node_modules/js-interpreter/",\
+        "packageDependencies": [\
+          ["js-interpreter", "npm:6.0.1"],\
+          ["minimist", "npm:1.2.8"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["js-tokens", [\
       ["npm:4.0.0", {\
         "packageLocation": "../../../.yarn/berry/cache/js-tokens-npm-4.0.0-0ac852e9e2-10c0.zip/node_modules/js-tokens/",\
@@ -4810,6 +4822,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["minimatch", "npm:9.0.5"],\
           ["brace-expansion", "npm:2.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["minimist", [\
+      ["npm:1.2.8", {\
+        "packageLocation": "../../../.yarn/berry/cache/minimist-npm-1.2.8-d7af7b1dce-10c0.zip/node_modules/minimist/",\
+        "packageDependencies": [\
+          ["minimist", "npm:1.2.8"]\
         ],\
         "linkType": "HARD"\
       }]\

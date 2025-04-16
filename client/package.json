@@ -19,6 +19,7 @@
     "@vueuse/router": "^13.0.0",
     "ajv": "^8.6.1",
     "dayjs": "^1.10.6",
+    "js-interpreter": "^6.0.1",
     "lodash": "^4.17.21",
     "maska": "^2.1.11",
     "monaco-editor": "^0.52.2",

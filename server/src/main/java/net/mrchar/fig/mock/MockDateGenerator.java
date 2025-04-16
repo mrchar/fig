@@ -1,11 +1,14 @@
 package net.mrchar.fig.mock;
 
 import jakarta.annotation.PostConstruct;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.mrchar.fig.data.RecordEntity;
 import net.mrchar.fig.data.RecordRepository;
 import net.mrchar.fig.form.FormEntity;
 import net.mrchar.fig.form.FormRepository;
+import net.mrchar.fig.function.FunctionEntity;
+import net.mrchar.fig.function.FunctionRepository;
 import net.mrchar.fig.struct.StructEntity;
 import net.mrchar.fig.struct.StructRepository;
 import net.mrchar.fig.vocabulary.VocabularyEntity;
@@ -13,8 +16,6 @@ import net.mrchar.fig.vocabulary.VocabularyRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Profile("dev")
@@ -25,6 +26,7 @@ public class MockDateGenerator {
   private final StructRepository structRepository;
   private final FormRepository formRepository;
   private final RecordRepository recordRepository;
+  private final FunctionRepository functionRepository;
 
   @PostConstruct
   public void init() {
@@ -39,5 +41,8 @@ public class MockDateGenerator {
 
     List<RecordEntity> recordEntities = RecordEntityGenerator.generate(formEntities.get(0), 10);
     this.recordRepository.saveAll(recordEntities);
+
+    List<FunctionEntity> functionEntities = FunctionEntityGenerator.generate(10);
+    this.functionRepository.saveAll(functionEntities);
   }
 }

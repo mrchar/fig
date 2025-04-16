@@ -91,6 +91,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/FunctionList.vue")
       },
       {
+        name:"FunctionEditor",
+        path:"/function/detail/:id",
+        meta:{title: "编辑函数", isMenu: false},
+        component:()=>import("@/views/FunctionEditor.vue")
+      },
+      {
         name: "ProcessList",
         path: "/process/list",
         meta: { title: "流程设计", isMenu: true },

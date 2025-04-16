@@ -5,8 +5,8 @@ spring:
     show-sql: true
   security:
     user:
-      name: ${USER_NAME}
-      password: ${USER_PASSWORD}
+      name: ${USER_NAME:username}
+      password: ${USER_PASSWORD:password}
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/master.xml

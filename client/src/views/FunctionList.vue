@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const columns = [
+  {title:"序号", prop:"index", formatter({index}){return index+1}}
+]
+</script>
 
 <template>
-  <div class="p-2">
-    建设中...
-  </div>
+  <Table :columns="columns" :datasource="api.function.useGetFunctions">
+    
+  </Table>
 </template>

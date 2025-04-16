@@ -4,26 +4,23 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="create_form_table" author="admin">
+    <changeSet id="create_function_table" author="admin">
         <preConditions>
             <not>
-                <tableExists tableName="form"/>
+                <tableExists tableName="function"/>
             </not>
         </preConditions>
-        <createTable tableName="form">
+        <createTable tableName="function">
             <column name="id" type="serial">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="varchar(50)">
-                <constraints nullable="false" unique="true"/>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
             </column>
             <column name="description" type="varchar(200)" defaultValue="">
                 <constraints nullable="false"/>
             </column>
-            <column name="struct_id" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="ui_schema" type="json">
+            <column name="content" type="longblob" defaultValue="">
                 <constraints nullable="false"/>
             </column>
             <column name="created_at" type="datetime" defaultValueComputed="now()">

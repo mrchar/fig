@@ -2233,6 +2233,7 @@ __metadata:
     eslint-plugin-vue: "npm:^10.0.0"
     globals: "npm:^16.0.0"
     husky: "npm:^9.1.7"
+    js-interpreter: "npm:^6.0.1"
     lint-staged: "npm:^15.5.0"
     lodash: "npm:^4.17.21"
     maska: "npm:^2.1.11"
@@ -3478,6 +3479,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-interpreter@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "js-interpreter@npm:6.0.1"
+  dependencies:
+    minimist: "npm:^1.2.8"
+  bin:
+    js-interpreter: lib/cli.min.js
+  checksum: 10c0/a15ae1506d9473c9582d39c276379a9e80152eab7319ad340110761c1d8de80e9f8d6be8fd30a7ec2f86a814b767bf5f5e3634c5b2346ab13aeefcda911b6ab0
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -3904,6 +3916,13 @@ __metadata:
   dependencies:
     brace-expansion: "npm:^2.0.1"
   checksum: 10c0/de96cf5e35bdf0eab3e2c853522f98ffbe9a36c37797778d2665231ec1f20a9447a7e567cb640901f89e4daaa95ae5d70c65a9e8aa2bb0019b6facbc3c0575ed
+  languageName: node
+  linkType: hard
+
+"minimist@npm:^1.2.8":
+  version: 1.2.8
+  resolution: "minimist@npm:1.2.8"
+  checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
   languageName: node
   linkType: hard
 
