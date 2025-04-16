@@ -58,7 +58,6 @@ const renderers = markRaw([
 const freezeRenderers = Object.freeze(renderers)
 
 const data = ref({
-  name: "John Doe"
 })
 
 function onJsonFormsChange(event: any) {

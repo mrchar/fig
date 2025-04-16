@@ -1,7 +1,7 @@
 import { createFetch } from "@vueuse/core"
 
 let apiBaseUrl = import.meta.env.VITE_API_BASE_URL
-if (window.location.hostname === "localhost") {
+if (window.location.hostname !== "localhost") {
   apiBaseUrl = window.location.origin + "/api"
 }
 
