@@ -48,3 +48,10 @@ export type RecordType = {
   form: FormType,
   content: any
 }
+
+export type FunctionType = {
+  id: number,
+  name: string,
+  description: string,
+  content: string
+}

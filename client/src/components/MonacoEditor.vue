@@ -46,12 +46,13 @@ monaco.languages.registerCompletionItemProvider("json", {
 
 export type Props = {
   uri: string
+  language: string
 }
 
 const content = defineModel<string | null>({ default: "" })
 const props = defineProps<Props>()
 const uri = monaco.Uri.parse(props.uri)
-const model = monaco.editor.createModel(content.value as string, "json", uri)
+const model = monaco.editor.createModel(content.value as string, props.language, uri)
 
 const containerRef = useTemplateRef("container")
 

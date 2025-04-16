@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { markRaw } from "vue"
 import { Icon } from "@iconify/vue"
-import { JsonForms } from "@jsonforms/vue"
-import { vanillaRenderers } from "@jsonforms/vue-vanilla"
+import { useJsonForms } from "@/composables/json-forms-renderers.ts"
 
 import api from "@/api"
 import type { FormType, StructType } from "@/types"
@@ -50,15 +48,10 @@ function saveForm() {
     })
 }
 
-const renderers = markRaw([
-  ...vanillaRenderers
-  // here you can add custom renderers
-])
 
-const freezeRenderers = Object.freeze(renderers)
+const { JsonForms, renderers } = useJsonForms()
 
-const data = ref({
-})
+const data = ref({})
 
 function onJsonFormsChange(event: any) {
   data.value = event.data
@@ -134,6 +127,7 @@ function onClickApply() {
         <MonacoEditor ref="monaco-editor"
                       v-model="uiSchemaString"
                       class="w-full"
+                      language="json"
                       :uri="route.path"
         />
       </FormItem>
@@ -147,7 +141,7 @@ function onClickApply() {
       class=" max-h-120 w-full max-w-lg  p-2 "
       :schema="form.jsonSchema"
       :uischema="form.uiSchema"
-      :renderers="freezeRenderers"
+      :renderers="renderers"
       @change="onJsonFormsChange"
     />
   </div>
@@ -164,7 +158,7 @@ function onClickApply() {
           </template>
         </Button>
       </FormItem>
-      <MonacoEditor class="w-full" v-model="completionResult" :uri="`${route.path}/completion`" />
+      <MonacoEditor class="w-full" v-model="completionResult" language="json" :uri="`${route.path}/completion`" />
     </Form>
     <template #footer>
       <div class="flex justify-end gap-2">

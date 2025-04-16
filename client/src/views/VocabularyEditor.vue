@@ -78,7 +78,7 @@ function onClickApply(){
           <Icon icon="mingcute:ai-line" class="w-6 h-6 cursor-pointer" @click="openDialog" />
         </div>
       </template>
-      <MonacoEditor class="w-full" v-model="definitionString" :uri="route.path" />
+      <MonacoEditor class="w-full" v-model="definitionString" language="json" :uri="route.path" />
     </FormItem>
     <div class="flex justify-end gap-2">
       <Button @click="onClickCancel">取消</Button>
@@ -98,7 +98,7 @@ function onClickApply(){
           </template>
         </Button>
       </FormItem>
-      <MonacoEditor class="w-full" v-model="completionResult" :uri="`${route.path}/completion`" />
+      <MonacoEditor class="w-full" v-model="completionResult" language="json" :uri="`${route.path}/completion`" />
     </Form>
     <template #footer>
       <div class="flex justify-end gap-2">

@@ -25,9 +25,9 @@ export default defineConfig({
     Components({ dirs: ["src/components"] }),
     vueDevTools()
   ],
-  server:{
-    proxy:{
-      "/api":"http://localhost:8080"
+  server: {
+    proxy: {
+      "/api": "http://localhost:8080"
     }
   }
 })
