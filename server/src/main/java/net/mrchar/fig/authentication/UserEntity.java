@@ -60,7 +60,7 @@ public class UserEntity extends AbstractEntity implements UserDetails {
     this.code = RandomUtil.generateCode(username);
     this.role = Role.USER;
     this.username = username;
-    this.password = password;
+    this.setPassword(password);
   }
 
   @Override

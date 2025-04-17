@@ -1,12 +1,20 @@
 package net.mrchar.fig.space;
 
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpaceRepository extends JpaRepository<SpaceEntity, Long> {
+  @Query(
+          """
+                  from SpaceEntity s
+                              where s.owner.username = ?#{principal.username}""")
+  Page<SpaceEntity> findAllForUser(Pageable pageable);
+
   @Query(
       """
             from SpaceEntity s

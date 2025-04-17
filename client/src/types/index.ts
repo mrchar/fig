@@ -57,3 +57,9 @@ export type FunctionType = {
   description: string,
   content: string
 }
+
+export type SpaceType = {
+  id: number,
+  code: string,
+  name: string,
+}

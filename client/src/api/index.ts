@@ -4,6 +4,7 @@ import completion from "@/api/completion.ts"
 import form from "@/api/form.ts"
 import record from "@/api/record.ts"
 import func from "@/api/function.ts"
+import space from "@/api/space.ts"
 
 export default {
   vocabulary,
@@ -11,5 +12,6 @@ export default {
   completion,
   form,
   record,
-  func
+  func,
+  space
 }

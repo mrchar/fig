@@ -1,4 +1,8 @@
 spring:
+  datasource:
+    url: jdbc:h2:mem:fig
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: none

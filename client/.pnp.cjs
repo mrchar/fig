@@ -54,6 +54,7 @@ const RAW_RUNTIME_STATE =
           ["lodash", "npm:4.17.21"],\
           ["maska", "npm:2.1.11"],\
           ["monaco-editor", "npm:0.52.2"],\
+          ["pinia", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.0.2"],\
           ["prettier", "npm:3.5.3"],\
           ["prettier-plugin-tailwindcss", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:0.6.11"],\
           ["qs", "npm:6.14.0"],\
@@ -2285,6 +2286,14 @@ const RAW_RUNTIME_STATE =
           ["@vue/devtools-api", "npm:6.6.4"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:7.7.5", {\
+        "packageLocation": "../../../.yarn/berry/cache/@vue-devtools-api-npm-7.7.5-8019396684-10c0.zip/node_modules/@vue/devtools-api/",\
+        "packageDependencies": [\
+          ["@vue/devtools-api", "npm:7.7.5"],\
+          ["@vue/devtools-kit", "npm:7.7.5"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["@vue/devtools-core", [\
@@ -2329,6 +2338,20 @@ const RAW_RUNTIME_STATE =
           ["superjson", "npm:2.2.2"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:7.7.5", {\
+        "packageLocation": "../../../.yarn/berry/cache/@vue-devtools-kit-npm-7.7.5-8fed67c1fd-10c0.zip/node_modules/@vue/devtools-kit/",\
+        "packageDependencies": [\
+          ["@vue/devtools-kit", "npm:7.7.5"],\
+          ["@vue/devtools-shared", "npm:7.7.5"],\
+          ["birpc", "npm:2.3.0"],\
+          ["hookable", "npm:5.5.3"],\
+          ["mitt", "npm:3.0.1"],\
+          ["perfect-debounce", "npm:1.0.0"],\
+          ["speakingurl", "npm:14.0.1"],\
+          ["superjson", "npm:2.2.2"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["@vue/devtools-shared", [\
@@ -2336,6 +2359,14 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/@vue-devtools-shared-npm-7.7.2-557fda9f0f-10c0.zip/node_modules/@vue/devtools-shared/",\
         "packageDependencies": [\
           ["@vue/devtools-shared", "npm:7.7.2"],\
+          ["rfdc", "npm:1.4.1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:7.7.5", {\
+        "packageLocation": "../../../.yarn/berry/cache/@vue-devtools-shared-npm-7.7.5-5ff81341ab-10c0.zip/node_modules/@vue/devtools-shared/",\
+        "packageDependencies": [\
+          ["@vue/devtools-shared", "npm:7.7.5"],\
           ["rfdc", "npm:1.4.1"]\
         ],\
         "linkType": "HARD"\
@@ -2739,6 +2770,13 @@ const RAW_RUNTIME_STATE =
           ["birpc", "npm:0.2.19"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:2.3.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/birpc-npm-2.3.0-3a0a6de3ce-10c0.zip/node_modules/birpc/",\
+        "packageDependencies": [\
+          ["birpc", "npm:2.3.0"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["boolbase", [\
@@ -2968,6 +3006,7 @@ const RAW_RUNTIME_STATE =
           ["lodash", "npm:4.17.21"],\
           ["maska", "npm:2.1.11"],\
           ["monaco-editor", "npm:0.52.2"],\
+          ["pinia", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.0.2"],\
           ["prettier", "npm:3.5.3"],\
           ["prettier-plugin-tailwindcss", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:0.6.11"],\
           ["qs", "npm:6.14.0"],\
@@ -5307,6 +5346,33 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/pidtree-npm-0.6.0-3d92e16117-10c0.zip/node_modules/pidtree/",\
         "packageDependencies": [\
           ["pidtree", "npm:0.6.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["pinia", [\
+      ["npm:3.0.2", {\
+        "packageLocation": "../../../.yarn/berry/cache/pinia-npm-3.0.2-2d2f052067-10c0.zip/node_modules/pinia/",\
+        "packageDependencies": [\
+          ["pinia", "npm:3.0.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.0.2", {\
+        "packageLocation": "./.yarn/__virtual__/pinia-virtual-52633062aa/4/.yarn/berry/cache/pinia-npm-3.0.2-2d2f052067-10c0.zip/node_modules/pinia/",\
+        "packageDependencies": [\
+          ["pinia", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.0.2"],\
+          ["@types/typescript", null],\
+          ["@types/vue", null],\
+          ["@vue/devtools-api", "npm:7.7.5"],\
+          ["typescript", "patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"],\
+          ["vue", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.5.13"]\
+        ],\
+        "packagePeers": [\
+          "@types/typescript",\
+          "@types/vue",\
+          "typescript",\
+          "vue"\
         ],\
         "linkType": "HARD"\
       }]\

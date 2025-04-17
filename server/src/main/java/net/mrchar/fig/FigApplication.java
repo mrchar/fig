@@ -53,7 +53,6 @@ public class FigApplication {
     this.userRepository.save(entity);
   }
 
-  @PostConstruct
   private void addDefaultSpace() {
     long count = this.spaceRepository.count();
     if (count != 0) {

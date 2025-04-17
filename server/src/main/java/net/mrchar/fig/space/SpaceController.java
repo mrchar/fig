@@ -16,7 +16,7 @@ public class SpaceController {
 
   @GetMapping
   public Page<SpaceEntity> listSpaces(Pageable pageable) {
-    return spaceRepository.findAll(pageable);
+    return spaceRepository.findAllForUser(pageable);
   }
 
   @Getter

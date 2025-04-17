@@ -8,6 +8,7 @@ export type Props = {
   options?: any[],
   datasource?: SearchDatasource, // 获取选项的方法
   formatter?: (item: any) => string // 将选项转换为字符串
+  selectFirst?: boolean
 }
 
 export type SearchDatasource<T = any> = (
@@ -25,6 +26,8 @@ const props = withDefaults(defineProps<Props>(),
   { options: () => [], placeholder: "please select a option" }
 )
 
+const emit = defineEmits(["change"])
+
 const keyword = ref("")
 const pagination: PaginationParams = {
   page: 1,
@@ -34,6 +37,18 @@ const searchParams = computed(() => ({ keyword: keyword.value }))
 const { data, execute } = props.datasource
   ? props.datasource(searchParams, pagination)
   : { data: ref([]) }
+
+watch(data, () => {
+  if (!props.selectFirst) {
+    return
+  }
+
+  const response: PagedResponse = data.value as PagedResponse
+  if (model.value === null && response.content.length > 0) {
+    emit("change", response.content[0])
+    model.value = response.content[0]
+  }
+})
 
 let timeoutIndex: number | null = null
 if (!props.datasource) {
@@ -63,21 +78,19 @@ const _options = computed((): any[] => {
   return []
 })
 
-const selectRef = useTemplateRef<HTMLSelectElement>("select")
+const selectValue = ref(null)
+
 watch(model, () => {
-  if (!selectRef.value) {
+  if (model.value === null) {
     return
   }
 
-  selectRef.value.value = props.formatter
+  selectValue.value = props.formatter
     ? props.formatter(model.value)
     : model.value
 }, { immediate: true })
 
-const emit = defineEmits(["change"])
-
-function onSelectChange(e: Event) {
-  const value = (e.target as HTMLSelectElement).value
+watch(selectValue, (value) => {
   if (props.formatter) {
     const selected = _options.value.find(item => (props.formatter!(item) === value))
     emit("change", selected)
@@ -86,7 +99,7 @@ function onSelectChange(e: Event) {
     emit("change", value)
     model.value = value
   }
-}
+})
 </script>
 
 <template>
@@ -94,7 +107,7 @@ function onSelectChange(e: Event) {
     <span v-if="props.prefix" class="label">
       {{ props.prefix }}
     </span>
-    <select ref="select" @change="onSelectChange">
+    <select ref="select" v-model="selectValue">
       <option v-if="props.placeholder" disabled selected>
         {{ props.placeholder }}
       </option>

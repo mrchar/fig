@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -32,6 +33,7 @@ public class SecurityConfiguration {
     http.csrf(AbstractHttpConfigurer::disable);
     http.authorizeHttpRequests(
         registry -> {
+          registry.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
           registry.anyRequest().authenticated();
         });
     http.exceptionHandling(

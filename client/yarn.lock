@@ -1703,6 +1703,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/devtools-api@npm:^7.7.2":
+  version: 7.7.5
+  resolution: "@vue/devtools-api@npm:7.7.5"
+  dependencies:
+    "@vue/devtools-kit": "npm:^7.7.5"
+  checksum: 10c0/006ca441e71812bc65154cf24776cabb0dba3da0a343e960983bbc955a5e8fbcb1d67a8c2df619a9fd5cabf18e1e78604abc88ec45aa8583b992fde7bd4734e0
+  languageName: node
+  linkType: hard
+
 "@vue/devtools-core@npm:^7.7.2":
   version: 7.7.2
   resolution: "@vue/devtools-core@npm:7.7.2"
@@ -1734,12 +1743,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/devtools-kit@npm:^7.7.5":
+  version: 7.7.5
+  resolution: "@vue/devtools-kit@npm:7.7.5"
+  dependencies:
+    "@vue/devtools-shared": "npm:^7.7.5"
+    birpc: "npm:^2.3.0"
+    hookable: "npm:^5.5.3"
+    mitt: "npm:^3.0.1"
+    perfect-debounce: "npm:^1.0.0"
+    speakingurl: "npm:^14.0.1"
+    superjson: "npm:^2.2.2"
+  checksum: 10c0/09b07ee3e5c178aacd5e71480c155b39176abdfacd23a8dcd1456191e47d7f36fee713298cb8536ac3f8c73ac870f273f0f55059d8acc93b816f485e670260e3
+  languageName: node
+  linkType: hard
+
 "@vue/devtools-shared@npm:^7.7.2":
   version: 7.7.2
   resolution: "@vue/devtools-shared@npm:7.7.2"
   dependencies:
     rfdc: "npm:^1.4.1"
   checksum: 10c0/6399135da41a91f48c3db7c59cedb01ad331af7784ef0877c15c669ad5a5d1cce68f73d50d81f85a31a90b0d6323ff807ebe5b1fb041d1e86932f2c983a0cdad
+  languageName: node
+  linkType: hard
+
+"@vue/devtools-shared@npm:^7.7.5":
+  version: 7.7.5
+  resolution: "@vue/devtools-shared@npm:7.7.5"
+  dependencies:
+    rfdc: "npm:^1.4.1"
+  checksum: 10c0/33deee34a6d69ffa8c1dcaa17b7def8992f0ef3e430f35ef8f4bfeb9aa533cf0b20348da14c26eeda2c70d728f2d4ab95fba5ac1561d793b92926ba70d0e6d41
   languageName: node
   linkType: hard
 
@@ -2024,6 +2057,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"birpc@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "birpc@npm:2.3.0"
+  checksum: 10c0/82489bcfa1c0a669bf4e5a15fa72691e8bda35abeac8860044eeffdcbc05da200b4349711a4beccdb2d0b90c40d752b0c7fcf01462bcfcb38ae9bd2b034ed339
+  languageName: node
+  linkType: hard
+
 "boolbase@npm:^1.0.0":
   version: 1.0.0
   resolution: "boolbase@npm:1.0.0"
@@ -2238,6 +2278,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     maska: "npm:^2.1.11"
     monaco-editor: "npm:^0.52.2"
+    pinia: "npm:^3.0.2"
     prettier: "npm:^3.5.3"
     prettier-plugin-tailwindcss: "npm:^0.6.11"
     qs: "npm:^6.14.0"
@@ -4353,6 +4394,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pinia@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "pinia@npm:3.0.2"
+  dependencies:
+    "@vue/devtools-api": "npm:^7.7.2"
+  peerDependencies:
+    typescript: ">=4.4.4"
+    vue: ^2.7.0 || ^3.5.11
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/4c21412ddb32c48c1d9fb9fb47a2cd40bc4af9198e65392423ab97f6a9da31d0b880bc59b008967058643a988cb574025f885a1d0e4faf47bec25521933bb27f
+  languageName: node
+  linkType: hard
+
 "pkg-types@npm:^1.3.0":
   version: 1.3.1
   resolution: "pkg-types@npm:1.3.1"
@@ -4975,7 +5031,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superjson@npm:^2.2.1":
+"superjson@npm:^2.2.1, superjson@npm:^2.2.2":
   version: 2.2.2
   resolution: "superjson@npm:2.2.2"
   dependencies:
