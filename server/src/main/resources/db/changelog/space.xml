@@ -4,26 +4,23 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="create_local_user_table" author="admin">
+    <changeSet id="create_space_table" author="admin">
         <preConditions>
             <not>
-                <tableExists tableName="local_user"/>
+                <tableExists tableName="space"/>
             </not>
         </preConditions>
-        <createTable tableName="local_user">
+        <createTable tableName="space">
             <column name="id" type="serial">
                 <constraints primaryKey="true"/>
             </column>
             <column name="code" type="varchar(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="role" type="varchar(10)">
+            <column name="name" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="username" type="varchar(50)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="password" type="varchar(100)">
+            <column name="owner_id" type="int">
                 <constraints nullable="false"/>
             </column>
             <column name="created_at" type="datetime" defaultValueComputed="now()">
@@ -33,5 +30,9 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <createIndex tableName="space" indexName="uk_space_owner_id_name">
+            <column name="owner_id"/>
+            <column name="name"/>
+        </createIndex>
     </changeSet>
 </databaseChangeLog>

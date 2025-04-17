@@ -49,13 +49,13 @@ class VocabularyApiTest {
   @Order(1)
   void should_success_when_search_vocabularies() throws Exception {
     VocabularyEntity entity = new VocabularyEntity();
-    entity.setVocabulary(new VocabularyConcept("name", "description", new HashMap<>()));
+    entity.setVocabulary(new VocabularyConcept("justaname", "description", new HashMap<>()));
     this.vocabularyRepository.save(entity);
     mockMvc
-        .perform(get("/vocabularies?keyword=am"))
+        .perform(get("/vocabularies?keyword=ustaname"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isNotEmpty())
-        .andExpect(jsonPath("$.content[0].name").value("name"));
+        .andExpect(jsonPath("$.content[0].name").value("justaname"));
   }
 
   @Test
@@ -65,7 +65,8 @@ class VocabularyApiTest {
         .perform(
             post("/vocabularies")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("""
+                .content(
+                    """
                         {
                           "name": "测试",
                           "description": "描述",
@@ -99,7 +100,8 @@ class VocabularyApiTest {
         .perform(
             put("/vocabularies/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("""
+                .content(
+                    """
                         {
                           "name": "修改",
                           "description": "描述",

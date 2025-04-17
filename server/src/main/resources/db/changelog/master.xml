@@ -9,4 +9,5 @@
     <include file="db/changelog/record.xml"/>
     <include file="db/changelog/function.xml"/>
     <include file="db/changelog/user.xml"/>
+    <include file="db/changelog/space.xml"/>
 </databaseChangeLog>

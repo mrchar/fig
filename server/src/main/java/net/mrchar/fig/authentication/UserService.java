@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.mrchar.fig.common.ResourceNotExistsException;
+import net.mrchar.fig.util.RandomUtil;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -19,21 +20,7 @@ public class UserService {
   private final SecurityProperties securityProperties;
   private final UserRepository userRepository;
 
-  @PostConstruct
-  public void addAdminUser() {
-    List<UserEntity> admins = this.userRepository.listAllByRole(Role.ADMIN);
-    if (!CollectionUtils.isEmpty(admins)) {
-      return;
-    }
 
-    SecurityProperties.User user = this.securityProperties.getUser();
-    if (!StringUtils.hasText(user.getName()) && !StringUtils.hasText(user.getPassword())) {
-      throw new RuntimeException("没有配置管理员账号和密码");
-    }
-
-    UserEntity entity = new UserEntity(user.getName(), user.getPassword());
-    this.userRepository.save(entity);
-  }
 
   public UserEntity getUserByCode(@NotNull String code) {
     return this.userRepository
@@ -47,7 +34,7 @@ public class UserService {
       throw new ResolutionException("Username not available.");
     }
 
-    String password = PasswordUtil.generatePassword();
+    String password = RandomUtil.generatePassword();
     UserEntity entity = new UserEntity(username, password);
     return this.userRepository.save(entity);
   }
@@ -78,7 +65,7 @@ public class UserService {
 
   public UserEntity updatePassword(@NotNull String code, @NotNull String password) {
     UserEntity entity = this.getUserByCode(code);
-    entity.setPassword(PasswordUtil.generatePassword());
+    entity.setPassword(RandomUtil.generatePassword());
     return this.userRepository.save(entity);
   }
 

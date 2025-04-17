@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @TestInstance(PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-class UserControllerTest {
+class AuthenticationApiTest {
   static Faker FAKER = new Faker();
 
   @Autowired UserRepository userRepository;
