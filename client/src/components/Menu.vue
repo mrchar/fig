@@ -6,7 +6,7 @@ export type Props = {
   active?: { path: string }
 }
 
-const props = withDefaults(defineProps<Props>(), { active: "" })
+const props = withDefaults(defineProps<Props>(), { active: () => ({ path: "" }) })
 
 
 </script>

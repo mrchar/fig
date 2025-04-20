@@ -146,7 +146,7 @@ function deleteForm(id: number) {
       <FormItem label="数据定义">
         <Select v-model="addParams.struct" class="w-full"
                 :datasource="api.struct.useListStructs"
-                :formatter="item=>item.name"
+                :formatter="item=>({label:item.name, value:item.name})"
         />
       </FormItem>
     </Form>

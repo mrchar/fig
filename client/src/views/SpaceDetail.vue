@@ -3,13 +3,15 @@ import api from "@/api"
 
 const router = useRouter()
 
-const code = useRouteParams<string>("code", null)
+const code = useRouteParams<string>("code", "")
 
 const updateParams = ref({ name: "" })
 
 api.space.useGetSpace(code)
   .then(({ data }) => {
-    updateParams.value = data.value
+    if (data.value) {
+      updateParams.value = data.value
+    }
   })
 
 function goBack() {

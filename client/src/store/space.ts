@@ -5,7 +5,7 @@ import type { SpaceType } from "@/types"
 export const useSpaceStore = defineStore("space", () => {
   const space = useStorage<SpaceType>("spaces", null, undefined, { serializer: StorageSerializers.object })
 
-  function setSpace(value) {
+  function setSpace(value: any) {
     space.value = value
   }
 

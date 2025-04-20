@@ -88,7 +88,7 @@ function deleteRecord(id: number) {
   <Form class="flex gap-2" @submit="refreshResult">
     <Select prefix="表单" v-model="searchParams.form"
             :datasource="api.form.useListForms"
-            :formatter="item => item.name" />
+            :formatter="item => ({label:item.name, value:item.name})" />
     <Button @click="refreshResult">搜索</Button>
   </Form>
   <Table ref="table" :columns="columns" :datasource="searchDatasource">
@@ -118,7 +118,7 @@ function deleteRecord(id: number) {
       <FormItem label="表单">
         <Select v-model="addParams.form" class="w-full"
                 :datasource="api.form.useListForms"
-                :formatter="item=>item.name"
+                :formatter="item=>({label:item.name, value:item.name})"
         />
       </FormItem>
     </Form>

@@ -7,7 +7,7 @@ export type Props = {
   placeholder?: string,
   options?: any[],
   datasource?: SearchDatasource, // 获取选项的方法
-  formatter?: (item: any) => string // 将选项转换为字符串
+  formatter?: (item: any) => { label: string, value: string } // 将选项转换为字符串
   selectFirst?: boolean
 }
 
@@ -44,7 +44,10 @@ watch(data, () => {
   }
 
   const response: PagedResponse = data.value as PagedResponse
-  if (model.value === null && response.content.length > 0) {
+  if (response.content.length == 0) {
+    return
+  }
+  if (model.value === null || !response.content.includes(model.value)) {
     emit("change", response.content[0])
     model.value = response.content[0]
   }
@@ -86,13 +89,13 @@ watch(model, () => {
   }
 
   selectValue.value = props.formatter
-    ? props.formatter(model.value)
+    ? props.formatter(model.value).value
     : model.value
 }, { immediate: true })
 
 watch(selectValue, (value) => {
   if (props.formatter) {
-    const selected = _options.value.find(item => (props.formatter!(item) === value))
+    const selected = _options.value.find(item => (props.formatter!(item).value === value))
     emit("change", selected)
     model.value = selected
   } else {
@@ -111,8 +114,10 @@ watch(selectValue, (value) => {
       <option v-if="props.placeholder" disabled selected>
         {{ props.placeholder }}
       </option>
-      <option v-for="option in _options">
-        {{ props.formatter ? props.formatter(option) : option }}
+      <option v-for="option in _options"
+              :value="props.formatter ? props.formatter(option).value : option "
+      >
+        {{ props.formatter ? props.formatter(option).label : option }}
       </option>
     </select>
   </label>

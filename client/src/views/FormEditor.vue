@@ -86,7 +86,7 @@ function applyChange(completionResult: string) {
       <FormItem label="数据定义">
         <Select v-model="saveParams.struct" class="w-full"
                 :datasource="api.struct.useListStructs"
-                :formatter="item=>item.name"
+                :formatter="item=>({label:item.name, value: item.name})"
         />
       </FormItem>
       <FormItem>

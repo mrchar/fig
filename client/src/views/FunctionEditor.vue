@@ -80,7 +80,7 @@ const completionDatasource = function(query: MaybeRef<string>) {
         <Select v-model="argumentStruct"
                 class="w-full"
                 :datasource="api.struct.useListStructs"
-                :formatter="item => item.name"
+                :formatter="item => ({label:item.name, value:item.name})"
         />
       </FormItem>
       <FormItem label="代码">

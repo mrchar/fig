@@ -24,7 +24,7 @@ const { space, setSpace } = useSpaceStore()
               class="w-56"
               :model-value="space"
               :datasource="api.space.useListSpaces"
-              :formatter="item=>item.name"
+              :formatter="item=>({label:item.name, value: item.code})"
               :select-first="true"
               placeholder="请选择空间"
               @change="setSpace"
