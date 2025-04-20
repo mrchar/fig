@@ -16,22 +16,28 @@ public class SpaceController {
 
   @GetMapping
   public Page<SpaceEntity> listSpaces(Pageable pageable) {
-    return spaceRepository.findAllForUser(pageable);
+    return this.spaceRepository.findAllForUser(pageable);
+  }
+
+  @GetMapping("/{code}")
+  public SpaceEntity getSpaces(@PathVariable String code) {
+    return this.spaceService.getSpace(code);
   }
 
   @Getter
   @Setter
-  public static class AddOrUpdateParams {
+  public static class AddOrUpdateSpaceParams {
     private String name;
   }
 
   @PostMapping
-  public SpaceEntity addSpace(@RequestBody AddOrUpdateParams params) {
+  public SpaceEntity addSpace(@RequestBody AddOrUpdateSpaceParams params) {
     return this.spaceService.addSpace(params.getName());
   }
 
   @PutMapping("{code}")
-  public SpaceEntity updateSpace(@PathVariable String code, @RequestBody AddOrUpdateParams params) {
+  public SpaceEntity updateSpace(
+      @PathVariable String code, @RequestBody AddOrUpdateSpaceParams params) {
     return this.spaceService.updateSpace(code, params.getName());
   }
 

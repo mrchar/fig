@@ -42,7 +42,7 @@ const { space, setSpace } = useSpaceStore()
         <RouterView />
       </main>
     </div>
-    <footer class="fixed bottom-0 text-right w-full p-4 text-gray-400">
+    <footer class="fixed bottom-0 text-right w-full p-4 text-gray-400 pointer-events-none">
       {{ space?.code }}
     </footer>
   </div>

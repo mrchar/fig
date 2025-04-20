@@ -2,6 +2,7 @@
 import api from "@/api"
 import type { PaginationParams } from "@/types"
 import type { Column } from "@/components/Table.vue"
+import useAuditColumns from "@/composables/audit-columns.ts"
 
 const columns: Column[] = [
   {
@@ -11,19 +12,7 @@ const columns: Column[] = [
   },
   { title: "名称", prop: "name" },
   { title: "描述", prop: "description" },
-  {
-    title: "创建时间", prop: "createdAt",
-    formatter({ value }) {
-      return value && new Date(value).toLocaleString()
-    }
-  },
-  {
-    title: "更新时间",
-    prop: "updatedAt",
-    formatter({ value }) {
-      return value && new Date(value).toLocaleString()
-    }
-  },
+  ...useAuditColumns(),
   {
     title: "操作", prop: "operations"
   }

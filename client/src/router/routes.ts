@@ -130,7 +130,28 @@ const routes: RouteRecordRaw[] = [
           help: "在表单中录入要收集的信息，点击保存，就可以将数据提交的系统中了。"
         },
         component: () => import("@/views/RecordEditor.vue")
-      }]
+      },
+      {
+        name: "SpaceList",
+        path: "/space/list",
+        meta: {
+          title: "空间管理",
+          isMenu: true,
+          help: "使用空间对功能进行隔离，每个空间承担独立的功能，可以是一家公司，或者一项专门的业务"
+        },
+        component: () => import("@/views/SpaceList.vue")
+      },
+      {
+        name: "SpaceEditor",
+        path: "/space/detail/:code",
+        meta: {
+          title: "编辑空间",
+          isMenu: false,
+          help: "你可以修改空间的名称"
+        },
+        component: () => import("@/views/SpaceDetail.vue")
+      }
+    ]
   }
 ]
 
