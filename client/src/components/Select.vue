@@ -115,9 +115,9 @@ watch(selectValue, (value) => {
         {{ props.placeholder }}
       </option>
       <option v-for="option in _options"
-              :value="props.formatter ? props.formatter(option).value : option "
+              :value="props.formatter ? props.formatter(option).value : option.value"
       >
-        {{ props.formatter ? props.formatter(option).label : option }}
+        {{ props.formatter ? props.formatter(option).label : option.label }}
       </option>
     </select>
   </label>

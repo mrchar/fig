@@ -22,7 +22,7 @@ export default defineConfig({
         { "@vueuse/router": ["useRouteParams"] }
       ]
     }),
-    Components({ dirs: ["src/components"] }),
+    Components({}),
     vueDevTools()
   ],
   server: {

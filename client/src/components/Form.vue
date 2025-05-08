@@ -7,7 +7,7 @@ function onSubmit() {
 </script>
 
 <template>
-  <form class="max-w-lg p-2" @submit.prevent="onSubmit">
+  <form class="p-2" @submit.prevent="onSubmit">
     <slot></slot>
   </form>
 </template>

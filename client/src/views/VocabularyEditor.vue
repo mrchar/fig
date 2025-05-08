@@ -18,6 +18,16 @@ watch(() => saveParams.value.definition, (value: any) => {
   definitionString.value = JSON.stringify(value, null, 2)
 }, { immediate: true })
 
+const monacoEditor = useTemplateRef("monaco-editor")
+
+onClickOutside(monacoEditor, () => {
+  try {
+    saveParams.value.definition = JSON.parse(definitionString.value)
+  } catch (e) {
+    console.error("解析词汇定义时发生错误", e)
+  }
+})
+
 const route = useRoute()
 
 const router = useRouter()
@@ -44,31 +54,34 @@ function applyChange(completionResult: string) {
 </script>
 
 <template>
-  <Form class="w-full h-full p-4 flex flex-col gap-2">
-    <FormItem label="名称">
-      <Input class="w-full" v-model="saveParams.name" placeholder="请输入词汇名称" />
-    </FormItem>
-    <FormItem label="描述">
-      <Input class="w-full" v-model="saveParams.description" placeholder="请输入词汇释义" />
-    </FormItem>
-    <FormItem>
-      <template #label>
-        <div class="flex w-full justify-between">
-          <div>定义</div>
-          <IntelligentButton :datasource="api.completion.useCompleteVocabulary" @apply="applyChange">
-            <template #editor="{completionResult}">
-              <MonacoEditor class="w-full" :model-value="completionResult"
-                            language="json"
-                            :uri="`${route.path}/completion`" />
-            </template>
-          </IntelligentButton>
-        </div>
-      </template>
-      <MonacoEditor class="w-full" v-model="definitionString" language="json" :uri="route.path" />
-    </FormItem>
-    <div class="flex justify-end gap-2">
-      <Button @click="goBack">取消</Button>
-      <Button priority="primary" @click="saveVocabulary">保存</Button>
-    </div>
-  </Form>
+  <div class="flex gap-2">
+    <Form class="w-full h-full p-4 flex flex-col gap-2">
+      <FormItem label="名称">
+        <Input class="w-full" v-model="saveParams.name" placeholder="请输入词汇名称" />
+      </FormItem>
+      <FormItem label="描述">
+        <Input class="w-full" v-model="saveParams.description" placeholder="请输入词汇释义" />
+      </FormItem>
+      <FormItem>
+        <template #label>
+          <div class="flex w-full justify-between">
+            <div>定义</div>
+            <IntelligentButton :datasource="api.completion.useCompleteVocabulary" @apply="applyChange">
+              <template #editor="{completionResult}">
+                <MonacoEditor class="w-full" :model-value="completionResult"
+                              language="json"
+                              :uri="`${route.path}/completion`" />
+              </template>
+            </IntelligentButton>
+          </div>
+        </template>
+        <MonacoEditor ref="monaco-editor" class="w-full" v-model="definitionString" language="json" :uri="route.path" />
+      </FormItem>
+      <div class="flex justify-end gap-2">
+        <Button @click="goBack">取消</Button>
+        <Button priority="primary" @click="saveVocabulary">保存</Button>
+      </div>
+    </Form>
+    <JsonSchemaEditor v-model="saveParams.definition" />
+  </div>
 </template>

@@ -17,6 +17,7 @@ import net.mrchar.fig.struct.StructEntity;
 import net.mrchar.fig.struct.StructRepository;
 import net.mrchar.fig.vocabulary.VocabularyEntity;
 import net.mrchar.fig.vocabulary.VocabularyRepository;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Profile("dev")
 @RequiredArgsConstructor
-// @ConditionalOnProperty(name = "mock.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "mock.enabled", havingValue = "true")
 public class MockDateGenerator {
   private final SecurityProperties securityProperties;
   private final UserRepository userRepository;
