@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from "vue-router"
-import LandingPage from "@/views/LandingPage.vue"
+import LandingPage from "@/views/LandingPage/LandingPage.vue"
 import Login from "@/views/Login.vue"
 import Framework from "@/layouts/Framework.vue"
 

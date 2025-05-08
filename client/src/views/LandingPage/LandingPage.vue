@@ -1,30 +1,26 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import ThemeToggle from "@/layouts/components/ThemeToggle.vue"
 
 useTitle("无花果低代码：开启高效业务数字化之旅")
 </script>
 <template>
   <!-- 导航栏 -->
-  <nav
-    class="navbar sticky top-0 bg-gradient-to-r from-slate-800/30 via-gray-800/30 to-zinc-800/30 backdrop-blur-md backdrop-saturate-75 py-4 px-8 border-b border-gray-700 z-50">
-    <div class="flex-1">
-      <a href="/" class="btn btn-ghost normal-case text-xl">Fig</a>
-    </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
-        <li><a href="#title">首页</a></li>
-        <li><a href="#feature-1">功能介绍</a></li>
-        <li><a>案例展示</a></li>
-        <li><a>联系我们</a></li>
-      </ul>
-    </div>
-  </nav>
+  <Navbar class="sticky top-0 z-50">
+    <ul class="menu menu-horizontal px-1">
+      <li><a href="#title">首页</a></li>
+      <li><a href="#feature-1">功能介绍</a></li>
+      <li><a>案例展示</a></li>
+      <li><a>联系我们</a></li>
+    </ul>
+    <ThemeToggle/>
+  </Navbar>
 
   <main>
     <!-- 英雄区域 -->
     <section
       id="title"
-      class="hero scroll-mt-32 min-h-screen flex flex-col justify-center items-center space-y-8 px-4 bg-gradient-to-br from-slate-900/20 via-gray-900/20 to-zinc-900/20">
+      class="hero scroll-mt-32 min-h-screen flex flex-col justify-center items-center space-y-8 px-4 bg-transparent dark:bg-gradient-to-br dark:from-slate-900/20 dark:via-gray-900/20 dark:to-zinc-900/20">
       <h1 class="text-5xl md:text-7xl lg:text-9xl font-bold text-center">无花果低代码</h1>
       <p class="text-xl md:text-3xl lg:text-5xl text-center">开启高效业务数字化之旅</p>
       <RouterLink to="/vocabulary/list">
@@ -33,7 +29,7 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
     </section>
 
     <!-- AI 全域赋能介绍 -->
-    <section id="feature-1" class="scroll-mt-32 py-16 px-8 bg-gradient-to-br from-slate-900/30 via-gray-900/30 to-zinc-900/30">
+    <section id="feature-1" class="scroll-mt-32 py-16 px-8 bg-transparent dark:bg-gradient-to-br dark:from-slate-900/30 dark:via-gray-900/30 dark:to-zinc-900/30">
       <div class="container mx-auto text-center">
         <h2 class="text-4xl font-bold mb-8">
           AI 全域赋能，驱动高效智能变革
@@ -46,13 +42,13 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
     </section>
 
     <!-- 功能介绍区域 -->
-    <section id="feature-2" class="py-16 px-8 bg-gradient-to-br from-slate-900/40 via-gray-900/40 to-zinc-900/40">
+    <section id="feature-2" class="py-16 px-8 dark:bg-gradient-to-br dark:from-slate-900/40 dark:via-gray-900/40 dark:to-zinc-900/40">
       <div class="container mx-auto">
         <h2 class="text-4xl font-bold text-center mb-12">极致体验，深度赋能</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- 卡片通用类 -->
           <div
-            class="card bg-gradient-to-br from-slate-800/20 via-gray-800/20 to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
+            class="card dark:bg-gradient-to-br dark:from-slate-800/20 dark:via-gray-800/20 dark:to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
             <div class="card-body">
               <h3 class="card-title">精准抽象，构建清晰业务概念</h3>
               <p>
@@ -60,7 +56,7 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
             </div>
           </div>
           <div
-            class="card bg-gradient-to-br from-slate-800/20 via-gray-800/20 to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
+            class="card dark:bg-gradient-to-br dark:from-slate-800/20 dark:via-gray-800/20 dark:to-zinc-800/20 dark:backdrop-blur-md border dark:border-gray-700 shadow-xl">
             <div class="card-body">
               <h3 class="card-title">灵活建模，打造贴合业务模型</h3>
               <p>
@@ -68,7 +64,7 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
             </div>
           </div>
           <div
-            class="card bg-gradient-to-br from-slate-800/20 via-gray-800/20 to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
+            class="card dark:bg-gradient-to-br dark:from-slate-800/20 dark:via-gray-800/20 dark:to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
             <div class="card-body">
               <h3 class="card-title">自主定制，生成精美专属表单</h3>
               <p>
@@ -76,7 +72,7 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
             </div>
           </div>
           <div
-            class="card bg-gradient-to-br from-slate-800/20 via-gray-800/20 to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
+            class="card dark:bg-gradient-to-br dark:from-slate-800/20 dark:via-gray-800/20 dark:to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
             <div class="card-body">
               <h3 class="card-title">巧妙规划，推动顺畅表单流转</h3>
               <p>
@@ -84,7 +80,7 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
             </div>
           </div>
           <div
-            class="card bg-gradient-to-br from-slate-800/20 via-gray-800/20 to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
+            class="card dark:bg-gradient-to-br dark:from-slate-800/20 dark:via-gray-800/20 dark:to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
             <div class="card-body">
               <h3 class="card-title">便捷定义，实现智能计算逻辑</h3>
               <p>
@@ -92,7 +88,7 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
             </div>
           </div>
           <div
-            class="card bg-gradient-to-br from-slate-800/20 via-gray-800/20 to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
+            class="card dark:bg-gradient-to-br dark:from-slate-800/20 dark:via-gray-800/20 dark:to-zinc-800/20 backdrop-blur-md border border-gray-700 shadow-xl">
             <div class="card-body">
               <h3 class="card-title">深度挖掘，释放巨大数据价值</h3>
               <p>
@@ -105,7 +101,7 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
 
     <!-- 页脚 -->
     <footer
-      class="footer p-10 bg-gradient-to-br from-slate-800/30 via-gray-800/30 to-zinc-800/30 backdrop-blur-md border-t border-gray-700 text-base-content flex justify-between">
+      class="footer p-10 dark:bg-gradient-to-br dark:from-slate-800/30 dark:via-gray-800/30 dark:to-zinc-800/30 backdrop-blur-md border-t border-gray-700 text-base-content flex justify-between">
       <div>
         <span class="footer-title">导航</span>
         <a class="link link-hover">首页</a>
@@ -132,3 +128,7 @@ useTitle("无花果低代码：开启高效业务数字化之旅")
     </footer>
   </main>
 </template>
+
+<style scoped>
+
+</style>

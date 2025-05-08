@@ -28,6 +28,7 @@ declare module 'vue' {
     JsonSchemaEditor: typeof import('./src/components/JsonSchemaEditor/JsonSchemaEditor.vue')['default']
     Menu: typeof import('./src/components/Menu.vue')['default']
     MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
+    Navbar: typeof import('./src/components/Navbar.vue')['default']
     NumberEditor: typeof import('./src/components/JsonSchemaEditor/renderers/NumberEditor.vue')['default']
     NumberRenderer: typeof import('./src/components/JsonSchemaEditor/components/NumberRenderer.vue')['default']
     ObjectEditor: typeof import('./src/components/JsonSchemaEditor/renderers/ObjectEditor.vue')['default']
@@ -39,8 +40,10 @@ declare module 'vue' {
     Select: typeof import('./src/components/Select.vue')['default']
     StringEditor: typeof import('./src/components/JsonSchemaEditor/renderers/StringEditor.vue')['default']
     StringRenderer: typeof import('./src/components/JsonSchemaEditor/components/StringRenderer.vue')['default']
+    Swap: typeof import('./src/components/Swap.vue')['default']
     Table: typeof import('./src/components/Table.vue')['default']
     Textarea: typeof import('./src/components/Textarea.vue')['default']
+    ThemeToggle: typeof import('@/layouts/components/ThemeToggle.vue')['default']
     TypeSelect: typeof import('./src/components/JsonSchemaEditor/components/TypeSelect.vue')['default']
   }
 }
