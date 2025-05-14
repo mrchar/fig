@@ -1,9 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router"
 import routes from "./routes.ts"
 
-const index = createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes: routes
 })
 
-export default index
+router.beforeEach((to, from, next) => {
+  // TODO: 检查登录状态
+  next()
+})
+
+export default router

@@ -111,6 +111,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/ProcessList.vue")
       },
       {
+        name: "ProcessEditor",
+        path: "/process/detail/:id",
+        meta: { title: "编辑流程", isMenu: false },
+        component: () => import("@/views/ProcessEditor.vue")
+      },
+      {
         name: "RecordList",
         path: "/record/list",
         meta: {
