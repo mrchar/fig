@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="6e03b81" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="process-payments" name="Process payments" isExecutable="true">
+    <bpmn:startEvent id="payment-request-received" name="Payment request received">
+      <bpmn:outgoing>Flow_0x382g7</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="prepare-transaction" name="Prepare transaction">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=total * 1.1" resultVariable="totalWithTax" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0x382g7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a9yf7z</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="charge-credit-card" name="Charge credit card">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="charge-credit-card" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0a9yf7z</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uq7eyx</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="payment-executed" name="Payment executed">
+      <bpmn:incoming>Flow_1uq7eyx</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0x382g7" sourceRef="payment-request-received" targetRef="prepare-transaction" />
+    <bpmn:sequenceFlow id="Flow_0a9yf7z" sourceRef="prepare-transaction" targetRef="charge-credit-card" />
+    <bpmn:sequenceFlow id="Flow_1uq7eyx" sourceRef="charge-credit-card" targetRef="payment-executed" />
+    <bpmn:textAnnotation id="TextAnnotation_0d92ga8">
+      <bpmn:text>Evaluate FEEL Expression and store in variable</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_14t53vb" associationDirection="None" sourceRef="prepare-transaction" targetRef="TextAnnotation_0d92ga8" />
+    <bpmn:textAnnotation id="TextAnnotation_1os6ut4">
+      <bpmn:text>Log variable on Console</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_16dalb4" associationDirection="None" sourceRef="charge-credit-card" targetRef="TextAnnotation_1os6ut4" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process-payments">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="payment-request-received">
+        <dc:Bounds x="182" y="190" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="159" y="233" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ndputq_di" bpmnElement="prepare-transaction">
+        <dc:Bounds x="250" y="168" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fnvq5a_di" bpmnElement="charge-credit-card">
+        <dc:Bounds x="390" y="168" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dogh5r_di" bpmnElement="payment-executed">
+        <dc:Bounds x="532" y="190" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="527" y="233" width="47" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_14t53vb_di" bpmnElement="Association_14t53vb">
+        <di:waypoint x="335" y="168" />
+        <di:waypoint x="365" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_16dalb4_di" bpmnElement="Association_16dalb4">
+        <di:waypoint x="475" y="168" />
+        <di:waypoint x="517" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0d92ga8_di" bpmnElement="TextAnnotation_0d92ga8">
+        <dc:Bounds x="350" y="80" width="100" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1os6ut4_di" bpmnElement="TextAnnotation_1os6ut4">
+        <dc:Bounds x="490" y="80" width="100" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0x382g7_di" bpmnElement="Flow_0x382g7">
+        <di:waypoint x="218" y="208" />
+        <di:waypoint x="250" y="208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a9yf7z_di" bpmnElement="Flow_0a9yf7z">
+        <di:waypoint x="350" y="208" />
+        <di:waypoint x="390" y="208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uq7eyx_di" bpmnElement="Flow_1uq7eyx">
+        <di:waypoint x="490" y="208" />
+        <di:waypoint x="532" y="208" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
