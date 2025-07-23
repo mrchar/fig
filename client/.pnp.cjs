@@ -33,6 +33,7 @@ const RAW_RUNTIME_STATE =
           ["@jsonforms/core", "npm:3.5.1"],\
           ["@jsonforms/vue", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.5.1"],\
           ["@jsonforms/vue-vanilla", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.5.1"],\
+          ["@monaco-editor/loader", "npm:1.5.0"],\
           ["@tailwindcss/vite", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:4.1.4"],\
           ["@types/lodash", "npm:4.17.16"],\
           ["@types/node", "npm:22.14.1"],\
@@ -56,6 +57,7 @@ const RAW_RUNTIME_STATE =
           ["maska", "npm:2.1.11"],\
           ["monaco-editor", "npm:0.52.2"],\
           ["pinia", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.0.2"],\
+          ["preact", "npm:10.26.9"],\
           ["prettier", "npm:3.5.3"],\
           ["prettier-plugin-tailwindcss", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:0.6.11"],\
           ["qs", "npm:6.14.0"],\
@@ -1217,6 +1219,16 @@ const RAW_RUNTIME_STATE =
           "@types/jsonforms__vue",\
           "@types/vue",\
           "vue"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@monaco-editor/loader", [\
+      ["npm:1.5.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/@monaco-editor-loader-npm-1.5.0-d11622f8cc-10c0.zip/node_modules/@monaco-editor/loader/",\
+        "packageDependencies": [\
+          ["@monaco-editor/loader", "npm:1.5.0"],\
+          ["state-local", "npm:1.0.7"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3026,6 +3038,7 @@ const RAW_RUNTIME_STATE =
           ["@jsonforms/core", "npm:3.5.1"],\
           ["@jsonforms/vue", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.5.1"],\
           ["@jsonforms/vue-vanilla", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.5.1"],\
+          ["@monaco-editor/loader", "npm:1.5.0"],\
           ["@tailwindcss/vite", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:4.1.4"],\
           ["@types/lodash", "npm:4.17.16"],\
           ["@types/node", "npm:22.14.1"],\
@@ -3049,6 +3062,7 @@ const RAW_RUNTIME_STATE =
           ["maska", "npm:2.1.11"],\
           ["monaco-editor", "npm:0.52.2"],\
           ["pinia", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:3.0.2"],\
+          ["preact", "npm:10.26.9"],\
           ["prettier", "npm:3.5.3"],\
           ["prettier-plugin-tailwindcss", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:0.6.11"],\
           ["qs", "npm:6.14.0"],\
@@ -5649,6 +5663,13 @@ const RAW_RUNTIME_STATE =
           ["preact", "npm:10.26.6"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:10.26.9", {\
+        "packageLocation": "../../../.yarn/berry/cache/preact-npm-10.26.9-90e1df1a58-10c0.zip/node_modules/preact/",\
+        "packageDependencies": [\
+          ["preact", "npm:10.26.9"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["prelude-ls", [\
@@ -6178,6 +6199,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["ssri", "npm:12.0.0"],\
           ["minipass", "npm:7.1.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["state-local", [\
+      ["npm:1.0.7", {\
+        "packageLocation": "../../../.yarn/berry/cache/state-local-npm-1.0.7-9005e49ea6-10c0.zip/node_modules/state-local/",\
+        "packageDependencies": [\
+          ["state-local", "npm:1.0.7"]\
         ],\
         "linkType": "HARD"\
       }]\
