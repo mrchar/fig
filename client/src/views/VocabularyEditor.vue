@@ -13,18 +13,16 @@ api.vocabulary
     }
   })
 
-const definitionString = ref("")
-watch(() => saveParams.value.definition, (value: any) => {
-  definitionString.value = JSON.stringify(value, null, 2)
-}, { immediate: true })
-
-const monacoEditor = useTemplateRef("monaco-editor")
-
-onClickOutside(monacoEditor, () => {
-  try {
-    saveParams.value.definition = JSON.parse(definitionString.value)
-  } catch (e) {
-    console.error("解析词汇定义时发生错误", e)
+const definitionString = computed({
+  get(){
+    return JSON.stringify(saveParams.value.definition, null, 2)
+  },
+  set(value){
+    try{
+      saveParams.value.definition = JSON.parse(value)
+    }catch(e){
+      console.debug("反序列化失败", e)
+    }
   }
 })
 
@@ -55,14 +53,14 @@ function applyChange(completionResult: string) {
 
 <template>
   <div class="flex gap-2">
-    <Form class="w-full h-full p-4 flex flex-col gap-2">
+    <Form class="flex-1 w-1/2 h-full p-4 flex flex-col gap-2">
       <FormItem label="名称">
         <Input class="w-full" v-model="saveParams.name" placeholder="请输入词汇名称" />
       </FormItem>
       <FormItem label="描述">
         <Input class="w-full" v-model="saveParams.description" placeholder="请输入词汇释义" />
       </FormItem>
-      <FormItem>
+      <FormItem class="w-full">
         <template #label>
           <div class="flex w-full justify-between">
             <div>定义</div>
@@ -82,6 +80,6 @@ function applyChange(completionResult: string) {
         <Button priority="primary" @click="saveVocabulary">保存</Button>
       </div>
     </Form>
-    <JsonSchemaEditor v-model="saveParams.definition" />
+    <JsonSchemaEditor v-model="saveParams.definition" class="flex-1 w-1/2" />
   </div>
 </template>

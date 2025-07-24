@@ -10,7 +10,6 @@ export type Props = {
 const content = defineModel<string | null>({ default: "" })
 const props = defineProps<Props>()
 
-
 let model = null
 
 function createModel(monaco) {
@@ -39,6 +38,8 @@ function registerProvider(monaco) {
   })
 }
 
+let editor = null;
+
 const skeletonRef = useTemplateRef("skeleton")
 
 const containerRef = useTemplateRef("container")
@@ -49,21 +50,33 @@ function createMonacoEditor(monaco) {
     return
   }
 
-  const editor = monaco.editor.create(containerRef.value, {
+  editor = monaco.editor.create(containerRef.value, {
     model,
     automaticLayout: true,
     theme: "vs-dark"
   })
 
+  // 隐藏加载提示
   skeletonRef.value.classList.add("opacity-0")
   setTimeout(()=>{
     skeletonRef.value.classList.add("hidden")
     containerRef.value.classList.remove("opacity-0")
   },500)
 
-  model.onDidChangeContent(() => {
-    content.value = model.getValue()
+  window.addEventListener("resize", ()=>{
+    try{
+      editor.layout()
+    }catch (e){
+      console.error(e)
+    }
   })
+
+  const updateContent = useDebounceFn(()=>{
+    console.log("updated content")
+    content.value = model.getValue()
+  }, 1000)
+
+  model.onDidChangeContent(updateContent)
 
   watch(content, () => {
     if (!editor.hasTextFocus()) {
