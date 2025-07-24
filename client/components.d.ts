@@ -11,6 +11,7 @@ declare module 'vue' {
     Breadcrumbs: typeof import('./src/components/Breadcrumbs.vue')['default']
     Button: typeof import('./src/components/Button.vue')['default']
     Card: typeof import('./src/components/Card.vue')['default']
+    Checkbox: typeof import('./src/components/Checkbox.vue')['default']
     Collapse: typeof import('./src/components/Collapse.vue')['default']
     CommonEditor: typeof import('./src/components/JsonSchemaEditor/components/CommonEditor.vue')['default']
     ConfirmButton: typeof import('./src/components/ConfirmButton.vue')['default']

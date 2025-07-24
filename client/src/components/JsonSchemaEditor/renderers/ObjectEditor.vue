@@ -19,6 +19,35 @@ const propertiesRenderers = computed(() => {
 
   return result
 })
+
+function isRequired(key: string): boolean {
+  if (!model.value.required || model.value.required.length === 0) {
+    return false
+  }
+
+  return model.value.required.includes(key)
+}
+
+function setRequired(key: string, required: boolean) {
+  if (!model.value.required) {
+    model.value.required = []
+  }
+
+  if (required) {
+    if (model.value.required.includes(key)) {
+      return
+    }
+
+    model.value.required.push(key)
+  } else {
+    const index = model.value.required.indexOf(key)
+    if (index === -1) {
+      return
+    }
+
+    model.value.required.splice(index, 1)
+  }
+}
 </script>
 
 <template>
@@ -43,6 +72,12 @@ const propertiesRenderers = computed(() => {
                    :is="h(propertiesRenderers[key].component)"
         />
       </Collapse>
+    </FormItem>
+    <FormItem label="必填项">
+      <div v-for="(property, key) in model.properties" class="flex gap-2 items-center">
+        <span>{{ property?.title || key }}</span>
+        <Checkbox :model-value="isRequired(key)" @change="(value)=>{setRequired(key, value)}" />
+      </div>
     </FormItem>
   </div>
 </template>
