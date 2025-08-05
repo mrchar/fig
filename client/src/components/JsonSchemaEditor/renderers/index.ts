@@ -2,10 +2,18 @@ import IntegerEditor from "./IntegerEditor.vue"
 import NumberEditor from "./NumberEditor.vue"
 import StringEditor from "./StringEditor.vue"
 import ObjectEditor from "./ObjectEditor.vue"
+import NullEditor from "@/components/JsonSchemaEditor/renderers/NullEditor.vue"
 
 export type Renderer = {
-  supports(model: any):boolean,
+  supports(model: any): boolean,
   component: any
+}
+
+export const nullRenderer: Renderer = {
+  supports(model: any): boolean {
+    return model.type === "null"
+  },
+  component: NullEditor
 }
 
 export const integerRenderer: Renderer = {
@@ -36,7 +44,7 @@ export const objectRenderer: Renderer = {
   component: ObjectEditor
 }
 
-export const defaultRenderers = [integerRenderer, numberRenderer, stringRenderer, objectRenderer]
+export const defaultRenderers = [nullRenderer, integerRenderer, numberRenderer, stringRenderer, objectRenderer]
 
 export function getMatchedRenderer(model: any, renderers: Renderer[]) {
   for (let renderer of renderers) {

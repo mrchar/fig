@@ -20,6 +20,47 @@ const propertiesRenderers = computed(() => {
   return result
 })
 
+const propKey = ref("property1")
+
+function onAddProperty() {
+  if (!model.value.properties) {
+    model.value.properties = {}
+  }
+
+  if (!propKey.value) {
+    return
+  }
+
+  if (!Object.keys(model.value.properties).includes(propKey.value)){
+    model.value.properties[propKey.value] = {
+      type: "null",
+      title: "New Property",
+      description: "new property description"
+    }
+  }
+
+  if (/property\d+/.test(propKey.value)) {
+    let index = parseInt(propKey.value.substring(8), 10)
+    propKey.value = "property" + ++index
+  }
+}
+
+function onRemoveProperty(){
+  if(!model.value.properties){
+    model.value.properties = {}
+  }
+
+  if(!propKey.value){
+    return
+  }
+
+  if(!Object.keys(model.value.properties).includes(propKey.value)){
+    return
+  }
+
+  delete model.value.properties[propKey.value]
+}
+
 function isRequired(key: string): boolean {
   if (!model.value.required || model.value.required.length === 0) {
     return false
@@ -66,12 +107,25 @@ function setRequired(key: string, required: boolean) {
       <Radio v-model="model.additionalProperties" />
     </FormItem>
     <FormItem label="属性" class="col-span-2">
-      <Collapse v-for="(item, key) in model.properties" :title="item.title || key" class="col-span-2">
+      <div v-if="!model.properties" class="text-base-content/70">
+        还没有任何属性
+      </div>
+      <Collapse v-for="(item, key) in model.properties"
+                :title="item.title ? `${item.title}(${key})` : key"
+                class="col-span-2"
+      >
         <component v-if="propertiesRenderers"
                    v-model="model.properties[key]"
                    :is="h(propertiesRenderers[key].component)"
         />
       </Collapse>
+      <div class="flex gap-2">
+        <FormItem label="属性名">
+          <Input v-model="propKey" class="w-76 flex-1" />
+        </FormItem>
+        <Button @click="onAddProperty" class="self-end my-1">添加属性</Button>
+        <Button @click="onRemoveProperty" class="self-end my-1 btn-error">删除属性</Button>
+      </div>
     </FormItem>
     <FormItem label="必填项">
       <div v-for="(property, key) in model.properties" class="flex gap-2 items-center">

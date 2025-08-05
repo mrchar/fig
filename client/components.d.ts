@@ -30,6 +30,7 @@ declare module 'vue' {
     Menu: typeof import('./src/components/Menu.vue')['default']
     MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
+    NullEditor: typeof import('./src/components/JsonSchemaEditor/renderers/NullEditor.vue')['default']
     NumberEditor: typeof import('./src/components/JsonSchemaEditor/renderers/NumberEditor.vue')['default']
     NumberRenderer: typeof import('./src/components/JsonSchemaEditor/components/NumberRenderer.vue')['default']
     ObjectEditor: typeof import('./src/components/JsonSchemaEditor/renderers/ObjectEditor.vue')['default']
