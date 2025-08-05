@@ -104,7 +104,7 @@ function setRequired(key: string, required: boolean) {
     </FormItem>
     <slot name="external" />
     <FormItem label="允许额外属性">
-      <Radio v-model="model.additionalProperties" />
+      <Toggle v-model="model.additionalProperties" />
     </FormItem>
     <FormItem label="属性" class="col-span-2">
       <div v-if="!model.properties" class="text-base-content/70">

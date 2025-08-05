@@ -2,11 +2,9 @@
 const model = defineModel()
 
 function onChange(e) {
-  console.log("Changed", e)
   model.value = e.target.checked
 }
 </script>
-
 <template>
-  <input type="radio" :checked="model" class="radio" @change="onChange" />
+  <input type="checkbox" :checked="model" class="toggle" @change="onChange" />
 </template>

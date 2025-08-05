@@ -51,42 +51,39 @@ function applyChange(completionResult: string) {
 </script>
 
 <template>
-  <Form class="max-w-7xl w-full h-full p-4 flex flex-col gap-2">
-    <div class="flex flex-col lg:flex-row gap-2">
-      <div class="flex flex-col gap-2">
-        <FormItem label="名称">
-          <Input class="w-full" v-model="saveParams.name" placeholder="请输入数据模型的名称" />
-        </FormItem>
-        <FormItem label="描述">
-          <Input class="w-full" v-model="saveParams.description" placeholder="请输入数据模型的描述" />
-        </FormItem>
-        <FormItem>
-          <template #label>
-            <div class="flex w-full justify-between">
-              <div>定义</div>
-              <IntelligentButton :datasource="api.completion.useCompleteStruct"
-                                 @apply="applyChange">
-                <template #editor="{completionResult}">
-                  <MonacoEditor class="w-full"
-                                :model-value="completionResult"
-                                language="json"
-                                :uri="`${route.path}/completion`" />
-                </template>
+  <div class="flex gap-2">
+    <Form class="flex-1 w-1/2 h-full p-4 flex flex-col gap-2">
+      <FormItem label="名称">
+        <Input class="w-full" v-model="saveParams.name" placeholder="请输入数据模型的名称" />
+      </FormItem>
+      <FormItem label="描述">
+        <Input class="w-full" v-model="saveParams.description" placeholder="请输入数据模型的描述" />
+      </FormItem>
+      <FormItem>
+        <template #label>
+          <div class="flex w-full justify-between">
+            <div>定义</div>
+            <IntelligentButton :datasource="api.completion.useCompleteStruct"
+                               @apply="applyChange">
+              <template #editor="{completionResult}">
+                <MonacoEditor class="w-full"
+                              :model-value="completionResult"
+                              language="json"
+                              :uri="`${route.path}/completion`" />
+              </template>
 
-              </IntelligentButton>
-            </div>
-          </template>
-          <MonacoEditor ref="monaco-editor" class="w-full" v-model="definitionString" language="json"
-                        :uri="route.path" />
-        </FormItem>
+            </IntelligentButton>
+          </div>
+        </template>
+        <MonacoEditor ref="monaco-editor" class="w-full" v-model="definitionString" language="json"
+                      :uri="route.path" />
+      </FormItem>
+
+      <div class="flex justify-end gap-2">
+        <Button @click="goBack">取消</Button>
+        <Button priority="primary" @click="saveStruct">保存</Button>
       </div>
-      <Card title="数据模型编辑器">
-        <JsonSchemaEditor v-model="saveParams.definition" />
-      </Card>
-    </div>
-    <div class="flex justify-end gap-2">
-      <Button @click="goBack">取消</Button>
-      <Button priority="primary" @click="saveStruct">保存</Button>
-    </div>
-  </Form>
+    </Form>
+    <JsonSchemaEditor v-model="saveParams.definition" class="flex-1 w-1/2"/>
+  </div>
 </template>

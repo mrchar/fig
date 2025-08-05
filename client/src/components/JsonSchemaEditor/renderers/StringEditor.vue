@@ -11,7 +11,21 @@ const model = defineModel()
       <Input v-model="model.title"/>
     </FormItem>
     <FormItem label="描述" class="col-span-2">
-      <Input v-model="model.description"></Input>
+      <Input v-model="model.description"/>
+    </FormItem>
+    <FormItem label="最小长度" class="col-span-1">
+      <Input v-model="model.minLength"/>
+    </FormItem>
+    <FormItem label="最大长度" class="col-span-1">
+      <Input v-model="model.maxLength"/>
+    </FormItem>
+    <FormItem label="格式" class="col-span-2">
+      <Select v-model="model.format" :options="[
+        {label:'日期时间', value:'data-time'},
+        {label:'日期', value:'date'},
+        {label:'时间', value:'time'},
+        {label:'电子邮箱', value:'email'},
+      ]"/>
     </FormItem>
     <slot name="external"/>
   </div>

@@ -8,6 +8,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ArrayEditor: typeof import('./src/components/JsonSchemaEditor/renderers/ArrayEditor.vue')['default']
+    BooleanEditor: typeof import('./src/components/JsonSchemaEditor/renderers/BooleanEditor.vue')['default']
     Breadcrumbs: typeof import('./src/components/Breadcrumbs.vue')['default']
     Button: typeof import('./src/components/Button.vue')['default']
     Card: typeof import('./src/components/Card.vue')['default']
@@ -46,6 +48,7 @@ declare module 'vue' {
     Table: typeof import('./src/components/Table.vue')['default']
     Textarea: typeof import('./src/components/Textarea.vue')['default']
     ThemeToggle: typeof import('@/layouts/components/ThemeToggle.vue')['default']
+    Toggle: typeof import('./src/components/Toggle.vue')['default']
     TypeSelect: typeof import('./src/components/JsonSchemaEditor/components/TypeSelect.vue')['default']
   }
 }
