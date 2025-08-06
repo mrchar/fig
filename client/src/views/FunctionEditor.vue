@@ -69,7 +69,7 @@ const completionDatasource = function(query: MaybeRef<string>) {
 
 <template>
   <div class="w-ful h-full flex gap-2 divide-x divide-gray-500">
-    <Form class="w-full h-full p-4 flex flex-col gap-2">
+    <Form class="w-1/2 h-full p-4 flex flex-col gap-2">
       <FormItem label="名称">
         <Input v-model="func.name" class="w-full" />
       </FormItem>
@@ -82,6 +82,9 @@ const completionDatasource = function(query: MaybeRef<string>) {
                 :datasource="api.struct.useListStructs"
                 :formatter="item => ({label:item.name, value:item.name})"
         />
+      </FormItem>
+      <FormItem label="画板">
+        <BlocklyEditor v-model="func.content"/>
       </FormItem>
       <FormItem label="代码">
         <template #label>
@@ -106,7 +109,7 @@ const completionDatasource = function(query: MaybeRef<string>) {
         <Button priority="primary" @click="saveFunction">保存</Button>
       </div>
     </Form>
-    <div>
+    <div class="w-1/2">
       <JsonForms
         class=" max-h-120 w-full max-w-lg  p-2 "
         :schema="argumentStruct.definition!"
@@ -119,5 +122,4 @@ const completionDatasource = function(query: MaybeRef<string>) {
       </div>
     </div>
   </div>
-
 </template>

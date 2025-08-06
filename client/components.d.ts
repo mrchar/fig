@@ -9,6 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ArrayEditor: typeof import('./src/components/JsonSchemaEditor/renderers/ArrayEditor.vue')['default']
+    BlocklyEditor: typeof import('./src/components/BlocklyEditor.vue')['default']
     BooleanEditor: typeof import('./src/components/JsonSchemaEditor/renderers/BooleanEditor.vue')['default']
     Breadcrumbs: typeof import('./src/components/Breadcrumbs.vue')['default']
     Button: typeof import('./src/components/Button.vue')['default']
