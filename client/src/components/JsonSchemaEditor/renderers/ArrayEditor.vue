@@ -38,7 +38,7 @@ const itemsRender = computed(() => {
       <Input v-model="model.description"></Input>
     </FormItem>
     <FormItem label="元素类型" class="col-span-2">
-      <div class="pl-2">
+      <div class="pl-4">
         <component v-if="itemsRender"
                    v-model="model.items"
                    :is="h(itemsRender.component)"
@@ -46,10 +46,10 @@ const itemsRender = computed(() => {
       </div>
     </FormItem>
     <FormItem label="最小元素数量" class="col-span-1">
-      <Input v-model.number="model.minItems" />
+      <Input type="number" v-model.number="model.minItems" min="0"/>
     </FormItem>
     <FormItem label="最大元素数量" class="col-span-1">
-      <Input v-model="model.maxItems"/>
+      <Input type="number" v-model="model.maxItems" min="0"/>
     </FormItem>
     <FormItem label="元素唯一">
       <Toggle v-model="model.uniqueItems" />

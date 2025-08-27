@@ -14,10 +14,10 @@ const model = defineModel()
       <Input v-model="model.description"/>
     </FormItem>
     <FormItem label="最小长度" class="col-span-1">
-      <Input v-model="model.minLength"/>
+      <Input type="number" v-model="model.minLength" min="0"/>
     </FormItem>
     <FormItem label="最大长度" class="col-span-1">
-      <Input v-model="model.maxLength"/>
+      <Input type="number" v-model="model.maxLength" min="0"/>
     </FormItem>
     <FormItem label="格式" class="col-span-2">
       <Select v-model="model.format" :options="[

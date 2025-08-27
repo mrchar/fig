@@ -112,7 +112,6 @@ function setRequired(key: string, required: boolean) {
       </div>
       <Collapse v-for="(item, key) in model.properties"
                 :title="item.title ? `${item.title}(${key})` : key"
-                class="col-span-2"
       >
         <component v-if="propertiesRenderers"
                    v-model="model.properties[key]"
