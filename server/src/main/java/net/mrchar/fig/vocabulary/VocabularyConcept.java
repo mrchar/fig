@@ -17,6 +17,10 @@ import org.hibernate.annotations.Type;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VocabularyConcept {
+  @NotBlank(message = "必须为词汇定义标识")
+  @Column(name = "key")
+  private String key;
+
   @NotBlank(message = "必须指明要定义的词汇！")
   @Column(name = "name")
   private String name;

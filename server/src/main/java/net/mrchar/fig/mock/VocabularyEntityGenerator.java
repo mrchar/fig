@@ -9,6 +9,7 @@ public class VocabularyEntityGenerator {
   private static final Faker faker = new Faker(Locale.CHINA);
 
   public static VocabularyEntity generate() {
+    String key = faker.letterify("vocabulary??????????");
     String name = faker.letterify("vocabulary??????????");
     String description = faker.letterify("vocabulary description ??????????");
     Map<String, Object> jsonSchema =
@@ -21,7 +22,7 @@ public class VocabularyEntityGenerator {
             "name",
             "description",
             "This schema describes a student name.");
-    VocabularyConcept concept = new VocabularyConcept(name, description, jsonSchema);
+    VocabularyConcept concept = new VocabularyConcept(key, name, description, jsonSchema);
     return new VocabularyEntity(concept);
   }
 

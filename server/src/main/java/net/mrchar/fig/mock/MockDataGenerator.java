@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 @Profile("dev")
 @RequiredArgsConstructor
 @ConditionalOnProperty(name = "mock.enabled", havingValue = "true")
-public class MockDateGenerator {
+public class MockDataGenerator {
   private final SecurityProperties securityProperties;
   private final UserRepository userRepository;
   private final SpaceRepository spaceRepository;
@@ -54,6 +54,7 @@ public class MockDateGenerator {
     VocabularyEntity name =
         new VocabularyEntity(
             VocabularyConcept.builder()
+                .key("name")
                 .name("姓名")
                 .description("使用文本记录人的姓名")
                 .definition(Map.of("type", "string", "title", "姓名"))
@@ -61,6 +62,7 @@ public class MockDateGenerator {
     VocabularyEntity gender =
         new VocabularyEntity(
             VocabularyConcept.builder()
+                .key("gender")
                 .name("性别")
                 .description("使用文本记录人的性别")
                 .definition(Map.of("type", "string", "title", "性别", "enum", List.of("男", "女")))
@@ -68,6 +70,7 @@ public class MockDateGenerator {
     VocabularyEntity age =
         new VocabularyEntity(
             VocabularyConcept.builder()
+                .key("age")
                 .name("年龄")
                 .description("使用正整数记录人的年龄")
                 .definition(Map.of("type", "integer", "title", "年龄"))

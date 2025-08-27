@@ -10,6 +10,7 @@ const columns: Column[] = [
       return index + 1
     }
   },
+  { title: "标识", prop: "key" },
   { title: "名称", prop: "name" },
   { title: "描述", prop: "description" },
   {
@@ -57,6 +58,18 @@ function initAddParams() {
 
 const addParams = ref(initAddParams())
 
+watch(()=>addParams.value.key,()=>{
+  if(!addParams.value.key){
+    return
+  }
+
+  if(!addParams.value.key.startsWith(addParams.value.name)){
+    return
+  }
+
+  addParams.value.name = addParams.value.key
+})
+
 function closeDialog() {
   if (dialogRef.value) {
     dialogRef.value.close()
@@ -72,25 +85,13 @@ const query = computed(() => {
   return `我要定义一个词汇${addParams.value.name}, 这是这个词汇的解释：${addParams.value.description}。请帮我创建数据定义。`
 })
 
-const {
-  isFetching: isGenerating,
-  data: completionResult,
-  execute: executeCompletion
-} = api.completion.useCompleteVocabulary(query)
-
 function createVocabulary() {
-  executeCompletion().then(() => {
-    if (completionResult.value) {
-      addParams.value.definition = JSON.parse(completionResult.value)
-    }
-    api.vocabulary.useAddVocabulary(addParams)
-      .then(({ data }) => {
-        dialogRef.value!.close()
-        addParams.value = initAddParams()
-        router.push(`/vocabulary/detail/${data!.value!.id}`)
-      })
-  })
-
+  api.vocabulary.useAddVocabulary(addParams)
+    .then(({ data }) => {
+      dialogRef.value!.close()
+      addParams.value = initAddParams()
+      router.push(`/vocabulary/detail/${data!.value!.id}`)
+    })
 }
 
 function gotoEditor(id: number) {
@@ -135,6 +136,9 @@ function deleteVocabulary(id: number) {
   </Table>
   <Dialog ref="dialog" title="新增词汇">
     <Form @submit="createVocabulary">
+      <FormItem label="标识符">
+        <Input v-model="addParams.key" class="w-full"/>
+      </FormItem>
       <FormItem label="名称">
         <Input v-model="addParams.name" class="w-full" />
       </FormItem>
@@ -147,7 +151,7 @@ function deleteVocabulary(id: number) {
         <Button @click="closeDialog">
           取消
         </Button>
-        <Button priority="primary" @click="createVocabulary" :loading="isGenerating">
+        <Button priority="primary" @click="createVocabulary">
           创建
         </Button>
       </div>

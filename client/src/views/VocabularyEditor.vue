@@ -49,6 +49,9 @@ function applyChange(completionResult: string) {
 <template>
   <div class="flex gap-2">
     <Form class="flex-1 w-1/2 h-full p-4 flex flex-col gap-2">
+      <FormItem label="标识">
+        <Input class="w-full" v-model="saveParams.key" placeholder="请输入词汇标识符" />
+      </FormItem>
       <FormItem label="名称">
         <Input class="w-full" v-model="saveParams.name" placeholder="请输入词汇名称" />
       </FormItem>
