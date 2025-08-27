@@ -46,6 +46,7 @@ declare module 'vue' {
     StringEditor: typeof import('./src/components/JsonSchemaEditor/renderers/StringEditor.vue')['default']
     StringRenderer: typeof import('./src/components/JsonSchemaEditor/components/StringRenderer.vue')['default']
     Swap: typeof import('./src/components/Swap.vue')['default']
+    Switch: typeof import('./src/components/Switch.vue')['default']
     Table: typeof import('./src/components/Table.vue')['default']
     Textarea: typeof import('./src/components/Textarea.vue')['default']
     ThemeToggle: typeof import('@/layouts/components/ThemeToggle.vue')['default']

@@ -106,6 +106,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="container" class="w-full h-72"></div>
+  <div ref="container" class="w-full min-h-96"></div>
   <Button @click="generateCode" class="btn-primary">生成代码</Button>
 </template>

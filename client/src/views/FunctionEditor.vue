@@ -65,6 +65,8 @@ const completionDatasource = function(query: MaybeRef<string>) {
   })
   return api.completion.useCompleteFunction(computedQuery)
 }
+
+const activatedEditor = ref("blockly")
 </script>
 
 <template>
@@ -82,13 +84,13 @@ const completionDatasource = function(query: MaybeRef<string>) {
               :formatter="item => ({label:item.name, value:item.name})"
       />
     </FormItem>
-    <FormItem label="画板">
-      <BlocklyEditor v-model="func.content"/>
-    </FormItem>
-    <FormItem label="代码">
+    <FormItem class="h-96 flex-1">
       <template #label>
-        <div class="flex w-full justify-between">
-          <div>代码</div>
+        <div class="flex w-full justify-between items-center">
+          <div>编辑器</div>
+          <Switch v-model="activatedEditor"
+                  :options="[{key:'blockly', label:'画板'},{key:'monaco', label:'代码'}]"
+          />
           <IntelligentButton :datasource="completionDatasource"
                              @apply="applyChange">
             <template #editor="{completionResult}">
@@ -101,7 +103,14 @@ const completionDatasource = function(query: MaybeRef<string>) {
           </IntelligentButton>
         </div>
       </template>
-      <MonacoEditor v-model="func.content" language="javascript" :uri="route.path" />
+      <BlocklyEditor v-if="activatedEditor==='blockly'"
+                     v-model="func.content"
+                     class="h-full"
+      />
+      <MonacoEditor v-if="activatedEditor==='monaco'"
+                    v-model="func.content" language="javascript" :uri="route.path"
+                    class="h-full"
+      />
     </FormItem>
     <div class="flex justify-end gap-2">
       <Button @click="goBack">取消</Button>
