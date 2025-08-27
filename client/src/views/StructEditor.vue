@@ -12,17 +12,16 @@ api.struct
     }
   })
 
-const definitionString = ref("")
-watch(() => saveParams.value.definition, (value: any) => {
-  definitionString.value = JSON.stringify(value, null, 2)
-}, { immediate: true })
-
-const monacoEditor = useTemplateRef("monaco-editor")
-onClickOutside(monacoEditor, () => {
-  try {
-    saveParams.value.definition = JSON.parse(definitionString.value)
-  } catch (e) {
-    console.error("解析数据定义时发生错误", e)
+const definitionString = computed({
+  get(){
+    return JSON.stringify(saveParams.value.definition, null, 2)
+  },
+  set(value){
+    try{
+      saveParams.value.definition = JSON.parse(value)
+    }catch(e){
+      console.debug("反序列化失败", e)
+    }
   }
 })
 
@@ -34,12 +33,7 @@ function goBack() {
 }
 
 function saveStruct() {
-  saveParams.value.definition = JSON.parse(definitionString.value)
-  api.struct.useUpdateStruct(id, {
-    name: saveParams.value.name,
-    description: saveParams.value.description,
-    definition: saveParams.value.definition
-  })
+  api.struct.useUpdateStruct(id, saveParams)
     .then(() => {
       router.go(-1)
     })

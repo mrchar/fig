@@ -5,13 +5,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 @Getter
+@Builder
 @Embeddable
 @NoArgsConstructor
+@AllArgsConstructor
 public class VocabularyConcept {
   @NotBlank(message = "必须指明要定义的词汇！")
   @Column(name = "name")
@@ -25,10 +29,4 @@ public class VocabularyConcept {
   @Type(JsonType.class)
   @Column(name = "definition", columnDefinition = "json")
   private Object definition;
-
-  public VocabularyConcept(String name, String description, Object definition) {
-    this.name = name;
-    this.description = description;
-    this.definition = definition;
-  }
 }

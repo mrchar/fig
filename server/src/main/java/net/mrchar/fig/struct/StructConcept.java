@@ -5,14 +5,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 @Getter
+@Builder
 @Embeddable
 @NoArgsConstructor
+@AllArgsConstructor
 public class StructConcept {
   @Setter
   @NotBlank(message = "必须为数据模型创建一个名称")
@@ -28,10 +28,4 @@ public class StructConcept {
   @Type(JsonType.class)
   @Column(name = "definition", columnDefinition = "json")
   private Object definition;
-
-  public StructConcept(String name, String description, Object definition) {
-    this.name = name;
-    this.description = description;
-    this.definition = definition;
-  }
 }

@@ -35,12 +35,7 @@ function goBack() {
 }
 
 function saveVocabulary() {
-  saveParams.value.definition = JSON.parse(definitionString.value)
-  api.vocabulary.useUpdateVocabulary(id, {
-    name: saveParams.value.name,
-    description: saveParams.value.description,
-    definition: saveParams.value.definition
-  })
+  api.vocabulary.useUpdateVocabulary(id, saveParams)
     .then(() => {
       router.go(-1)
     })
