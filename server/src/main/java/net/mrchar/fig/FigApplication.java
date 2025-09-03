@@ -50,6 +50,7 @@ public class FigApplication {
     }
 
     UserEntity entity = new UserEntity(user.getName(), user.getPassword());
+    entity.setRole(Role.ADMIN);
     this.userRepository.save(entity);
   }
 
