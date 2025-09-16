@@ -38,21 +38,6 @@ const { data, execute } = props.datasource
   ? props.datasource(searchParams, pagination)
   : { data: ref([]) }
 
-watch(data, () => {
-  if (!props.selectFirst) {
-    return
-  }
-
-  const response: PagedResponse = data.value as PagedResponse
-  if (response.content.length == 0) {
-    return
-  }
-  if (model.value === null || !response.content.includes(model.value)) {
-    emit("change", response.content[0])
-    model.value = response.content[0]
-  }
-})
-
 let timeoutIndex: number | null = null
 if (!props.datasource) {
   watch(keyword, () => {
@@ -83,6 +68,41 @@ const _options = computed((): any[] => {
 
 const selectValue = ref(null)
 
+// 自动设置默认值
+watch(_options, () => {
+  // 如果没有启动自动选择第一个则直接返回
+  if (!props.selectFirst) {
+    return
+  }
+
+  // 如果选项是空的，则直接返回
+  if (_options?.length == 0) {
+    return
+  }
+
+  const selected = props.formatter
+    ? props.formatter(_options.value[0]).value
+    : _options.value[0].value
+
+  // 如果没有选中任何项目，则自动选择第一个选项
+  if(model.value === null || model.value === undefined) {
+    console.log("model.value is null or undefined")
+    selectValue.value = selected
+  }
+
+  // 判断当前选项是否存在
+  const exists = props.formatter
+    ? _options.value.some(item =>
+      (props.formatter!(item).value === props.formatter(model.value).value))
+    : _options.value.some(item => (item === model.value))
+
+  // 如果当前选中项在列表中不存在，则直接选中第一项
+  if (!exists) {
+    selectValue.value = selected
+  }
+})
+
+// 当model发生改变时，更新选中项
 watch(model, () => {
   if (model.value === null) {
     return
@@ -93,6 +113,7 @@ watch(model, () => {
     : model.value
 }, { immediate: true })
 
+// 当选中项更新时，发布时间并更新model
 watch(selectValue, (value) => {
   if (props.formatter) {
     const selected = _options.value.find(item => (props.formatter!(item).value === value))

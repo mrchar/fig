@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SpaceRepository extends JpaRepository<SpaceEntity, Long> {
   @Query(
-          """
-                  from SpaceEntity s
-                              where s.owner.username = ?#{principal.username}""")
+      """
+              from SpaceEntity s
+                          where s.owner.username = ?#{principal.username}""")
   Page<SpaceEntity> findAllForUser(Pageable pageable);
 
   @Query(

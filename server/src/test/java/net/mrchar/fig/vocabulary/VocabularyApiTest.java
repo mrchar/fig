@@ -2,13 +2,21 @@ package net.mrchar.fig.vocabulary;
 
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import net.mrchar.fig.authentication.UserEntity;
+import net.mrchar.fig.authentication.UserRepository;
+import net.mrchar.fig.mock.SpaceEntityGenerator;
+import net.mrchar.fig.mock.UserEntityGenerator;
 import net.mrchar.fig.mock.VocabularyEntityGenerator;
+import net.mrchar.fig.space.SpaceEntity;
+import net.mrchar.fig.space.SpaceRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +32,24 @@ import org.springframework.test.web.servlet.MockMvc;
 @TestInstance(PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 class VocabularyApiTest {
+  static ObjectMapper mapper = new ObjectMapper();
+
+  @Autowired UserRepository userRepository;
+  @Autowired SpaceRepository spaceRepository;
   @Autowired VocabularyRepository vocabularyRepository;
   @Autowired MockMvc mockMvc;
 
+  UserEntity user;
+  SpaceEntity space;
+
   @BeforeAll
   void setUp() {
+    this.user = this.userRepository.save(UserEntityGenerator.generate("user"));
+    this.space = this.spaceRepository.save(SpaceEntityGenerator.generate(user));
+
     List<VocabularyEntity> entities = new ArrayList<>();
     for (int i = 0; i < 10; i++) {
-      entities.add(VocabularyEntityGenerator.generate());
+      entities.add(VocabularyEntityGenerator.generate(space));
     }
     this.vocabularyRepository.saveAll(entities);
   }
@@ -40,7 +58,8 @@ class VocabularyApiTest {
   @Order(1)
   void should_success_when_listing_vocabularies() throws Exception {
     mockMvc
-        .perform(get("/vocabularies"))
+        .perform(get("/vocabularies?space={space}", space.getCode()))
+        .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isNotEmpty());
   }
@@ -48,11 +67,12 @@ class VocabularyApiTest {
   @Test
   @Order(1)
   void should_success_when_search_vocabularies() throws Exception {
-    VocabularyEntity entity = new VocabularyEntity();
-    entity.setVocabulary(new VocabularyConcept("justaname", "description", new HashMap<>()));
+    VocabularyEntity entity =
+        new VocabularyEntity(
+            new VocabularyConcept("key", "justaname", "description", new HashMap<>()), space);
     this.vocabularyRepository.save(entity);
     mockMvc
-        .perform(get("/vocabularies?keyword=ustaname"))
+        .perform(get("/vocabularies?space={space}&keyword=ustaname", space.getCode()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isNotEmpty())
         .andExpect(jsonPath("$.content[0].name").value("justaname"));
@@ -61,17 +81,20 @@ class VocabularyApiTest {
   @Test
   @Order(2)
   void should_success_when_create_vocabulary() throws Exception {
+    VocabularyService.AddVocabularyParams params =
+        new VocabularyService.AddVocabularyParams(
+            VocabularyConcept.builder()
+                .key("key")
+                .name("测试")
+                .description("描述")
+                .definition(new HashMap<>())
+                .build(),
+            space.getCode());
     mockMvc
         .perform(
             post("/vocabularies")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    """
-                        {
-                          "name": "测试",
-                          "description": "描述",
-                          "definition": {}
-                        }"""))
+                .content(mapper.writeValueAsBytes(params)))
         .andExpect(status().isOk());
   }
 
@@ -102,11 +125,12 @@ class VocabularyApiTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     """
-                        {
-                          "name": "修改",
-                          "description": "描述",
-                          "definition": {}
-                        }"""))
+                            {
+                              "key": "key",
+                              "name": "修改",
+                              "description": "描述",
+                              "definition": {}
+                            }"""))
         .andExpect(status().isOk());
   }
 }

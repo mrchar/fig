@@ -29,6 +29,9 @@ camunda:
       enabled: true
       grpc-address: http://127.0.0.1:26500
       rest-address: http://127.0.0.1:8081
+fig:
+  mock:
+    enabled: false
 logging:
   level:
     org.springframework.security: TRACE

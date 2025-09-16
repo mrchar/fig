@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import api from "@/api"
+import { storeToRefs } from "pinia"
 import type { Column } from "@/components/Table.vue"
 import type { PaginationParams } from "@/types"
 import useAuditColumns from "@/composables/audit-columns.ts"
+import { useSpaceStore } from "@/store"
 
 const columns: Column[] = [
   {
@@ -24,9 +26,13 @@ const columns: Column[] = [
   }
 ]
 
+// TODO: 实现参数变化时自动更新
+const {space} = storeToRefs(useSpaceStore())
 const searchParams = ref({ keyword: "" })
 const searchDatasource = (pagination: MaybeRef<PaginationParams>) => {
-  return api.vocabulary.useListVocabularies(searchParams, pagination)
+  return api.vocabulary.useListVocabularies(
+    computed(()=>({...searchParams.value, space:space.value.code })), pagination
+  )
 }
 
 const tableRef = useTemplateRef("table")
@@ -58,6 +64,7 @@ function initAddParams() {
 
 const addParams = ref(initAddParams())
 
+// 当key变化时，更新name
 watch(()=>addParams.value.key,()=>{
   if(!addParams.value.key){
     return
@@ -86,7 +93,9 @@ const query = computed(() => {
 })
 
 function createVocabulary() {
-  api.vocabulary.useAddVocabulary(addParams)
+  api.vocabulary.useAddVocabulary(
+    computed(()=>({...addParams.value, spaceCode: space.value.code}))
+  )
     .then(({ data }) => {
       dialogRef.value!.close()
       addParams.value = initAddParams()

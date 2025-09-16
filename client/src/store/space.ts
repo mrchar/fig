@@ -3,7 +3,7 @@ import { StorageSerializers } from "@vueuse/core"
 import type { SpaceType } from "@/types"
 
 export const useSpaceStore = defineStore("space", () => {
-  const space = useStorage<SpaceType>("spaces", null, undefined, { serializer: StorageSerializers.object })
+  const space = useStorage<SpaceType>("space", null, localStorage, { serializer: StorageSerializers.object })
 
   function setSpace(value: any) {
     space.value = value

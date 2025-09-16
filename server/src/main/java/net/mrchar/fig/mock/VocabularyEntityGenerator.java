@@ -2,13 +2,14 @@ package net.mrchar.fig.mock;
 
 import java.util.*;
 import net.datafaker.Faker;
+import net.mrchar.fig.space.SpaceEntity;
 import net.mrchar.fig.vocabulary.VocabularyConcept;
 import net.mrchar.fig.vocabulary.VocabularyEntity;
 
 public class VocabularyEntityGenerator {
   private static final Faker faker = new Faker(Locale.CHINA);
 
-  public static VocabularyEntity generate() {
+  public static VocabularyEntity generate(SpaceEntity space) {
     String key = faker.letterify("vocabulary??????????");
     String name = faker.letterify("vocabulary??????????");
     String description = faker.letterify("vocabulary description ??????????");
@@ -23,13 +24,13 @@ public class VocabularyEntityGenerator {
             "description",
             "This schema describes a student name.");
     VocabularyConcept concept = new VocabularyConcept(key, name, description, jsonSchema);
-    return new VocabularyEntity(concept);
+    return new VocabularyEntity(concept, space);
   }
 
-  public static List<VocabularyEntity> generate(Integer count) {
+  public static List<VocabularyEntity> generate(Integer count, SpaceEntity space) {
     List<VocabularyEntity> entities = new ArrayList<>();
     for (int i = 0; i < count; i++) {
-      entities.add(generate());
+      entities.add(generate(space));
     }
 
     return entities;

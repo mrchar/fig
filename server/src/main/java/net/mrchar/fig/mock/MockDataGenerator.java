@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Profile("dev")
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "mock.enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "fig", name = "mock.enabled", havingValue = "true")
 public class MockDataGenerator {
   private final SecurityProperties securityProperties;
   private final UserRepository userRepository;
@@ -49,7 +49,7 @@ public class MockDataGenerator {
     UserEntity userEntity =
         this.userRepository.findByUsername(securityProperties.getUser().getName()).orElseThrow();
 
-    this.spaceRepository.save(new SpaceEntity("育才中学", userEntity));
+    SpaceEntity spaceEntity = this.spaceRepository.save(new SpaceEntity("育才中学", userEntity));
 
     VocabularyEntity name =
         new VocabularyEntity(
@@ -58,7 +58,8 @@ public class MockDataGenerator {
                 .name("姓名")
                 .description("使用文本记录人的姓名")
                 .definition(Map.of("type", "string", "title", "姓名"))
-                .build());
+                .build(),
+            spaceEntity);
     VocabularyEntity gender =
         new VocabularyEntity(
             VocabularyConcept.builder()
@@ -66,7 +67,8 @@ public class MockDataGenerator {
                 .name("性别")
                 .description("使用文本记录人的性别")
                 .definition(Map.of("type", "string", "title", "性别", "enum", List.of("男", "女")))
-                .build());
+                .build(),
+            spaceEntity);
     VocabularyEntity age =
         new VocabularyEntity(
             VocabularyConcept.builder()
@@ -74,7 +76,8 @@ public class MockDataGenerator {
                 .name("年龄")
                 .description("使用正整数记录人的年龄")
                 .definition(Map.of("type", "integer", "title", "年龄"))
-                .build());
+                .build(),
+            spaceEntity);
     this.vocabularyRepository.saveAll(List.of(name, gender, age));
 
     StructEntity studentEntity =
@@ -134,7 +137,9 @@ public class MockDataGenerator {
     List<SpaceEntity> spaceEntities = SpaceEntityGenerator.generate(userEntity, 10);
     this.spaceRepository.saveAll(spaceEntities);
 
-    List<VocabularyEntity> vocabularyEntities = VocabularyEntityGenerator.generate(10);
+    SpaceEntity spaceEntity = this.spaceRepository.save(SpaceEntityGenerator.generate(userEntity));
+
+    List<VocabularyEntity> vocabularyEntities = VocabularyEntityGenerator.generate(10, spaceEntity);
     this.vocabularyRepository.saveAll(vocabularyEntities);
 
     List<StructEntity> structEntities = StructEntityGenerator.generate(10);

@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import net.datafaker.Faker;
-import net.mrchar.fig.util.RandomUtil;
 import net.mrchar.fig.authentication.UserEntity;
+import net.mrchar.fig.util.RandomUtil;
 
 public class UserEntityGenerator {
   private static final Faker FAKER = new Faker(Locale.CHINA);
 
   public static UserEntity generate() {
     return new UserEntity(FAKER.name().fullName(), RandomUtil.generatePassword());
+  }
+
+  public static UserEntity generate(String username) {
+    return new UserEntity(username, RandomUtil.generatePassword());
   }
 
   public static List<UserEntity> generate(Integer count) {

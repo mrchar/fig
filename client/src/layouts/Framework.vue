@@ -2,6 +2,8 @@
 import routes from "@/router/routes.ts"
 import ThemeToggle from "./components/ThemeToggle.vue"
 import SpaceSelect from "./components/SpaceSelect.vue"
+import { useSpaceStore } from "@/store"
+import { storeToRefs } from "pinia"
 
 const menus = computed(() => {
   return routes
@@ -11,6 +13,8 @@ const menus = computed(() => {
 })
 
 const route = useRoute()
+
+const { space } = storeToRefs(useSpaceStore())
 
 </script>
 

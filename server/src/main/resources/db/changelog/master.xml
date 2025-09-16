@@ -3,11 +3,11 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <include file="db/changelog/user.xml"/>
+    <include file="db/changelog/space.xml"/>
     <include file="db/changelog/vocabulary.xml"/>
     <include file="db/changelog/struct.xml"/>
     <include file="db/changelog/form.xml"/>
     <include file="db/changelog/record.xml"/>
     <include file="db/changelog/function.xml"/>
-    <include file="db/changelog/user.xml"/>
-    <include file="db/changelog/space.xml"/>
 </databaseChangeLog>

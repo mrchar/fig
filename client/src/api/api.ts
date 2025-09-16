@@ -12,11 +12,6 @@ export const useApi = createFetch({
     beforeFetch(ctx) {
       const url = new URL(ctx.url)
 
-      const {space}=useSpaceStore()
-      if(space){
-        url.searchParams.set("space", space.code)
-      }
-
       if (url.searchParams.has("page")
         && url.searchParams.has("size")) {
         const page = parseInt(url.searchParams.get("page") as string)
