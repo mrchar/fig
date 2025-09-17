@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import type { WorkspaceSvg } from "blockly/core"
 import * as Blockly from "blockly/core"
 import "blockly/blocks"
 import * as zhCn from "blockly/msg/zh-hans"
 import { javascriptGenerator } from "blockly/javascript"
 import toolbox from "./toolbox.json"
 
+
+// @ts-ignore
 Blockly.setLocale(zhCn)
 
 const model = defineModel()
 
-const workspace = shallowRef(null)
+const workspace = shallowRef<WorkspaceSvg|null>(null)
 
 function generateCode() {
   if (!workspace.value) {
@@ -22,7 +25,7 @@ function generateCode() {
 const containerRef = useTemplateRef("container")
 
 onMounted(() => {
-  workspace.value = Blockly.inject(containerRef.value, {
+  workspace.value = Blockly.inject(containerRef.value as Element, {
     toolbox: toolbox,
     grid: {
       spacing: 20,

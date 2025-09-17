@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type {Monaco} from "@monaco-editor/loader"
 import loader from "@monaco-editor/loader"
 import api from "@/api"
 
@@ -10,17 +11,17 @@ export type Props = {
 const content = defineModel<string | null>({ default: "" })
 const props = defineProps<Props>()
 
-let model = null
+let model: any| null = null
 
-function createModel(monaco) {
+function createModel(monaco: Monaco) {
   const uri = monaco.Uri.parse(props.uri)
   model = monaco.editor.createModel(content.value as string, props.language, uri)
 }
 
-function registerProvider(monaco) {
+function registerProvider(monaco: Monaco) {
   // 注册自定义完成项提供者
   monaco.languages.registerCompletionItemProvider("json", {
-    async provideCompletionItems(model, position) {
+    async provideCompletionItems(model: any, position: any) {
       // 获取用户当前输入的文本
       const currentLine = model.getLineContent(position.lineNumber)
       const currentInput = currentLine.slice(0, position.column - 1)
@@ -38,13 +39,13 @@ function registerProvider(monaco) {
   })
 }
 
-let editor = null;
+let editor: any | null = null;
 
-const skeletonRef = useTemplateRef("skeleton")
+const skeletonRef = useTemplateRef<HTMLElement>("skeleton")
 
-const containerRef = useTemplateRef("container")
+const containerRef = useTemplateRef<HTMLElement>("container")
 
-function createMonacoEditor(monaco) {
+function createMonacoEditor(monaco: Monaco) {
   if (!containerRef.value) {
     console.error("找不到容器，MonacoEditor初始化失败")
     return
@@ -57,10 +58,10 @@ function createMonacoEditor(monaco) {
   })
 
   // 隐藏加载提示
-  skeletonRef.value.classList.add("opacity-0")
+  skeletonRef.value?.classList.add("opacity-0")
   setTimeout(()=>{
-    skeletonRef.value.classList.add("hidden")
-    containerRef.value.classList.remove("opacity-0")
+    skeletonRef.value?.classList.add("hidden")
+    containerRef.value?.classList.remove("opacity-0")
   },500)
 
   window.addEventListener("resize", ()=>{
@@ -87,8 +88,8 @@ function createMonacoEditor(monaco) {
 }
 
 function loadMonacoEditor() {
-  loader.init().then(moncao => {
-    createModel(moncao)
+  loader.init().then(monaco => {
+    createModel(monaco)
     registerProvider(monaco)
     createMonacoEditor(monaco)
   })

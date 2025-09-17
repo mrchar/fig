@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { h } from "vue"
+import type { Renderer } from "./renderers"
 import { defaultRenderers, getMatchedRenderer, useProvide } from "./renderers"
 
 type Props = {
-  renderers?: any[]
+  renderers?: Renderer[]
 }
 const model = defineModel()
 
-const props = withDefaults(defineProps<Props>(), { renderers: defaultRenderers })
+const props = withDefaults(defineProps<Props>(), { renderers: ()=>defaultRenderers })
 
 useProvide(props.renderers)
 

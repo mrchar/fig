@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const model = defineModel()
+const model = defineModel<any>({default: {}})
 </script>
 
 <template>
@@ -14,10 +14,10 @@ const model = defineModel()
       <Input v-model="model.description"/>
     </FormItem>
     <FormItem label="最小值" class="col-span-1">
-      <Input type="number" v-model="model.minimum" placeholder="输入最小值"/>
+      <Input v-model="model.minimum" placeholder="输入最小值"/>
     </FormItem>
     <FormItem label="最大值" class="col-span-1">
-      <Input type="number" v-model="model.maximum" placeholder="输入最大值"/>
+      <Input v-model="model.maximum" placeholder="输入最大值"/>
     </FormItem>
     <slot name="external"/>
   </div>

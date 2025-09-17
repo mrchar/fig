@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const model = defineModel()
+const model = defineModel<boolean>()
 
-function onChange(e) {
+function onChange(e: Event) {
   console.log("Changed", e)
-  model.value = e.target.checked
+  model.value = (e.target as HTMLInputElement).checked
 }
 </script>
 

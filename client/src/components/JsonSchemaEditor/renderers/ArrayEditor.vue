@@ -2,7 +2,7 @@
 import { h, watch } from "vue"
 import { getMatchedRenderer, useInject } from "@/components/JsonSchemaEditor/renderers/index.ts"
 
-const model = defineModel()
+const model = defineModel<any>()
 
 watch(model, () => {
   if (!model.value.items) {

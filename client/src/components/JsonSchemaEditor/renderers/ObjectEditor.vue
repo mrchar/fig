@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import { h } from "vue"
-import { getMatchedRenderer, useInject } from "@/components/JsonSchemaEditor/renderers/index.ts"
+import type { Renderer } from "@/components/JsonSchemaEditor/renderers"
+import { getMatchedRenderer, useInject } from "@/components/JsonSchemaEditor/renderers"
 
-const model = defineModel()
+const model = defineModel<any>()
 
 const renderers = useInject()
 
-const propertiesRenderers = computed(() => {
+const propertiesRenderers = computed<{[key: string]: Renderer}|undefined>(() => {
   const properties = model.value.properties
   if (!properties) {
     return
   }
 
-  const result = {}
+  const result:{[key:string]: Renderer} = {}
   for (let key of Object.keys(properties)) {
-    result[key] = getMatchedRenderer(properties[key], renderers)
+    const render  = getMatchedRenderer(properties[key], renderers)
+    if(render) {
+      result[key] = render
+    }
   }
 
   return result
@@ -107,11 +111,11 @@ function setRequired(key: string, required: boolean) {
       <Toggle v-model="model.additionalProperties" />
     </FormItem>
     <FormItem label="属性" class="col-span-2">
-      <div v-if="!model.properties" class="text-base-content/70">
+      <div v-if="!model?.properties" class="text-base-content/70">
         还没有任何属性
       </div>
-      <Collapse v-for="(item, key) in model.properties"
-                :title="item.title ? `${item.title}(${key})` : key"
+      <Collapse v-for="(item, key) in model?.properties"
+                :title="item.title ? `${item.title}(${key})` : key as unknown as string"
       >
         <component v-if="propertiesRenderers"
                    v-model="model.properties[key]"
@@ -127,9 +131,10 @@ function setRequired(key: string, required: boolean) {
       </div>
     </FormItem>
     <FormItem label="必填项">
-      <div v-for="(property, key) in model.properties" class="flex gap-2 items-center">
+      <div v-for="(property, key) in model?.properties" class="flex gap-2 items-center">
         <span>{{ property?.title || key }}</span>
-        <Checkbox :model-value="isRequired(key)" @change="(value)=>{setRequired(key, value)}" />
+        <Checkbox :model-value="isRequired(key as unknown as string)"
+                  @change="(value)=>{setRequired(key as unknown as string, value)}" />
       </div>
     </FormItem>
   </div>

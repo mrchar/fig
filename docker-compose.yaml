@@ -4,7 +4,27 @@ services:
   db:
     image: postgres:latest
     environment:
-      - "POSTGRES_USER=fig"
-      - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_USER=${DATABASE_USER}"
+      - "POSTGRES_PASSWORD=${DATABASE_PASSWORD}"
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  server:
+    image: fig-server:latest
+    environment:
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/fig"
+      - "SPRING_DATASOURCE_USERNAME=${DATABASE_USER}"
+      - "SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  client:
+    image: fig-client:latest
+    ports:
+      - "3000:3000"

@@ -3,6 +3,89 @@
 “无花果” 系统致力于打造一套高度灵活且功能完备的数据收集、处理及分析软件，
 不仅能够实现简单业务场景的快速搭建，还可轻松迭代升级，从容支持复杂业务场景下的数据管理需求。
 
+## 快速开始
+
+### 后端
+
+本项目后端使用`gradle`构建，请确保你安装了大于 17 版本的`jdk`，执行下面的命令进行构建。
+
+```shell
+# 切换到后端目录
+cd server
+# 如果使用windows系统，使用"./gradlew.bat"代替"./gradlew"
+./gradlew clean build -x test
+```
+
+你可以使用下面的命令启动后端服务器。
+
+```shell
+# 接换到后端目录
+cd server
+# 启动服务器，将version更换为版本号
+java -jar ./build/libs/fig-version.jar
+```
+
+### 前端
+
+本项目前端使用`vite`构建，请确保你已经安装了大于 22 版本的`node`运行环境，执行下面的命令进行构建。
+
+```shell
+# 切换到前端目录
+cd client
+# 如果是第一次构建，需要先安装依赖
+yarn install
+# 确保已经正确安装依赖后，执行构建
+yarn build
+```
+
+如果要启动调试服务器，执行下面的命令。
+
+```shell
+# 切换到前端目录
+cd client
+# 启动调试服务器
+yarn dev
+```
+
+启动调试服务器后，访问`http://localhost:5173`打开服务，默认用户名 username，默认密码 password，正式发布时请修改用户名和密码。
+
+### 容器化
+
+如果你需要使用容器启动项目，我们也为你准备了构建配置和运行配置。`server`目录和`client`目录中均已包含 Dockerfile，同时我们也在构建工具中添加了构建命令。
+
+在开始使用镜像启动服务前，请确定你已经正确安装了`docker`和`docker-compose`， 我们开发环境使用`docker desktop`安装。
+
+使用下面的命令构建后端服务的镜像。
+
+```shell
+# 进入后端目录
+cd server
+# 执行构建命令
+./gradlew buildImage
+# 检查容器镜像
+docker image ls
+```
+
+使用下面的命令构建前端服务的镜像。
+
+```shell
+# 进入前端目录
+cd client
+# 执行构建命令
+yarn build:image
+# 检查容器镜像
+docker image ls
+```
+
+容器构建完成后，你可以使用根目录的`docker-compose`配置文件启动服务，你可以修改`.env`中的配置。
+
+```shell
+# 启动多个服务
+docker compose up -d
+```
+
+启动后访问`https://localhost:3000`,默认用户名 username，默认密码 password。默认用户名密码仅用于调试，正式发布时请修改用户名和密码。
+
 ## 需求
 
 在商业活动中，企业普遍需要通过多种途径收集客户及合作伙伴信息，并对采集到的数据进行系统性检查、深度处理与精准分析。

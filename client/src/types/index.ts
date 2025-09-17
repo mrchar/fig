@@ -18,6 +18,7 @@ export type PagedResponse<T = any> = {
 
 export type VocabularyType = {
   id: number,
+  key: string,
   name: string,
   description: string,
   definition: any,

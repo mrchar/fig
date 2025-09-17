@@ -24,10 +24,5 @@ export default defineConfig({
     }),
     Components({}),
     vueDevTools()
-  ],
-  server: {
-    proxy: {
-      "/api": "http://localhost:8080"
-    }
-  }
+  ]
 })

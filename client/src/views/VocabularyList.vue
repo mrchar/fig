@@ -54,6 +54,7 @@ function onClickOpenDialog() {
 
 function initAddParams() {
   return {
+    key: "",
     name: "",
     description: "",
     definition: {
@@ -87,10 +88,6 @@ function closeDialog() {
 
 
 const router = useRouter()
-
-const query = computed(() => {
-  return `我要定义一个词汇${addParams.value.name}, 这是这个词汇的解释：${addParams.value.description}。请帮我创建数据定义。`
-})
 
 function createVocabulary() {
   api.vocabulary.useAddVocabulary(

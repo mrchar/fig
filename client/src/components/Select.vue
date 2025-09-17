@@ -69,20 +69,20 @@ const _options = computed((): any[] => {
 const selectValue = ref(null)
 
 // 自动设置默认值
-watch(_options, () => {
+watch(_options, (value) => {
   // 如果没有启动自动选择第一个则直接返回
   if (!props.selectFirst) {
     return
   }
 
   // 如果选项是空的，则直接返回
-  if (_options?.length == 0) {
+  if (value?.length == 0) {
     return
   }
 
   const selected = props.formatter
-    ? props.formatter(_options.value[0]).value
-    : _options.value[0].value
+    ? props.formatter(value[0]).value
+    : value[0].value
 
   // 如果没有选中任何项目，则自动选择第一个选项
   if(model.value === null || model.value === undefined) {
@@ -92,9 +92,9 @@ watch(_options, () => {
 
   // 判断当前选项是否存在
   const exists = props.formatter
-    ? _options.value.some(item =>
-      (props.formatter!(item).value === props.formatter(model.value).value))
-    : _options.value.some(item => (item === model.value))
+    ? value.some(item =>
+      (props.formatter!(item).value === props.formatter!(model.value).value))
+    : value.some(item => (item === model.value))
 
   // 如果当前选中项在列表中不存在，则直接选中第一项
   if (!exists) {

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const model = defineModel()
+const model = defineModel<boolean>()
 
 const emit = defineEmits(["change"])
 
-function onChange(event) {
-  emit("change", event.target.checked)
-  model.value = event.target.checked
+function onChange(event: Event) {
+  emit("change", (event.target as HTMLInputElement).checked)
+  model.value = (event.target as HTMLInputElement).checked
 }
 
 </script>

@@ -75,3 +75,7 @@ dependencies {
 tasks.named("test") {
     useJUnitPlatform()
 }
+
+tasks.register('buildImage', Exec) {
+    commandLine 'docker', "build", "-t", "fig-server:latest", "."
+}

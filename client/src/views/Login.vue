@@ -15,7 +15,13 @@ function login() {
   formData.append("username", params.value.username)
   formData.append("password", params.value.password)
   useApi("/login").post(formData)
-    .then(() => {
+    .then(({error}) => {
+      if(error.value){
+        console.error("登录失败", error.value)
+        // TODO: 添加错误提示
+        return
+      }
+
       router.push("/")
     })
 }

@@ -6,7 +6,7 @@ const router = createRouter({
   routes: routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((_, __, next) => {
   // TODO: 检查登录状态
   next()
 })

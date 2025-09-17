@@ -18,7 +18,7 @@ function initModeler() {
     console.log("commandStack changed")
   })
 
-  modeler.on("element.changed", (event) => {
+  modeler.on("element.changed", (event: any) => {
     const element = event.element
 
     // the element was changed by the user

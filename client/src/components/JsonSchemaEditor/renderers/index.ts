@@ -61,12 +61,17 @@ export const objectRenderer: Renderer = {
 
 export const defaultRenderers = [arrayRenderer, booleanRenderer, nullRenderer, integerRenderer, numberRenderer, stringRenderer, objectRenderer]
 
-export function getMatchedRenderer(model: any, renderers: Renderer[]) {
+export function getMatchedRenderer(model: any, renderers: Renderer[] | undefined): Renderer | null {
+  if (!renderers) {
+    return null
+  }
+
   for (let renderer of renderers) {
     if (renderer.supports(model)) {
       return renderer
     }
   }
+
   return null
 }
 

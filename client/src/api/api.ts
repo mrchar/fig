@@ -1,5 +1,4 @@
 import { createFetch } from "@vueuse/core"
-import { useSpaceStore } from "@/store"
 
 let apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 if (window.location.hostname !== "localhost") {
@@ -8,6 +7,9 @@ if (window.location.hostname !== "localhost") {
 
 export const useApi = createFetch({
   baseUrl: apiBaseUrl,
+  fetchOptions:{
+    credentials: "include"
+  },
   options: {
     beforeFetch(ctx) {
       const url = new URL(ctx.url)
