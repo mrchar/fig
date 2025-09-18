@@ -1,6 +1,5 @@
 package net.mrchar.fig.vocabulary;
 
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,14 +23,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 @WithMockUser
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestInstance(PER_CLASS)
-@TestMethodOrder(OrderAnnotation.class)
 class VocabularyApiTest {
+  static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
   static ObjectMapper mapper = new ObjectMapper();
 
   @Autowired UserRepository userRepository;
@@ -41,21 +42,44 @@ class VocabularyApiTest {
 
   UserEntity user;
   SpaceEntity space;
+  VocabularyEntity vocabulary;
 
   @BeforeAll
+  static void beforeAll() {
+    postgres.start();
+  }
+
+  @AfterAll
+  static void afterAll() {
+    postgres.stop();
+  }
+
+  @DynamicPropertySource
+  static void dynamicProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.datasource.url", postgres::getJdbcUrl);
+    registry.add("spring.datasource.username", postgres::getUsername);
+    registry.add("spring.datasource.password", postgres::getPassword);
+  }
+
+  @BeforeEach
   void setUp() {
+    this.vocabularyRepository.deleteAll();
+    this.spaceRepository.deleteAll();
+    this.userRepository.deleteAll();
+
     this.user = this.userRepository.save(UserEntityGenerator.generate("user"));
     this.space = this.spaceRepository.save(SpaceEntityGenerator.generate(user));
 
-    List<VocabularyEntity> entities = new ArrayList<>();
+    this.vocabulary = vocabularyRepository.save(VocabularyEntityGenerator.generate(space));
+
+    List<VocabularyEntity> vocabularies = new ArrayList<>();
     for (int i = 0; i < 10; i++) {
-      entities.add(VocabularyEntityGenerator.generate(space));
+      vocabularies.add(VocabularyEntityGenerator.generate(space));
     }
-    this.vocabularyRepository.saveAll(entities);
+    this.vocabularyRepository.saveAll(vocabularies);
   }
 
   @Test
-  @Order(1)
   void should_success_when_listing_vocabularies() throws Exception {
     mockMvc
         .perform(get("/vocabularies?space={space}", space.getCode()))
@@ -65,7 +89,6 @@ class VocabularyApiTest {
   }
 
   @Test
-  @Order(1)
   void should_success_when_search_vocabularies() throws Exception {
     VocabularyEntity entity =
         new VocabularyEntity(
@@ -79,7 +102,6 @@ class VocabularyApiTest {
   }
 
   @Test
-  @Order(2)
   void should_success_when_create_vocabulary() throws Exception {
     VocabularyService.AddVocabularyParams params =
         new VocabularyService.AddVocabularyParams(
@@ -99,7 +121,6 @@ class VocabularyApiTest {
   }
 
   @Test
-  @Order(3)
   void should_fail_when_create_vocabulary_with_invalid_params() throws Exception {
     mockMvc
         .perform(
@@ -117,11 +138,10 @@ class VocabularyApiTest {
   }
 
   @Test
-  @Order(4)
   void should_success_when_update_vocabulary() throws Exception {
     mockMvc
         .perform(
-            put("/vocabularies/1")
+            put("/vocabularies/" + this.vocabulary.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     """

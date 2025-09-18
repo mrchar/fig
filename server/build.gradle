@@ -47,7 +47,6 @@ dependencies {
     // Starters
     implementation "io.camunda:spring-boot-starter-camunda-sdk:8.7.3"
 
-
     // Database
     runtimeOnly "com.h2database:h2"
     runtimeOnly 'org.postgresql:postgresql'
@@ -70,6 +69,10 @@ dependencies {
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.security:spring-security-test"
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:mysql'
+    testImplementation 'org.testcontainers:postgresql'
 }
 
 tasks.named("test") {
