@@ -60,7 +60,9 @@ yarn dev
 ```shell
 # 进入后端目录
 cd server
-# 执行构建命令
+# 直接执行构建命令
+docker build -t fig-server:latest .
+# 也可以使用gradle执行构建命令
 ./gradlew buildImage
 # 检查容器镜像
 docker image ls
@@ -71,7 +73,9 @@ docker image ls
 ```shell
 # 进入前端目录
 cd client
-# 执行构建命令
+# 直接执行构建命令
+docker build -t fig-client:latest .
+# 也可以使用yarn执行构建命令
 yarn build:image
 # 检查容器镜像
 docker image ls
