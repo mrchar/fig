@@ -8,11 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import net.mrchar.fig.authentication.UserEntity;
+import net.mrchar.fig.authentication.UserRepository;
 import net.mrchar.fig.common.ResourceNotExistsException;
 import net.mrchar.fig.space.SpaceEntity;
 import net.mrchar.fig.space.SpaceRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @RequiredArgsConstructor
 public class VocabularyService {
+  private final UserRepository userRepository;
   private final SpaceRepository spaceRepository;
   private final VocabularyRepository vocabularyRepository;
 
@@ -57,9 +61,16 @@ public class VocabularyService {
   }
 
   public VocabularyEntity addVocabulary(@Valid AddVocabularyParams params) {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    UserEntity userEntity =
+        this.userRepository
+            .findByUsername(username)
+            .orElseThrow(
+                () -> new ResourceNotExistsException("User not found by username: " + username));
+
     SpaceEntity spaceEntity =
         this.spaceRepository
-            .findByCodeForUser(params.getSpaceCode())
+            .findByOwnerAndCode(userEntity, params.getSpaceCode())
             .orElseThrow(
                 () ->
                     new ResourceNotExistsException(

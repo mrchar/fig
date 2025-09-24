@@ -1,5 +1,6 @@
 package net.mrchar.fig.space;
 
+import java.security.Principal;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,12 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/spaces")
 public class SpaceController {
-  private final SpaceRepository spaceRepository;
   private final SpaceService spaceService;
 
   @GetMapping
   public Page<SpaceEntity> listSpaces(Pageable pageable) {
-    return this.spaceRepository.findAllForUser(pageable);
+    return this.spaceService.listSpaces(pageable);
   }
 
   @GetMapping("/{code}")
