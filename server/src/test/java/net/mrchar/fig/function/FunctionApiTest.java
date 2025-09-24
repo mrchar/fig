@@ -1,6 +1,5 @@
 package net.mrchar.fig.function;
 
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -9,37 +8,61 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import net.mrchar.fig.mock.FunctionEntityGenerator;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 @WithMockUser
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestInstance(PER_CLASS)
-@TestMethodOrder(OrderAnnotation.class)
 class FunctionApiTest {
+  static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
+
   @Autowired FunctionRepository functionRepository;
   @Autowired MockMvc mockMvc;
 
   ObjectMapper mapper = new ObjectMapper();
-  FunctionEntity functionEntity;
+  FunctionEntity function;
 
   @BeforeAll
+  static void beforeAll() {
+    postgres.start();
+  }
+
+  @AfterAll
+  static void afterAll() {
+    postgres.stop();
+  }
+
+  @DynamicPropertySource
+  static void dynamicProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.datasource.url", postgres::getJdbcUrl);
+    registry.add("spring.datasource.username", postgres::getUsername);
+    registry.add("spring.datasource.password", postgres::getPassword);
+  }
+
+  @BeforeEach
   void setUp() {
     List<FunctionEntity> entities = FunctionEntityGenerator.generate(10);
     this.functionRepository.saveAll(entities);
 
-    functionEntity = new FunctionEntity(new FunctionConcept("name", "description", ""));
-    functionRepository.save(functionEntity);
+    FunctionEntity functionEntity =
+        new FunctionEntity(new FunctionConcept("name", "description", ""));
+    this.function = functionRepository.save(functionEntity);
+  }
+
+  @AfterEach
+  void tearDown() {
+    this.functionRepository.deleteAll();
   }
 
   @Test
-  @Order(1)
   void should_success_when_list_functions() throws Exception {
     mockMvc
         .perform(get("/functions"))
@@ -48,7 +71,6 @@ class FunctionApiTest {
   }
 
   @Test
-  @Order(1)
   void should_success_when_search_with_correct_params() throws Exception {
     mockMvc
         .perform(get("/functions?keyword=name"))
@@ -58,7 +80,6 @@ class FunctionApiTest {
   }
 
   @Test
-  @Order(2)
   void should_success_when_create_with_correct_params() throws Exception {
     FunctionEntity entity = FunctionEntityGenerator.generate();
     mockMvc
@@ -70,7 +91,6 @@ class FunctionApiTest {
   }
 
   @Test
-  @Order(3)
   void should_fail_when_create_with_incorrect_params() throws Exception {
     FunctionEntity entity = FunctionEntityGenerator.generate();
     entity.getFunction().setName(null);
@@ -83,7 +103,6 @@ class FunctionApiTest {
   }
 
   @Test
-  @Order(4)
   void should_success_when_update_with_correct_params() throws Exception {
     FunctionEntity entity = FunctionEntityGenerator.generate();
     this.functionRepository.save(entity);
@@ -98,7 +117,6 @@ class FunctionApiTest {
   }
 
   @Test
-  @Order(5)
   void should_fail_when_update_with_incorrect_params() throws Exception {
     FunctionEntity entity = FunctionEntityGenerator.generate();
     this.functionRepository.save(entity);
@@ -113,8 +131,7 @@ class FunctionApiTest {
   }
 
   @Test
-  @Order(6)
   void should_success_when_delete_with_correct_params() throws Exception {
-    mockMvc.perform(delete("/functions/" + functionEntity.getId())).andExpect(status().isOk());
+    mockMvc.perform(delete("/functions/" + function.getId())).andExpect(status().isOk());
   }
 }

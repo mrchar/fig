@@ -24,7 +24,7 @@ public class SpaceService {
         this.userRepository
             .findByUsername(username)
             .orElseThrow(
-                () -> new ResourceNotExistsException("User not found by username: " + username));
+                () -> new PreparationFailedException("User not found by username: " + username));
 
     return this.spaceRepository.findAllByOwner(userEntity, pageable);
   }
@@ -53,7 +53,7 @@ public class SpaceService {
         this.userRepository
             .findByUsername(username)
             .orElseThrow(
-                () -> new ResourceNotExistsException("User not found by username: " + username));
+                () -> new PreparationFailedException("User not found by username: " + username));
 
     return this.spaceRepository
         .findByOwnerAndCode(userEntity, code)

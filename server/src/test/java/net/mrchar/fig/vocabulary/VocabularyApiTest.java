@@ -17,7 +17,6 @@ import net.mrchar.fig.mock.VocabularyEntityGenerator;
 import net.mrchar.fig.space.SpaceEntity;
 import net.mrchar.fig.space.SpaceRepository;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -63,10 +62,6 @@ class VocabularyApiTest {
 
   @BeforeEach
   void setUp() {
-    this.vocabularyRepository.deleteAll();
-    this.spaceRepository.deleteAll();
-    this.userRepository.deleteAll();
-
     this.user = this.userRepository.save(UserEntityGenerator.generate("user"));
     this.space = this.spaceRepository.save(SpaceEntityGenerator.generate(user));
 
@@ -77,6 +72,13 @@ class VocabularyApiTest {
       vocabularies.add(VocabularyEntityGenerator.generate(space));
     }
     this.vocabularyRepository.saveAll(vocabularies);
+  }
+
+  @AfterEach
+  void tearDown() {
+    this.vocabularyRepository.deleteAll();
+    this.spaceRepository.deleteAll();
+    this.userRepository.deleteAll();
   }
 
   @Test

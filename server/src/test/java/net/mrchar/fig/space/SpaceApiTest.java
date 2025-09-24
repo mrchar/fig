@@ -17,15 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+@WithMockUser
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithUserDetails("username")
 class SpaceApiTest {
   static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 
@@ -55,15 +55,18 @@ class SpaceApiTest {
 
   @BeforeEach
   void setup() {
-    this.spaceRepository.deleteAll();
-    this.userRepository.deleteAll();
-
-    UserEntity user = this.userRepository.save(UserEntityGenerator.generate("username"));
+    UserEntity user = this.userRepository.save(UserEntityGenerator.generate("user"));
 
     space = this.spaceRepository.save(SpaceEntityGenerator.generate(user));
 
     List<SpaceEntity> entities = SpaceEntityGenerator.generate(user, 10);
     this.spaceRepository.saveAll(entities);
+  }
+
+  @AfterEach
+  void tearDown() {
+    this.spaceRepository.deleteAll();
+    this.userRepository.deleteAll();
   }
 
   @Test
